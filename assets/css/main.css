@@ -113,20 +113,16 @@ input[type=search]::-webkit-search-results-decoration {
 html {
   overflow-x: hidden;
   scroll-behavior: smooth;
+  font-size: 62.5%;
 }
 
 body {
   position: relative;
   margin: 0;
   padding: 0;
-  color: #1b1b1b;
-  font-size: 18px;
+  color: #000;
+  font-size: 1.6rem;
   font-family: "Poppins", sans-serif;
-}
-@media only screen and (max-width: 1023px) {
-  body {
-    font-size: 16px;
-  }
 }
 
 a,
@@ -135,5 +131,104 @@ button {
 }
 
 /* Components */
+.nav {
+  z-index: 2000;
+  width: 100%;
+}
+.nav .container {
+  margin: 0 auto;
+  max-width: 1300px;
+}
+.nav__top {
+  background-color: #1e1f1f;
+  padding: 0.3em 0.6em;
+  width: 100%;
+}
+.nav__top-boxes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav__top-left {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+.nav__top-left p {
+  color: #ffffff;
+  font-size: 1.2rem;
+}
+.nav__top-left p a:hover {
+  color: #009ee1;
+}
+.nav__middle {
+  background-color: #f6f6f6;
+  padding: 1em;
+}
+.nav__middle-boxes {
+  display: flex;
+  align-items: center;
+}
+.nav__middle-left {
+  display: inline-block;
+  margin-right: 3em;
+}
+.nav__middle-left img {
+  width: 230px;
+}
+.nav__middle-middle {
+  margin-right: auto;
+}
+.nav__middle-middle ul {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+.nav__middle-middle ul li a {
+  font-size: 1.4rem;
+}
+.nav__middle-middle ul li a:hover {
+  color: #009ee1;
+}
+.nav__navigation ul {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+.nav__navigation ul li a {
+  color: #ffffff;
+  font-size: 1.2rem;
+}
+.nav__navigation ul li a:hover {
+  color: #009ee1;
+}
+.nav p {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+.nav p svg {
+  fill: #009ee1;
+  width: 20px;
+  height: 20px;
+}
+.nav__bottom {
+  background-color: #009ee1;
+  padding: 1em;
+}
+.nav__bottom-boxes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3em;
+}
+.nav__bottom-boxes p {
+  color: #ffffff;
+  font-size: 1.4rem;
+}
+.nav__bottom-boxes p svg {
+  fill: #ffffff;
+}
+
 /* Layouts */
 /* Pages */

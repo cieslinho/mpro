@@ -1,0 +1,131 @@
+.nav {
+	z-index: 2000;
+	width: 100%;
+
+	.container {
+		margin: 0 auto;
+		max-width: 1300px;
+	}
+
+	&__top {
+		background-color: $dark;
+		// @include container;
+		padding: 0.3em 0.6em;
+		width: 100%;
+
+		&-boxes {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		&-left {
+			display: flex;
+			align-items: center;
+			gap: 1em;
+
+			p {
+				color: $white;
+				font-size: 1.2rem;
+
+				a {
+					&:hover {
+						color: $blue;
+					}
+				}
+			}
+		}
+	}
+
+	&__middle {
+		background-color: $gray;
+		padding: 1em;
+        
+		&-boxes {
+			display: flex;
+			// justify-content: space-between;
+			align-items: center;
+		}
+
+		&-left {
+			display: inline-block;
+			margin-right: 3em;
+
+			img {
+				width: 230px;
+			}
+		}
+
+		&-middle {
+			margin-right: auto;
+
+			ul {
+				display: flex;
+				align-items: center;
+				gap: 1em;
+
+				li {
+					a {
+						font-size: 1.4rem;
+						&:hover {
+							color: $blue;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	&__navigation {
+		ul {
+			display: flex;
+			align-items: center;
+			gap: 1em;
+
+			li {
+				a {
+					color: $white;
+					font-size: 1.2rem;
+
+					&:hover {
+						color: $blue;
+					}
+				}
+			}
+		}
+	}
+
+	p {
+		display: flex;
+		align-items: center;
+		gap: 1em;
+
+		svg {
+			fill: $blue;
+			width: 20px;
+			height: 20px;
+		}
+		// color: $white;
+	}
+
+	&__bottom {
+		background-color: $blue;
+		padding: 1em;
+
+		&-boxes {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 3em;
+
+			p {
+				color: $white;
+				font-size: 1.4rem;
+
+				svg {
+					fill: $white;
+				}
+			}
+		}
+	}
+}
