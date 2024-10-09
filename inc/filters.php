@@ -24,3 +24,27 @@ function change_excerpt($excerpt) {
 }
 
 add_filter('the_excerpt', 'change_excerpt');
+
+// add_filter( 'nav_menu_link_attributes', 'nav_menu_link_class', 10, 4 );
+
+// function nav_menu_link_class(  $atts, $item, $args, $depth ) {
+
+//       if ( 0 !== $depth ) {
+//          $class         = 'nav__sublink';
+//          $atts['class'] = $class;
+//       }
+//     return $atts;
+// }
+
+function custom_menu_classes($classes, $item, $args, $depth) {
+    // Dodajemy klasę bazując na głębokości zagnieżdżenia
+    $classes[] = 'sub-menu-depth-' . $depth;
+
+    // Opcjonalnie: dodaj klasę tylko do elementów posiadających submenu
+    if (in_array('menu-item-has-children', $classes)) {
+        $classes[] = 'has-submenu-depth-' . $depth;
+    }
+
+    return $classes;
+}
+add_filter('nav_menu_css_class', 'custom_menu_classes', 10, 4);

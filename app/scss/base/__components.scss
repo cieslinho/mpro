@@ -1,0 +1,10 @@
+.container {
+	margin: 0 auto;
+	padding: 0.5em 1em;
+	width: 100%;
+	max-width: 1400px;
+
+	@include view(tablet) {
+		padding: 0.5em 2em;
+	}
+}

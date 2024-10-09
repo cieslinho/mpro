@@ -1,37 +1,82 @@
 @mixin view($breakpoint) {
 	@if $breakpoint == mobile {
-		@media only screen and (max-width: 767px) {
+		@media only screen and (min-width: 767px) {
 			@content;
 		}
 	}
 
 	@if $breakpoint == tablet {
-		@media only screen and (max-width: 1023px) {
+		@media only screen and (min-width: 1023px) {
 			@content;
 		}
 	}
 
 	@if $breakpoint == small-desktop {
-		@media only screen and (max-width: 1280px) {
+		@media only screen and (min-width: 1280px) {
 			@content;
 		}
 	}
 
 	@if $breakpoint == desktop {
-		@media only screen and (max-width: 1440px) {
+		@media only screen and (min-width: 1440px) {
 			@content;
 		}
 	}
 }
 
 @mixin container() {
-	margin: auto;
-	margin-block: 40px;
-	padding-inline: 16px;
+	margin: 0 auto;
+	padding: 0.5em 1em;
 	width: 100%;
-	max-width: 1360px;
+	max-width: 1400px;
 
 	@include view(tablet) {
-		margin-block: 16px;
+		padding: 1.5em 2em;
+	}
+}
+
+@mixin btn() {
+	transition: all 0.3s;
+	border-radius: 8px;
+	background-color: $dark;
+	padding: 0.5em 1em;
+	color: $white;
+	text-align: center;
+
+	&:hover {
+		background-color: $black;
+	}
+}
+
+@mixin btnCta {
+	@include btn;
+	background-color: $blue;
+
+	&:hover {
+		background-color: $darkBlue;
+	}
+}
+
+@mixin hoverBlue {
+	transition: all 0.3s;
+
+	&:hover {
+		color: $blue;
+	}
+}
+
+@mixin hoverDark {
+	transition: all 0.3s;
+
+	&:hover {
+		color: $dark;
+	}
+}
+
+@mixin hoverDarkBlue {
+	transition: all 0.3s;
+
+	&:hover {
+		color: $darkBlue;
 	}
 }
