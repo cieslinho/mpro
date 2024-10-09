@@ -4,9 +4,11 @@
 @import 'base/__mixins';
 @import 'base/__general';
 @import 'base/__text';
+@import 'base/__components';
 
 /* Components */
 @import 'components/__nav';
+@import 'components/__header';
 
 /* Layouts */
 

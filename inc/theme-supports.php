@@ -23,7 +23,7 @@ add_theme_support('html5', array(
 
 add_editor_style();
 
-add_theme_support('wp-block-styles');
+// add_theme_support('wp-block-styles');
 
 add_theme_support('align-wide');
 
@@ -35,3 +35,4 @@ function remove_global_css()
 	remove_action('wp_body_open', 'wp_global_styles_render_svg_filters');
 }
 add_action('init', 'remove_global_css');
+
