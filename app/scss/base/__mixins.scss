@@ -80,3 +80,11 @@
 		color: $darkBlue;
 	}
 }
+
+@mixin sectionPadding {
+	padding: 1.5em 0;
+
+	@include view(tablet) {
+		padding: 3em 0;
+	}
+}

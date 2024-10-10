@@ -8,6 +8,7 @@ function register_menus()
 			'categories-menu' => esc_html__('categories-menu', 'mpro'),
 			'categories-header' => esc_html__('categories-header', 'mpro'),
 			'footer-menu' => esc_html__('footer-menu', 'mpro'),
+			'category-slider' => esc_html__('category-slider', 'mpro')
 		)
 	);
 }

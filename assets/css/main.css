@@ -673,5 +673,47 @@ button {
   font-size: 1.3rem;
 }
 
+.category {
+  padding: 1.5em 0;
+}
+@media only screen and (min-width: 1023px) {
+  .category {
+    padding: 3em 0;
+  }
+}
+.category .menu-category-slider-menu-container {
+  padding-bottom: 1em;
+}
+.category__swiper {
+  margin: -1em;
+  padding: 1em;
+}
+.category__slide {
+  transition: all 0.1s ease-out;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  padding: 1em 1em;
+}
+.category__slide:hover {
+  box-shadow: 0 0 20px rgba(30, 31, 31, 0.1);
+}
+.category__link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.1em;
+  font-weight: 700;
+  font-size: 1.35rem;
+  text-align: center;
+}
+.category__pagination {
+  bottom: 0 !important;
+}
+.category__pagination .swiper-pagination-bullet-active {
+  background-color: #1e1f1f;
+}
+
 /* Layouts */
 /* Pages */

@@ -49,20 +49,44 @@ const closeNav = () => {
 	navOverlay.classList.remove('active')
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-	var swiper = new Swiper('.swiper-container', {
-		loop: true, // Automatyczne zapętlanie slajdów
-		slidesPerView: 1, // Pokaż jeden slajd naraz
-		spaceBetween: 20, // Brak odstępu między slajdami
-		pagination: {
-			el: '.swiper-pagination',
-			clickable: true,
+var headerSwiper = new Swiper('.swiper-container', {
+	loop: true, // Automatyczne zapętlanie slajdów
+	slidesPerView: 1, // Pokaż jeden slajd naraz
+	spaceBetween: 20, // Brak odstępu między slajdami
+	pagination: {
+		el: '.swiper-pagination',
+		clickable: true,
+	},
+})
+
+var categorySwiper = new Swiper('.menu-category-slider-menu-container', {
+	loop: true, // Automatyczne zapętlanie slajdów
+	slidesPerView: 1, // Pokaż jeden slajd naraz
+	spaceBetween: 20, // Brak odstępu między slajdami
+	// centeredSlides: true,
+	pagination: {
+		el: '.category__pagination',
+		clickable: true,
+	},
+	breakpoints: {
+		368: {
+			slidesPerView: 2,
+			spaceBetween: 20,
 		},
-		navigation: {
-			nextEl: '.swiper-button-next',
-			prevEl: '.swiper-button-prev',
+		568: {
+			slidesPerView: 3,
+			spaceBetween: 20,
 		},
-	})
+		768: {
+			slidesPerView: 5,
+			spaceBetween: 20,
+		},
+
+		1024: {
+			slidesPerView: 7,
+			spaceBetween: 20,
+		},
+	},
 })
 
 navBtn.addEventListener('click', handleNav)
