@@ -1,0 +1,45 @@
+.partners {
+	@include sectionPadding;
+
+	&__boxes {
+		display: grid;
+		grid-template-rows: 1fr;
+		grid-template-columns: repeat(2, 1fr);
+		align-items: center;
+		// gap: 1em;
+
+		@include view(mobile-max) {
+			grid-template-columns: repeat(5, 1fr);
+		}
+
+		@include view(mobile) {
+			grid-template-columns: repeat(7, 1fr);
+		}
+	}
+
+	&__box {
+		display: flex;
+		justify-content: center;
+		outline: 1px solid $gray;
+
+		&:hover {
+			img {
+				filter: grayscale(0);
+			}
+		}
+
+		img {
+			filter: grayscale(1);
+			transition: all 0.3s;
+			padding: 1em;
+			width: 120px;
+			height: 120px;
+			object-fit: contain;
+
+			@include view(mobile-max) {
+				width: 140px;
+				height: 140px;
+			}
+		}
+	}
+}
