@@ -5,8 +5,8 @@
  * @param array $block The block settings and attributes.
  */
 
-$menu_content = get_field('menu-content');
-$categoryImage = $menu_content['category-image'];
+// $menu_content = get_field('menu-content');
+// $categoryImage = $menu_content['category-image'];
 
 /**
  * Dodaj obrazek obok elementów <li> w menu
