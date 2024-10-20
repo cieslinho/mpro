@@ -1,0 +1,15 @@
+{
+	"name": "acf/block-latest-products",
+	"title": "Latest Products Block",
+	"description": "A custom Latest Products block that uses ACF fields.",
+	"category": "formatting",
+	"icon": "admin-comments",
+	"keywords": ["Latest Products block", "quote"],
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "latest-products-block.php"
+	},
+	"supports": {
+		"anchor": true
+	}
+}

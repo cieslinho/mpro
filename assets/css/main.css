@@ -142,6 +142,33 @@ button {
   }
 }
 
+.section-title {
+  margin-bottom: 2em;
+  font-weight: 700;
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+@media only screen and (min-width: 767px) {
+  .section-title {
+    font-size: 2.4rem;
+  }
+}
+
+.section-btn {
+  transition: all 0.3s;
+  border-radius: 8px;
+  background-color: #1e1f1f;
+  padding: 0.5em 1em;
+  color: #ffffff;
+  text-align: center;
+  display: block;
+  margin: 2em auto 0;
+  max-width: 300px;
+}
+.section-btn:hover {
+  background-color: #000;
+}
+
 /* Components */
 .nav {
   z-index: 2000;
@@ -713,6 +740,91 @@ button {
 }
 .category__pagination .swiper-pagination-bullet-active {
   background-color: #1e1f1f;
+}
+
+.latest {
+  padding: 1.5em 0;
+}
+@media only screen and (min-width: 1023px) {
+  .latest {
+    padding: 3em 0;
+  }
+}
+.latest__products {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(2, 1fr);
+  border: 1px solid #f6f6f6;
+}
+@media only screen and (min-width: 567px) {
+  .latest__products {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media only screen and (min-width: 767px) {
+  .latest__products {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.latest__product {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.5em;
+  outline: 1px solid #f6f6f6;
+  border-bottom: 1px solid #f6f6f6;
+}
+.latest__product-top {
+  align-self: center;
+  margin-top: 1em;
+}
+.latest__product img {
+  padding: 1em;
+  width: 180px;
+  height: 180px;
+}
+.latest__product h2 {
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+.latest__product-infos {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.5em;
+  padding: 1em;
+  height: 100%;
+}
+.latest__product-infos::after {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #f6f6f6;
+  width: 100%;
+  height: 1px;
+  content: "";
+}
+.latest__product-price {
+  color: #009ee1;
+  font-weight: 700;
+}
+.latest__product-btn {
+  transition: all 0.3s;
+  border-radius: 8px;
+  background-color: #1e1f1f;
+  padding: 0.5em 1em;
+  color: #ffffff;
+  text-align: center;
+  background-color: #009ee1;
+  align-self: stretch;
+}
+.latest__product-btn:hover {
+  background-color: #000;
+}
+.latest__product-btn:hover {
+  background-color: #057db1;
 }
 
 /* Layouts */
