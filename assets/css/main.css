@@ -827,5 +827,52 @@ button {
   background-color: #057db1;
 }
 
+.partners {
+  padding: 1.5em 0;
+}
+@media only screen and (min-width: 1023px) {
+  .partners {
+    padding: 3em 0;
+  }
+}
+.partners__boxes {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+}
+@media only screen and (min-width: 567px) {
+  .partners__boxes {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+@media only screen and (min-width: 767px) {
+  .partners__boxes {
+    grid-template-columns: repeat(7, 1fr);
+  }
+}
+.partners__box {
+  display: flex;
+  justify-content: center;
+  outline: 1px solid #f6f6f6;
+}
+.partners__box:hover img {
+  filter: grayscale(0);
+}
+.partners__box img {
+  filter: grayscale(1);
+  transition: all 0.3s;
+  padding: 1em;
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+@media only screen and (min-width: 567px) {
+  .partners__box img {
+    width: 140px;
+    height: 140px;
+  }
+}
+
 /* Layouts */
 /* Pages */
