@@ -1,0 +1,202 @@
+.latest {
+	&__posts {
+		display: grid;
+		gap: 1.5em;
+
+		@include view(mobile) {
+			// display: grid;
+			grid-template-rows: 1fr;
+			grid-template-columns: 2fr 1fr;
+			align-items: flex-start;
+		}
+	}
+
+	&__left,
+	&__right {
+		&-item {
+			display: flex;
+			position: relative;
+
+			flex-direction: column;
+
+			a {
+				display: flex;
+				flex-direction: column;
+				align-items: stretch;
+				border-radius: 8px;
+				overflow: hidden;
+			}
+
+			&:hover {
+				.latest__img::after {
+					background-color: rgba($color: $black, $alpha: 0);
+				}
+
+				.latest__img img {
+					transform: scale(1.05);
+				}
+			}
+		}
+	}
+
+	&__right {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5em;
+	}
+
+	&__img {
+		position: relative;
+		align-self: stretch;
+		overflow: hidden;
+
+		&::after {
+			position: absolute;
+			top: 0;
+			left: 0;
+			transition: all 0.3s;
+			// z-index: 5;
+			background-color: rgba($color: $black, $alpha: 0.4);
+			width: 100%;
+			height: 100%;
+			content: '';
+		}
+
+		&-left,
+		&-right {
+			img {
+				display: block;
+				transition: all 0.3s;
+				width: 100%;
+				object-fit: cover;
+			}
+		}
+
+		&-left {
+			img {
+				height: 475px;
+			}
+		}
+	}
+
+	&__date {
+		display: flex;
+
+		position: absolute;
+		@include btn;
+		// top: 10px;
+		right: 10px;
+		flex-direction: row;
+		align-items: center;
+		align-self: flex-start;
+		gap: 0.3em;
+		text-align: center;
+
+		&-left {
+			font-size: 1.5rem;
+		}
+
+		&-right {
+			font-size: 1.3rem;
+		}
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-start;
+		gap: 0.2em;
+		background-color: $dark;
+		width: 100%;
+
+		h3 {
+			color: $white;
+			font-weight: 700;
+		}
+
+		p {
+			color: $gray;
+			font-size: 1.4rem;
+		}
+
+		&-left {
+			padding: 1em;
+		}
+
+		&-right {
+			padding: 0.8em 1em;
+		}
+	}
+
+	&__categories,
+	&__tags {
+		display: flex;
+		position: absolute;
+		left: 10px;
+		align-items: center;
+		gap: 0.5em;
+		z-index: 20;
+		padding-left: 0.3em;
+
+		a {
+			font-weight: 700;
+			font-size: 1.3rem;
+
+			@include btnCta;
+
+			padding: 0.3em 0.6em;
+		}
+	}
+
+	&__categories,
+	&__date {
+		top: 15px;
+	}
+
+	&__tags {
+		a {
+			@include btn;
+
+			background-color: $gray;
+			padding: 0.3em 0.6em;
+			color: $black;
+			font-size: 1.2rem;
+
+			&:hover {
+				background-color: $gray;
+			}
+		}
+
+		&-left {
+			bottom: 120px;
+		}
+
+		&-right {
+			bottom: 90px;
+		}
+	}
+
+	&__btn {
+		position: relative;
+
+		color: $gray;
+
+		&::after {
+			position: absolute;
+			bottom: 0px;
+			left: 0;
+			transition: all 0.3s;
+			background-color: $white;
+			width: 0;
+			height: 1px;
+			content: '';
+		}
+
+		&:hover {
+			&::after {
+				width: 100%;
+			}
+		}
+	}
+}
