@@ -4,14 +4,18 @@
 	&__boxes {
 		display: grid;
 		grid-template-rows: 1fr;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(1, 1fr);
 
 		border: 1px solid $gray;
 
 		@include view(mobile-max) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		@include view(mobile) {
 			grid-template-columns: repeat(3, 1fr);
 		}
-		@include view(mobile) {
+		@include view(tablet) {
 			grid-template-columns: repeat(4, 1fr);
 		}
 	}
@@ -100,10 +104,58 @@
 	}
 
 	&__content {
-		@include view(mobile) {
+		display: flex;
+		flex-direction: column;
+		gap: 2em;
+
+		@include view(tablet) {
 			display: grid;
 			grid-template-columns: 0.8fr 2fr;
 			gap: 4em;
+		}
+	}
+
+	&__right {
+		display: flex;
+		flex-direction: column;
+		gap: 2em;
+	}
+
+	&__sorting {
+		display: flex;
+
+		flex-direction: column;
+		// align-self: flex-end;
+		justify-content: space-between;
+		// align-items: center;
+		gap: 1em;
+
+		@include view(mobile) {
+			flex-direction: row;
+			align-items: center;
+		}
+
+		&-label {
+			margin-right: 0.5em;
+			font-weight: 600;
+		}
+
+		&-select {
+			@include btn;
+			cursor: pointer;
+
+			background-color: $gray;
+			color: $black;
+
+			&:hover {
+				background-color: $gray;
+			}
+		}
+
+		p.woocommerce-result-count {
+			margin: 0;
+
+			font-weight: 600;
 		}
 	}
 

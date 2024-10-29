@@ -664,3 +664,31 @@ function add_custom_class_to_cart_link($fragments) {
 }
 
 
+function custom_product_sorting($query) {
+    if (!is_admin() && $query->is_main_query() && (is_post_type_archive('product') || is_tax('product_cat'))) {
+        // Pobierz parametr 'orderby' z URL
+        $orderby = isset($_GET['orderby']) ? $_GET['orderby'] : '';
+
+        switch ($orderby) {
+            case 'date_asc':
+                $query->set('orderby', 'date');
+                $query->set('order', 'ASC');
+                break;
+            case 'date_desc':
+                $query->set('orderby', 'date');
+                $query->set('order', 'DESC');
+                break;
+            case 'price_asc':
+                $query->set('meta_key', '_price');
+                $query->set('orderby', 'meta_value_num');
+                $query->set('order', 'ASC');
+                break;
+            case 'price_desc':
+                $query->set('meta_key', '_price');
+                $query->set('orderby', 'meta_value_num');
+                $query->set('order', 'DESC');
+                break;
+        }
+    }
+}
+add_action('pre_get_posts', 'custom_product_sorting');

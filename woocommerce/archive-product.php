@@ -41,50 +41,77 @@ remove_action( 'woocommerce_product_loop_end', 'woocommerce_product_loop_end', 1
         </div>
 
         <div class="products__content">
-            <aside class="products__sidebar">
-                <?php
-                // Wyświetl widgety sidebaru
-                if ( is_active_sidebar( 'shop-sidebar' ) ) {
-                    dynamic_sidebar( 'shop-sidebar' );
-                }
-                ?>
+            <div class="products__left">
+                <aside class="products__sidebar">
+                    <?php
+                    // Wyświetl widgety sidebaru
+                    if ( is_active_sidebar( 'shop-sidebar' ) ) {
+                        dynamic_sidebar( 'shop-sidebar' );
+                    }
+                    ?>
 
-<div class="price-filter">
-    <h3>Filtruj wg ceny</h3>
-    <div class="price-range">
-        <input type="range" id="minPrice" min="0" max="<?php echo esc_attr($max_price); ?>" value="0">
-        <input type="range" id="maxPrice" min="0" max="<?php echo esc_attr($max_price); ?>" value="<?php echo esc_attr($max_price); ?>">
+                    <div class="price-filter">
+                        <h3>Filtruj wg ceny</h3>
+                        <div class="price-range">
+                            <input type="range" id="minPrice" min="0" max="<?php echo esc_attr($max_price); ?>"
+                                value="0">
+                            <input type="range" id="maxPrice" min="0" max="<?php echo esc_attr($max_price); ?>"
+                                value="<?php echo esc_attr($max_price); ?>">
+                        </div>
+                        <div class="price-values">
+                            <label>
+
+                                <button class="change-price" id="minPriceDecrease">-</button>
+                                <input type="number" id="minPriceInput" value="0" min="0"
+                                    max="<?php echo esc_attr($max_price); ?>">
+                                <button class="change-price" id="minPriceIncrease">+</button>
+                            </label>
+                            <span class="price-dash">-</span>
+                            <label>
+
+                                <button class="change-price" id="maxPriceDecrease">-</button>
+                                <input type="number" id="maxPriceInput" value="<?php echo esc_attr($max_price); ?>"
+                                    min="0" max="<?php echo esc_attr($max_price); ?>">
+                                <button class="change-price" id="maxPriceIncrease">+</button>
+                            </label>
+                        </div>
+                        <div class="displayed-values">
+                            <span id="minPriceValue">0</span> - <span id="maxPriceValue">
+                                <?php echo esc_attr($max_price); ?>
+                            </span>
+                        </div>
+                        <button id="filterButton">Filtruj</button>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="products__right">
+            <div class="products__sorting">
+    <form method="GET">
+        <label for="orderby" class="products__sorting-label">Sortuj:</label>
+        <select name="orderby" id="orderby" class="products__sorting-select" onchange="this.form.submit()">
+            <option value="">Wybierz sortowanie</option>
+            <option value="date_asc" <?php selected( isset($_GET['orderby']) && $_GET['orderby'] == 'date_asc' ); ?>>Data rosnąco</option>
+            <option value="date_desc" <?php selected( isset($_GET['orderby']) && $_GET['orderby'] == 'date_desc' ); ?>>Data malejąco</option>
+            <option value="price_asc" <?php selected( isset($_GET['orderby']) && $_GET['orderby'] == 'price_asc' ); ?>>Cena rosnąco</option>
+            <option value="price_desc" <?php selected( isset($_GET['orderby']) && $_GET['orderby'] == 'price_desc' ); ?>>Cena malejąco</option>
+        </select>
+    </form>
+    <div class="products__count">
+    <?php woocommerce_result_count(); ?>
+    
     </div>
-    <div class="price-values">
-        <label>
-            
-            <button class="change-price" id="minPriceDecrease">-</button>
-            <input type="number" id="minPriceInput" value="0" min="0" max="<?php echo esc_attr($max_price); ?>">
-            <button class="change-price" id="minPriceIncrease">+</button>
-        </label>
-        <span class="price-dash">-</span>
-        <label>
-            
-            <button class="change-price" id="maxPriceDecrease">-</button>
-            <input type="number" id="maxPriceInput" value="<?php echo esc_attr($max_price); ?>" min="0" max="<?php echo esc_attr($max_price); ?>">
-            <button class="change-price" id="maxPriceIncrease">+</button>
-        </label>
-    </div>
-    <div class="displayed-values">
-        <span id="minPriceValue">0</span> - <span id="maxPriceValue"><?php echo esc_attr($max_price); ?></span>
-    </div>
-    <button id="filterButton">Filtruj</button>
 </div>
-            </aside>
 
-            <div class="products__boxes">
-                <?php if ( woocommerce_product_loop() ) : ?>
+
+                <div class="products__boxes">
+                    <?php if ( woocommerce_product_loop() ) : ?>
                     <?php if ( wc_get_loop_prop( 'total' ) ) : ?>
-                        <?php while ( have_posts() ) : the_post(); ?>
-                            <div class="products__box">
-                                <div class="products__box-top">
-                                    <a href="<?php the_permalink(); ?>">
-                                        <?php
+                    <?php while ( have_posts() ) : the_post(); ?>
+                    <div class="products__box">
+                        <div class="products__box-top">
+                            <a href="<?php the_permalink(); ?>">
+                                <?php
                                         /**
                                          * Hook: woocommerce_before_shop_loop_item_title.
                                          *
@@ -93,12 +120,14 @@ remove_action( 'woocommerce_product_loop_end', 'woocommerce_product_loop_end', 1
                                          */
                                         do_action( 'woocommerce_before_shop_loop_item_title' );
                                         ?>
-                                    </a>
-                                </div>
-                                <div class="products__box-infos">
-                                    <h2><?php the_title(); ?></h2>
-                                    <span class="products__price">
-                                        <?php
+                            </a>
+                        </div>
+                        <div class="products__box-infos">
+                            <h2>
+                                <?php the_title(); ?>
+                            </h2>
+                            <span class="products__price">
+                                <?php
                                         /**
                                          * Hook: woocommerce_after_shop_loop_item_title.
                                          *
@@ -106,9 +135,9 @@ remove_action( 'woocommerce_product_loop_end', 'woocommerce_product_loop_end', 1
                                          */
                                         do_action( 'woocommerce_after_shop_loop_item_title' );
                                         ?>
-                                    </span>
-                                    <div class="products__btn products__btn-loop">
-                                        <?php
+                            </span>
+                            <div class="products__btn products__btn-loop">
+                                <?php
                                         /**
                                          * Hook: woocommerce_after_shop_loop_item.
                                          *
@@ -116,17 +145,18 @@ remove_action( 'woocommerce_product_loop_end', 'woocommerce_product_loop_end', 1
                                          */
                                         do_action( 'woocommerce_after_shop_loop_item' );
                                         ?>
-                                    </div>
-                                </div>
                             </div>
-                        <?php endwhile; ?>
+                        </div>
+                    </div>
+                    <?php endwhile; ?>
                     <?php endif; ?>
-                <?php else : ?>
+                    <?php else : ?>
                     <?php do_action( 'woocommerce_no_products_found' ); ?>
-                <?php endif; ?>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
-        
+
         <!-- Paginacja dolna -->
         <div class="products__pagination">
             <?php
