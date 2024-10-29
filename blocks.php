@@ -7,6 +7,8 @@ function register_acf_blocks() {
     register_block_type( __DIR__ . '/block/latest-products-block' );
     register_block_type( __DIR__ . '/block/partners-block' );
     register_block_type( __DIR__ . '/block/latest-news-block' );
+    register_block_type( __DIR__ . '/block/top-banner-block' );
+    register_block_type( __DIR__ . '/block/bottom-banner-block' );
 
 }
 
