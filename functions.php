@@ -699,3 +699,15 @@ function customize_woocommerce_products_per_page( $query ) {
         $query->set( 'posts_per_page', 12 );
     }
 }
+
+if( function_exists('acf_add_options_page') ) {
+    
+    acf_add_options_page(array(
+        'page_title'    => 'Banery Kategorii',
+        'menu_title'    => 'Banery',
+        'menu_slug'     => 'baners',
+        'capability'    => 'edit_posts',
+        'redirect'      => false
+    ));
+}
+?>

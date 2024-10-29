@@ -1,0 +1,15 @@
+{
+	"name": "acf/bottom-banner-block",
+	"title": "Bottom Banner Block",
+	"description": "A custom Bottom Banner Block that uses ACF fields.",
+	"category": "formatting",
+	"icon": "admin-comments",
+	"keywords": ["Bottom Banner Block", "quote"],
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "bottom-banner-block.php"
+	},
+	"supports": {
+		"anchor": true
+	}
+}
