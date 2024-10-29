@@ -1,0 +1,18 @@
+.woocommerce .woocommerce-breadcrumb {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5em;
+	margin-block: 2em !important;
+
+	&::after,
+	&::before {
+		content: unset !important;
+	}
+
+	li {
+		text-transform: uppercase;
+		a {
+			@include hoverBlue;
+		}
+	}
+}

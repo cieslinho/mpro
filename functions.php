@@ -586,3 +586,81 @@ add_action('after_setup_theme', 'theme_add_woocommerce_support');
 
 wp_enqueue_media();
 
+
+// Modyfikacja struktury WooCommerce breadcrumbs
+add_filter( 'woocommerce_breadcrumb_defaults', 'custom_woocommerce_breadcrumbs' );
+
+function custom_woocommerce_breadcrumbs() {
+    return array(
+        'delimiter'   => '/', // Usuń domyślny separator
+        'wrap_before' => '<ul class="woocommerce-breadcrumb breadcrumbs">', // Zmień wrapper na ul
+        'wrap_after'  => '</ul>',
+        'before'      => '<li>', // Każdy element breadcrumb w li
+        'after'       => '</li>',
+        'home'        => _x( 'Home', 'breadcrumb', 'woocommerce' ), // Zmień etykietę strony głównej, jeśli potrzebne
+    );
+}
+
+
+
+function my_theme_widgets_init() {
+    register_sidebar( array(
+        'name'          => 'Shop Sidebar',
+        'id'            => 'shop-sidebar',
+        'before_widget' => '<div class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h2 class="widget-title">',
+        'after_title'   => '</h2>',
+    ) );
+}
+add_action( 'widgets_init', 'my_theme_widgets_init' );
+
+
+add_action( 'woocommerce_product_query', 'filter_products_by_price' );
+
+function filter_products_by_price( $query ) {
+    if ( isset( $_GET['min_cena'] ) && isset( $_GET['max_cena'] ) ) {
+        $meta_query = $query->get( 'meta_query' );
+
+        $meta_query[] = array(
+            'key' => '_price',
+            'value' => array( floatval( $_GET['min_cena'] ), floatval( $_GET['max_cena'] ) ),
+            'compare' => 'BETWEEN',
+            'type' => 'DECIMAL',
+        );
+
+        $query->set( 'meta_query', $meta_query );
+    }
+}
+
+add_filter( 'woocommerce_get_query_vars', 'change_price_filter_query_vars' );
+
+function change_price_filter_query_vars( $vars ) {
+    if ( isset( $_GET['min_price'] ) ) {
+        $vars['min_cena'] = $_GET['min_price'];
+        unset( $vars['min_price'] );
+    }
+    if ( isset( $_GET['max_price'] ) ) {
+        $vars['max_cena'] = $_GET['max_price'];
+        unset( $vars['max_price'] );
+    }
+
+    return $vars;
+}
+
+
+// Dodaj klasę do elementu "Zobacz koszyk" po dodaniu do koszyka
+add_filter('woocommerce_add_to_cart_fragments', 'add_custom_class_to_cart_link');
+
+function add_custom_class_to_cart_link($fragments) {
+    ob_start();
+    ?>
+    <a href="<?php echo esc_url(wc_get_cart_url()); ?>" class="added_to_cart products__btn-ajax" title="<?php esc_attr_e('Zobacz koszyk', 'woocommerce'); ?>" rel="nofollow">
+        <?php echo esc_html(__('Zobacz koszyk', 'woocommerce')); ?>
+    </a>
+    <?php
+    $fragments['a.added_to_cart'] = ob_get_clean();
+    return $fragments;
+}
+
+
