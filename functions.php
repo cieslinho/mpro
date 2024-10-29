@@ -692,3 +692,10 @@ function custom_product_sorting($query) {
     }
 }
 add_action('pre_get_posts', 'custom_product_sorting');
+
+add_action( 'pre_get_posts', 'customize_woocommerce_products_per_page' );
+function customize_woocommerce_products_per_page( $query ) {
+    if ( ! is_admin() && $query->is_main_query() && ( is_shop() || is_product_category() ) ) {
+        $query->set( 'posts_per_page', 12 );
+    }
+}
