@@ -1,0 +1,148 @@
+<?php
+/**
+ * The template for displaying product archives, including the main shop page which is a post type archive.
+ * This template can be overridden by copying it to yourtheme/woocommerce/archive-product.php.
+ *
+ * @see https://docs.woocommerce.com/document/template-structure/
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+get_header( 'shop' );
+
+// Pobierz maksymalną cenę z produktów
+global $wpdb;
+$max_price = $wpdb->get_var( "
+    SELECT MAX(CAST(meta_value AS DECIMAL(10,2))) 
+    FROM {$wpdb->postmeta} 
+    WHERE meta_key = '_price'
+    AND post_id IN (SELECT ID FROM {$wpdb->posts} WHERE post_type = 'product' AND post_status = 'publish')
+" );
+
+// Ustaw wartość domyślną na 10000, jeśli nie ma produktów
+$max_price = $max_price ? $max_price : 10000;
+
+// Usuń domyślny wrapper ul i li WooCommerce
+remove_action( 'woocommerce_product_loop_start', 'woocommerce_maybe_show_product_subcategories' );
+remove_action( 'woocommerce_product_loop_start', 'woocommerce_product_loop_start', 10 );
+remove_action( 'woocommerce_product_loop_end', 'woocommerce_product_loop_end', 10 );
+?>
+
+<section class="products">
+    <div class="container">
+        <!-- Breadcrumbs -->
+        <div class="products__breadcrumbs">
+            <?php
+            /**
+             * Wyświetl breadcrumbs WooCommerce.
+             */
+            woocommerce_breadcrumb();
+            ?>
+        </div>
+
+        <div class="products__content">
+            <aside class="products__sidebar">
+                <?php
+                // Wyświetl widgety sidebaru
+                if ( is_active_sidebar( 'shop-sidebar' ) ) {
+                    dynamic_sidebar( 'shop-sidebar' );
+                }
+                ?>
+
+<div class="price-filter">
+    <h3>Filtruj wg ceny</h3>
+    <div class="price-range">
+        <input type="range" id="minPrice" min="0" max="<?php echo esc_attr($max_price); ?>" value="0">
+        <input type="range" id="maxPrice" min="0" max="<?php echo esc_attr($max_price); ?>" value="<?php echo esc_attr($max_price); ?>">
+    </div>
+    <div class="price-values">
+        <label>
+            
+            <button class="change-price" id="minPriceDecrease">-</button>
+            <input type="number" id="minPriceInput" value="0" min="0" max="<?php echo esc_attr($max_price); ?>">
+            <button class="change-price" id="minPriceIncrease">+</button>
+        </label>
+        <span class="price-dash">-</span>
+        <label>
+            
+            <button class="change-price" id="maxPriceDecrease">-</button>
+            <input type="number" id="maxPriceInput" value="<?php echo esc_attr($max_price); ?>" min="0" max="<?php echo esc_attr($max_price); ?>">
+            <button class="change-price" id="maxPriceIncrease">+</button>
+        </label>
+    </div>
+    <div class="displayed-values">
+        <span id="minPriceValue">0</span> - <span id="maxPriceValue"><?php echo esc_attr($max_price); ?></span>
+    </div>
+    <button id="filterButton">Filtruj</button>
+</div>
+            </aside>
+
+            <div class="products__boxes">
+                <?php if ( woocommerce_product_loop() ) : ?>
+                    <?php if ( wc_get_loop_prop( 'total' ) ) : ?>
+                        <?php while ( have_posts() ) : the_post(); ?>
+                            <div class="products__box">
+                                <div class="products__box-top">
+                                    <a href="<?php the_permalink(); ?>">
+                                        <?php
+                                        /**
+                                         * Hook: woocommerce_before_shop_loop_item_title.
+                                         *
+                                         * @hooked woocommerce_show_product_loop_sale_flash - 10
+                                         * @hooked woocommerce_template_loop_product_thumbnail - 10
+                                         */
+                                        do_action( 'woocommerce_before_shop_loop_item_title' );
+                                        ?>
+                                    </a>
+                                </div>
+                                <div class="products__box-infos">
+                                    <h2><?php the_title(); ?></h2>
+                                    <span class="products__price">
+                                        <?php
+                                        /**
+                                         * Hook: woocommerce_after_shop_loop_item_title.
+                                         *
+                                         * @hooked woocommerce_template_loop_price - 10
+                                         */
+                                        do_action( 'woocommerce_after_shop_loop_item_title' );
+                                        ?>
+                                    </span>
+                                    <div class="products__btn products__btn-loop">
+                                        <?php
+                                        /**
+                                         * Hook: woocommerce_after_shop_loop_item.
+                                         *
+                                         * @hooked woocommerce_template_loop_add_to_cart - 10
+                                         */
+                                        do_action( 'woocommerce_after_shop_loop_item' );
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endwhile; ?>
+                    <?php endif; ?>
+                <?php else : ?>
+                    <?php do_action( 'woocommerce_no_products_found' ); ?>
+                <?php endif; ?>
+            </div>
+        </div>
+        
+        <!-- Paginacja dolna -->
+        <div class="products__pagination">
+            <?php
+            /**
+             * Wyświetl paginację WooCommerce na dole.
+             */
+            woocommerce_pagination();
+            ?>
+        </div>
+    </div>
+</section>
+
+<script>
+    var maxPrice = <?php echo esc_js($max_price); ?>; // Przekazanie maksymalnej ceny do JavaScript
+</script>
+
+<?php
+get_footer( 'shop' );
+?>

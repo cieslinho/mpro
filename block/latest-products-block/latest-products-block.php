@@ -14,11 +14,11 @@ $section_link = $latest_products_content['section-link']
 
 ?>
 
-<section class="latest">
+<section class="products latest">
     <div class="container">
         <h2 class="section-title"> <?php echo esc_html( $heading ); ?></h2>
         <?php if( $latest_products ): ?>
-            <div class="latest__products">
+            <div class="products__boxes products__latest">
                 <?php foreach( $latest_products as $post ): ?>
                 <?php 
                     // Przygotuj dane postu
@@ -33,18 +33,18 @@ $section_link = $latest_products_content['section-link']
 
                 <!-- Produkt promocyjny -->
                 
-                    <a class="latest__product" href="<?php echo get_permalink($product_id); ?>">
+                    <a class="products__box products__latest" href="<?php echo get_permalink($product_id); ?>">
                         
-                    <div class="latest__product-top"><?php echo $product->get_image(); // Miniatura produktu ?></div>
+                    <div class="products__box-top products__latest-top"><?php echo $product->get_image(); // Miniatura produktu ?></div>
 
-                        <div class="latest__product-infos">
+                        <div class="products__box-infos products__latest-infos">
                             <h2>
                                 <?php echo get_the_title($product_id); ?>
                             </h2>
-                            <span class="latest__product-price">
+                            <span class="products__price products__price-latest">
                                 <?php echo $product->get_price_html(); ?>
                             </span>
-                            <button class="latest__product-btn">Sprawdź</button>
+                            <button class="products__btn products__btn-latest">Sprawdź</button>
                         
                         </div>
                     </a>

@@ -48,3 +48,22 @@ function custom_menu_classes($classes, $item, $args, $depth) {
     return $classes;
 }
 add_filter('nav_menu_css_class', 'custom_menu_classes', 10, 4);
+
+// Zamiana słowa 'page' na 'strona' w paginacji WooCommerce
+add_filter( 'gettext', 'custom_woocommerce_pagination_translation', 20, 3 );
+
+function custom_woocommerce_pagination_translation( $translated_text, $text, $domain ) {
+    // Sprawdzamy czy tekst dotyczy paginacji WooCommerce
+    if ( $domain === 'woocommerce' ) {
+        switch ( $translated_text ) {
+            case 'Page %d of %d':
+                $translated_text = 'Strona %d z %d';
+                break;
+            case 'Page':
+                $translated_text = 'Strona';
+                break;
+        }
+    }
+    return $translated_text;
+}
+
