@@ -30,7 +30,6 @@ remove_action( 'woocommerce_product_loop_end', 'woocommerce_product_loop_end', 1
 
 <section class="products">
     <div class="container">
-        <!-- Breadcrumbs -->
         <div class="products__breadcrumbs">
             <?php
             /**
@@ -39,6 +38,8 @@ remove_action( 'woocommerce_product_loop_end', 'woocommerce_product_loop_end', 1
             woocommerce_breadcrumb();
             ?>
         </div>
+        
+        <!-- Breadcrumbs -->
 
         <div class="products__content">
             <div class="products__left">

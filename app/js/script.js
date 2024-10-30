@@ -59,6 +59,26 @@ var headerSwiper = new Swiper('.swiper-container', {
 	},
 })
 
+document.addEventListener('DOMContentLoaded', function () {
+	const thumbnails = document.querySelectorAll('.product__thumbnail')
+	const mainImage = document.getElementById('main-image')
+
+	thumbnails.forEach(thumbnail => {
+		thumbnail.addEventListener('click', function () {
+			const largeImgUrl = this.getAttribute('data-large-img')
+
+			// Zmień główne zdjęcie
+			if (mainImage) {
+				mainImage.src = largeImgUrl
+			}
+
+			// Ustaw aktywną miniaturę (dodaj klasę 'active')
+			thumbnails.forEach(th => th.classList.remove('active'))
+			this.classList.add('active')
+		})
+	})
+})
+
 var categorySwiper = new Swiper('.menu-category-slider-menu-container', {
 	loop: true, // Automatyczne zapętlanie slajdów
 	slidesPerView: 1, // Pokaż jeden slajd naraz
