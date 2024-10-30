@@ -84,6 +84,70 @@ if ( function_exists( 'wc_print_notices' ) ) {
 
             <div class="product__right">
                 <?php do_action( 'woocommerce_single_product_summary' ); ?>
+                
+                <?php 
+$categories_for_price_per_kg = ['gwoździe', 'kołki', 'nity zrywalne', 'śruby', 'nakrętki', 'podkładki', 'śruby imbusowe', 'śruby maszynowe 5.8', 'śruby maszynowe 8.8', 'śruby podsadzane', 'śruby rzymskie', 'wkręty ciesielskie', 'wkręty farmerskie', 'wkręty fosfatowane', 'wkręty hartowane', 'wkręty hartowane torx', 'wkręty samowiercące'];
+
+if (has_term($categories_for_price_per_kg, 'product_cat', get_the_ID())) {
+    $group_content = get_field('group_content');
+    $price_per_kg = $group_content['price_per_kg'] ?? null;
+    
+    if ($price_per_kg) : ?>
+        <div class="price-per-kg">
+            <p>Cena za kg: <?php echo $price_per_kg; ?> PLN</p>
+        </div>
+
+        <div id="weight-calculator">
+            <label for="kg-input">Ilość kg:</label>
+            <input type="number" id="kg-input" min="0.1" step="0.1" placeholder="Podaj ilość kg">
+            <button id="calculate-price">Oblicz cenę</button>
+            <p id="total-price"></p>
+        </div>
+
+        <input type="hidden" id="product-total-price" name="product_total_price" value="">
+        <input type="hidden" id="product-quantity" name="quantity" value="1">
+        <label for="product-quantity-display">Ilość:</label>
+        <input type="number" id="product-quantity-display" name="quantity" value="1" readonly>
+        <input type="hidden" name="add-to-cart" value="<?php echo get_the_ID(); ?>">
+
+        <span> KG</span> <!-- Jednostka KG obok ilości -->
+    <?php endif; 
+}
+
+
+?>
+
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const kgInput = document.getElementById('kg-input');
+    const quantityDisplay = document.getElementById('product-quantity-display');
+    const quantityInput = document.querySelector('input[name="quantity"]'); // Input quantity
+
+    // Funkcja do obliczania ceny
+    document.getElementById('calculate-price').addEventListener('click', function() {
+        const pricePerKg = <?php echo json_encode($price_per_kg); ?>; // Użyj PHP, aby pobrać cenę za kg
+        const kg = parseFloat(kgInput.value) || 0; // Pobierz wartość z inputu kg
+        const totalPrice = (kg * pricePerKg).toFixed(2); // Oblicz całkowitą cenę
+
+        document.getElementById('total-price').innerText = 'Cena całkowita: ' + totalPrice + ' PLN';
+        quantityDisplay.value = kg; // Ustaw ilość w quantity display
+        quantityInput.value = kg; // Ustaw ilość w input 'quantity'
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
             </div>
         </div>
 

@@ -700,14 +700,26 @@ function customize_woocommerce_products_per_page( $query ) {
     }
 }
 
-if( function_exists('acf_add_options_page') ) {
-    
-    acf_add_options_page(array(
-        'page_title'    => 'Banery Kategorii',
-        'menu_title'    => 'Banery',
-        'menu_slug'     => 'baners',
-        'capability'    => 'edit_posts',
-        'redirect'      => false
-    ));
+
+
+
+add_action('save_post', 'update_product_price_from_acf', 10, 2);
+function update_product_price_from_acf($post_id, $post) {
+    // Sprawdź, czy to jest produkt WooCommerce
+    if ($post->post_type !== 'product') {
+        return;
+    }
+
+    // Pobierz wartość z pola ACF
+    $price_per_kg = get_field('group_content')['price_per_kg']; // Upewnij się, że używasz właściwej ścieżki do pola ACF
+
+    // Sprawdź, czy cena jest ustawiona
+    if ($price_per_kg) {
+        // Ustaw cenę produktu na podstawie wartości ACF
+        update_post_meta($post_id, '_regular_price', $price_per_kg);
+        update_post_meta($post_id, '_price', $price_per_kg);
+    }
 }
-?>
+
+
+
