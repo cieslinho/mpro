@@ -1,10 +1,10 @@
 {
 	"name": "acf/top-banner-block",
-	"title": "Top Banner Block",
-	"description": "A custom Top Banner Block that uses ACF fields.",
+	"title": "Top Banner Block Block",
+	"description": "A custom Top Banner Block Block that uses ACF fields.",
 	"category": "formatting",
 	"icon": "admin-comments",
-	"keywords": ["Top Banner Block", "quote"],
+	"keywords": ["Top Banner Block Block", "quote"],
 	"acf": {
 		"mode": "preview",
 		"renderTemplate": "top-banner-block.php"

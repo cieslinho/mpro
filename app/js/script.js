@@ -264,6 +264,21 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 })
 
+const tabButtons = document.querySelectorAll('.product__tab')
+const tabContents = document.querySelectorAll('.product__tab-content')
+
+tabButtons.forEach(button => {
+	button.addEventListener('click', function () {
+		const targetId = button.getAttribute('data-target')
+
+		// Zamknij wszystkie zakładki
+		tabContents.forEach(content => (content.style.display = 'none'))
+
+		// Pokaż tylko klikniętą zakładkę
+		document.getElementById(targetId).style.display = 'block'
+	})
+})
+
 // Inicjalizowanie funkcji po załadowaniu dokumentu
 document.addEventListener('DOMContentLoaded', initPriceFilter)
 

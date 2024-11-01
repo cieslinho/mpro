@@ -57,4 +57,20 @@
 	&__thumbnail.active {
 		border: 1px solid $darkBlue;
 	}
+
+	&__details {
+		display: flex;
+		flex-direction: column;
+		gap: 2em;
+	}
+
+	&__calculator {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5em;
+
+		&-bottom {
+			display: flex;
+		}
+	}
 }

@@ -9,6 +9,9 @@ function register_acf_blocks() {
     register_block_type( __DIR__ . '/block/latest-news-block' );
     register_block_type( __DIR__ . '/block/top-banner-block' );
     register_block_type( __DIR__ . '/block/bottom-banner-block' );
+    register_block_type( __DIR__ . '/block/product-tabs-block' );
+    register_block_type( __DIR__ . '/block/product-order-benefits-block' );
+    register_block_type( __DIR__ . '/block/product-short-description-block' );
 
 }
 
