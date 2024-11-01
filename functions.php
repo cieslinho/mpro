@@ -487,7 +487,7 @@ function woo_search()
             ?>
         
             <a href="<?php echo esc_url(
-                post_permalink()
+                get_permalink()
             ); ?>" class="woo_bar_el" <?= $stock_hide ?> >
 <?php $image = wp_get_attachment_image_src(
     get_post_thumbnail_id(),
@@ -720,6 +720,7 @@ function update_product_price_from_acf($post_id, $post) {
         update_post_meta($post_id, '_price', $price_per_kg);
     }
 }
+
 
 
 

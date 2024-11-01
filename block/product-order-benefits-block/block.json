@@ -1,0 +1,15 @@
+{
+	"name": "acf/product-order-benefits-block",
+	"title": "Product Order Benefits Block",
+	"description": "A custom Product Order Benefits Block that uses ACF fields.",
+	"category": "formatting",
+	"icon": "admin-comments",
+	"keywords": ["Product Order Benefits Block", "quote"],
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "product-order-benefits-block.php"
+	},
+	"supports": {
+		"anchor": true
+	}
+}
