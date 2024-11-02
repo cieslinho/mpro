@@ -1,6 +1,8 @@
 .product {
 	@include sectionPadding;
 
+	// layout content
+
 	&__content {
 		display: flex;
 		flex-direction: column;
@@ -16,6 +18,8 @@
 		}
 	}
 
+	// left
+
 	&__left {
 		display: flex;
 		flex-direction: column;
@@ -27,11 +31,23 @@
 		}
 	}
 
+	// product img
+
+	&__img {
+		align-self: center;
+		img {
+			// width: 100%;
+			width: auto;
+		}
+	}
+
+	// thumbnails
+
 	&__thumbnails {
 		display: grid;
 		grid-template-rows: repeat(1, 1fr);
 		grid-template-columns: repeat(4, 1fr);
-		// align-items: center;
+		align-self: center;
 
 		@include view(mobile) {
 			grid-template-columns: repeat(6, 1fr);
@@ -58,19 +74,450 @@
 		border: 1px solid $darkBlue;
 	}
 
+	// right
+
+	// details
+
 	&__details {
 		display: flex;
 		flex-direction: column;
 		gap: 2em;
 	}
 
-	&__calculator {
+	// top
+
+	&__top {
 		display: flex;
+
+		position: relative;
 		flex-direction: column;
 		gap: 0.5em;
 
+		&::after {
+			position: relative;
+			bottom: 0;
+			left: 0;
+			align-self: center;
+			background-color: $gray;
+			width: 100%;
+			height: 1px;
+			content: '';
+		}
+	}
+
+	&__short {
+		border-radius: 8px;
+		background-color: $gray;
+		padding: 0.5em;
+	}
+
+	&__title {
+		font-weight: 600;
+		font-size: 2.4rem;
+	}
+
+	&__price {
+		bdi {
+			color: $blue;
+			font-weight: 600;
+			font-size: 2.8rem;
+		}
+	}
+
+	//  price per kg calculator
+
+	&__calculator {
+		display: flex;
+		position: relative;
+		flex-direction: column;
+		gap: 0.5em;
+		border-radius: 8px;
+		background-color: $gray;
+		padding: 0.5em;
+
+		&::after {
+			position: absolute;
+			bottom: -15px;
+			left: 0;
+			align-self: center;
+			background-color: $gray;
+			width: 100%;
+			height: 1px;
+			content: '';
+		}
+
+		&-title {
+			color: $black;
+			font-weight: 600;
+			text-align: center;
+		}
+
+		&-label,
+		&-info {
+			text-align: center;
+		}
+
+		&-top,
 		&-bottom {
 			display: flex;
+			flex-direction: column;
+			gap: 0.5em;
+			border-radius: 8px;
+			background-color: $white;
+			padding: 0.5em;
+		}
+
+		&-middle {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5em;
+		}
+
+		&-row {
+			display: grid;
+			grid-template-rows: 1fr;
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		&-btn {
+			@include btn;
+			margin-block: 0.5em;
+		}
+
+		&-bottom {
+			flex-direction: row;
+			justify-content: center;
+		}
+
+		&-input {
+			margin: 0 !important;
+		}
+	}
+
+	// bottom
+
+	&__bottom {
+		display: flex;
+		position: relative;
+		flex-direction: column;
+		gap: 1em;
+		&::after {
+			position: absolute;
+			bottom: -15px;
+			left: 0;
+			align-self: center;
+			background-color: $gray;
+			width: 100%;
+			height: 1px;
+			content: '';
+		}
+	}
+
+	&__btn {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		p.stock.in-stock {
+			color: $dark;
+			font-weight: 600;
+			font-size: 1.4rem;
+		}
+
+		form.cart {
+			display: flex;
+			gap: 0.5em;
+			// align-items: center;
+
+			.quantity {
+				display: flex;
+				border-radius: 8px;
+				background-color: $gray;
+			}
+
+			button {
+				@include btnCta;
+				background-color: $blue !important;
+				width: 100%;
+				font-weight: 400;
+
+				&:hover {
+					background-color: $darkBlue !important;
+				}
+			}
+		}
+	}
+
+	&__meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5em;
+		font-size: 1.3rem;
+
+		.sku {
+			font-weight: 600;
+		}
+
+		a {
+			font-weight: 600;
+		}
+	}
+
+	//benefits
+
+	&__benefits {
+		display: grid;
+		grid-template-rows: 1fr;
+		grid-template-columns: repeat(4, 1fr);
+		// align-items: center;
+		gap: 0.5em;
+		border-radius: 8px;
+		background-color: $gray;
+		padding: 0.5em;
+	}
+
+	&__benefit {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.1em;
+
+		&-icon {
+		}
+
+		&-text {
+			font-size: 1.1rem;
+			text-align: center;
+		}
+	}
+
+	// tabs
+
+	&__tabs {
+		display: flex;
+		flex-direction: column;
+		// gap: 1em;
+		// background-color: $gray;
+		margin-bottom: 2em;
+
+		&-btns {
+			display: flex;
+			gap: 0em;
+			// flex-wrap: wrap;
+			overflow-x: scroll;
+
+			@include view(mobile) {
+				overflow-x: unset;
+			}
+		}
+
+		&-content {
+			display: none;
+			border: 1px solid $blue;
+			// background-color: $gray;
+
+			padding: 1em;
+
+			#respond {
+				display: flex;
+				flex-direction: column;
+				gap: 1em;
+				padding: 1em !important;
+
+				h3 {
+					font-weight: 600;
+					font-size: 2rem;
+				}
+
+				#commentform {
+					display: flex;
+					flex-direction: column;
+					gap: 0.5em;
+
+					p {
+						a {
+							text-decoration: underline;
+						}
+					}
+
+					p.comment-form-comment {
+						display: flex;
+						flex-direction: column;
+						gap: 0.5em;
+						margin-block: 0.5em;
+
+						label {
+							font-size: 1.6rem;
+						}
+
+						textarea {
+							border-radius: 8px;
+							background-color: $gray;
+							padding: 1em;
+						}
+					}
+
+					p.form-submit input {
+						@include btn;
+						padding: 1em 2em;
+						width: 100%;
+					}
+				}
+			}
+		}
+	}
+
+	&__tab {
+		background-color: $darkBlue;
+		padding: 0.5em 1em;
+		color: $white;
+
+		&-description,
+		&-additional {
+			line-height: 180%;
+		}
+
+		&-specs,
+		&-reviews {
+			display: flex;
+			flex-direction: column;
+			gap: 1em;
+		}
+
+		&-item {
+			display: flex;
+			align-items: center;
+			gap: 0.3em;
+		}
+
+		&-icon {
+			width: 20px;
+			height: 20px;
+		}
+
+		&-reviews {
+			margin-bottom: 2em;
+		}
+	}
+
+	&__comment {
+		border-radius: 8px;
+		// border: 1px solid $white;
+		background-color: $gray;
+		padding: 1em;
+
+		&-top {
+			display: flex;
+			flex-direction: column;
+			gap: 0.3em;
+
+			@include view(mobile) {
+				flex-direction: row;
+				align-items: center;
+				gap: 1em;
+			}
+		}
+
+		&-content {
+			display: flex;
+			flex-direction: column;
+			// align-items: center;
+			gap: 0.3em;
+
+			@include view(mobile) {
+				// flex-direction: row;
+				// align-items: center;
+			}
+		}
+
+		&-meta {
+			font-size: 1.3rem;
+
+			@include view(mobile) {
+				font-size: 1.5rem;
+			}
+			strong {
+				font-weight: 600;
+			}
+		}
+
+		&-text {
+			font-size: 1.4rem;
+			line-height: 180%;
+
+			@include view(mobile) {
+				font-size: 1.6rem;
+			}
+		}
+	}
+
+	&__tab.active {
+		background-color: $blue;
+		font-weight: 600;
+	}
+
+	// reviews
+
+	&__stars {
+		position: relative;
+		-webkit-mask: url('/wp-content/uploads/2024/11/star.svg') left top;
+		mask: url('/wp-content/uploads/2024/11/star.svg') left top;
+		-webkit-mask-size: 16px;
+		mask-size: 16px;
+		transition: all 0.3s ease-out;
+		margin: 0;
+		background-color: $dark;
+		width: 80px !important;
+		height: 16px !important;
+		overflow: hidden;
+
+		&::before {
+			content: unset !important;
+		}
+	}
+
+	&__star {
+		position: absolute;
+		top: 0;
+		left: 0;
+		-webkit-mask: url('/wp-content/uploads/2024/11/star.svg') left top;
+		mask: url('/wp-content/uploads/2024/11/star.svg') left top;
+		-webkit-mask-size: 16px;
+		mask-size: 16px;
+		transition: all 0.3s ease-out;
+		height: 16px;
+		overflow: hidden;
+		text-indent: -9000em;
+
+		&:nth-child(1) {
+			width: 20%;
+		}
+		&:nth-child(2) {
+			width: 40%;
+		}
+		&:nth-child(3) {
+			width: 60%;
+		}
+		&:nth-child(4) {
+			width: 80%;
+		}
+		&:nth-child(5) {
+			width: 100%;
+		}
+
+		&-filled {
+			background-color: $blue;
+		}
+	}
+
+	// related
+
+	&__related {
+		display: flex;
+		flex-direction: column;
+		gap: 1em;
+		.products__btn {
+			@include btnCta;
 		}
 	}
 }

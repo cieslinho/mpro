@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 const tabButtons = document.querySelectorAll('.product__tab')
-const tabContents = document.querySelectorAll('.product__tab-content')
+const tabContents = document.querySelectorAll('.product__tabs-content')
 
 tabButtons.forEach(button => {
 	button.addEventListener('click', function () {
@@ -274,8 +274,14 @@ tabButtons.forEach(button => {
 		// Zamknij wszystkie zakładki
 		tabContents.forEach(content => (content.style.display = 'none'))
 
+		// Usuń klasę 'active' z wszystkich przycisków
+		tabButtons.forEach(btn => btn.classList.remove('active'))
+
 		// Pokaż tylko klikniętą zakładkę
 		document.getElementById(targetId).style.display = 'block'
+
+		// Dodaj klasę 'active' do klikniętego przycisku
+		button.classList.add('active')
 	})
 })
 

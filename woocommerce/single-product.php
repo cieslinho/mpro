@@ -44,7 +44,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 
         <div class="product__content">
             <div class="product__left">
-                <div class="product__main-image">
+                <div class="product__img">
                     <img id="main-image" src="<?php echo esc_url($main_image_url); ?>" alt="<?php echo esc_attr($main_image_alt); ?>">
                 </div>
 
@@ -134,17 +134,22 @@ if ( in_array( get_the_ID(), $target_product_ids ) || has_term( $target_categori
     
         <div class="product__calculator">
         
-            <p>Cena za kg: <?php echo esc_html( $price_per_kg ); ?> PLN</p>
+            <p class="product__calculator-title">Cena za kg: <?php echo esc_html( $price_per_kg ); ?> PLN</p>
         
             <div class="product__calculator-top" id="weight-calculator">
-                <label class="product__calculator-label" for="kg-input">Ilość kg:</label>
-                <input class="product__calculator-input" type="number" id="kg-input" min="0.1" step="0.1" placeholder="Podaj ilość kg">
-                <button type="button" class="product__calculator-btn" id="calculate-price">Oblicz cenę</button>
-                <p class="product__calculator-info" id="total-price"></p>
+               <div class="product__calculator-row">
+               <label class="product__calculator-label" for="kg-input">Ilość kg:</label>
+               <input class="product__calculator-input" type="number" id="kg-input" min="0.1" step="0.1" placeholder="Podaj ilość kg">
+               </div>
+                
             </div>
+<div class="product__calculator-middle">
+<button type="button" class="product__calculator-btn" id="calculate-price">Oblicz cenę</button>
+<p class="product__calculator-info" id="total-price"></p>
+</div>
 
             <div class="product__calculator-bottom">
-                <label class="product__calculator-display" for="product-quantity-display">Ilość:</label>
+                <label class="product__calculator-label" for="product-quantity-display">Ilość:</label>
                 <input class="product__calculator-input" type="number" id="product-quantity-display" name="quantity" value="1" readonly>
                 <span class="product__calculator-info"> KG</span>
             </div>
