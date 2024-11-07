@@ -7,8 +7,13 @@ function register_menus()
 			'header-menu' => esc_html__('header-menu', 'mpro'),
 			'categories-menu' => esc_html__('categories-menu', 'mpro'),
 			'categories-header' => esc_html__('categories-header', 'mpro'),
-			'footer-menu' => esc_html__('footer-menu', 'mpro'),
-			'category-slider' => esc_html__('category-slider', 'mpro')
+			'category-slider' => esc_html__('category-slider', 'mpro'),
+			'footer-contact' => esc_html__('footer-contact', 'mpro'),
+			'footer-company' => esc_html__('footer-company', 'mpro'),
+			'footer-categories' => esc_html__('footer-categories', 'mpro'),
+			'footer-info' => esc_html__('footer-info', 'mpro'),
+			'footer-socials' => esc_html__('footer-socials', 'mpro')
+			
 		)
 	);
 }
