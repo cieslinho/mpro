@@ -29,6 +29,14 @@ function init_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'init_scripts' );
 
+add_action('admin_enqueue_scripts', 'enqueue_my_custom_admin_script');
+
+function enqueue_my_custom_admin_script() {
+    wp_enqueue_media(); // Umożliwia korzystanie z mediów
+    wp_enqueue_script('my-admin-script', plugin_dir_url(__FILE__) . 'js/my-admin-script.js', array('jquery'), null, true);
+}
+
+
 function add_arrow_icon( $items, $args ) {
 	if ( $args->theme_location == 'categories-menu' ) {
 		$pattern = '/<li[^>]*\bclass="[^"]*\bmenu-item-has-children\b[^"]*"[^>]*>/';
@@ -584,8 +592,14 @@ function theme_add_woocommerce_support() {
 }
 add_action('after_setup_theme', 'theme_add_woocommerce_support');
 
-wp_enqueue_media();
 
+
+
+add_theme_support('post-thumbnails', array(
+'post',
+'page',
+'custom-post-type-name',
+));
 
 // Modyfikacja struktury WooCommerce breadcrumbs
 add_filter( 'woocommerce_breadcrumb_defaults', 'custom_woocommerce_breadcrumbs' );
@@ -720,7 +734,5 @@ function update_product_price_from_acf($post_id, $post) {
         update_post_meta($post_id, '_price', $price_per_kg);
     }
 }
-
-
 
 

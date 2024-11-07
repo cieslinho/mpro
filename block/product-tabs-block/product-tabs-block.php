@@ -27,7 +27,7 @@ $review_count = get_comments_number();
         <button class="product__tab active" data-target="description">Opis</button>
         <button class="product__tab" data-target="additional">Dodatkowe Informacje</button>
         <button class="product__tab" data-target="specs">Materiały Techniczne</button>
-        <button class="product__tab" data-target="reviews"><?echo sprintf(__('Opinie <span>(%d)</span>', 'woocommerce'), $review_count);?></button>
+        <button class="product__tab" data-target="reviews"><?php echo sprintf(__('Opinie <span>(%d)</span>', 'woocommerce'), $review_count);?></button>
         <button class="product__tab" data-target="help">Pomoc</button>
     </div>
 

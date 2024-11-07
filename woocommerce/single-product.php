@@ -18,7 +18,7 @@ $main_image_url = wp_get_attachment_image_url( $main_image_id, 'large' );
 $main_image_alt = get_post_meta( $main_image_id, '_wp_attachment_image_alt', true );
 
 // Placeholder dla głównego zdjęcia
-$placeholder_url = 'http://mpro.local/wp-content/uploads/2024/10/product-placeholder.png';
+$placeholder_url = 'http://mprosklep.pl/wp-content/uploads/2024/10/product-placeholder.png';
 
 // Użyj placeholdera, jeśli brak głównego zdjęcia
 if (!$main_image_url) {
@@ -33,8 +33,7 @@ $sale_price = get_post_meta($product_id, '_sale_price', true); // Pobierz cenę 
 
 <section class="product">
     <div class="container">
- <?   // Wyświetlanie komunikatów, jeśli istnieją
-if ( function_exists( 'wc_print_notices' ) ) {
+ <?php   if ( function_exists( 'wc_print_notices' ) ) {
     wc_print_notices();
 }
 ?>
@@ -91,12 +90,10 @@ if ( function_exists( 'wc_print_notices' ) ) {
                     <div class="product__top">
                     <h1 class="product__title"><?php the_title(); ?></h1>
 
-                    <?
-                    if ($sale_price) {
-                        // Jeżeli jest cena promocyjna, wyświetl obie ceny
+                    <?php
+                    if ($sale_price) {                
                         echo '<p class="product__price product__pricv-sale price"><del>' . wc_price($price) . '</del> <ins>' . wc_price($sale_price) . '</ins></p>';
-                    } else {
-                        // Wyświetl standardową cenę
+                    } else {                        
                         echo '<p class="product__price product__pricv-normal price">' . wc_price($price) . '</p>';
                     }
                     ?>
@@ -226,12 +223,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <h2 class="section-title section-title-margin">Podobne produkty</h2>
         <div class="products__boxes">
     <?php
-    // Pobieranie podobnych produktów
-    $related_products = wc_get_related_products(get_the_ID(), 4); // Wyświetlanie maksymalnie 4 podobnych produktów
+ini_set('display_errors','Off');
+ini_set('error_reporting', E_ALL );
+    $related_products = wc_get_related_products(get_the_ID(), 4);
 
     if ($related_products):
         foreach ($related_products as $related_product_id):
-            // Uzyskanie danych produktu
+          
             $product = wc_get_product($related_product_id);
             $product_title = $product->get_name();
             $product_link = get_permalink($related_product_id);
