@@ -1,3 +1,266 @@
-.footer{
-    
+.footer {
+	@include sectionPadding;
+	background-color: $dark;
+
+	&__top,
+	&__middle,
+	&__bottom {
+		margin-bottom: 2em;
+		border-bottom: 1px solid $darkGray;
+		padding-bottom: 2em;
+	}
+
+	&__top {
+		display: grid;
+		grid-template-rows: 1fr;
+		grid-template-columns: repeat(1, 1fr);
+		gap: 1em;
+
+		@include view(mobile-max) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		@include view(mobile) {
+			grid-template-columns: repeat(5, 1fr);
+		}
+	}
+
+	&__box {
+		width: 100%;
+		// text-align: center;
+
+		&:last-child {
+			justify-content: center;
+			text-align: center;
+
+			@include view(mobile) {
+				text-align: unset;
+			}
+
+			.footer__box-title {
+				display: block;
+				margin-block: 1em;
+
+				@include view(mobile) {
+					margin-top: 0;
+					margin-bottom: 1em;
+				}
+			}
+		}
+
+		&:nth-child(4) {
+			.footer__btn {
+				border-bottom: unset;
+			}
+		}
+
+		&-title {
+			display: none;
+			margin-bottom: 1em;
+			// display: block;
+			width: 100%;
+			color: $white;
+			font-weight: 600;
+
+			text-align: center;
+			text-transform: uppercase;
+
+			@include view(mobile) {
+				display: unset;
+			}
+		}
+	}
+
+	&__btn {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 1px solid $darkGray;
+		padding: 0.5em 1em;
+		width: 100%;
+		color: $white;
+		font-weight: 600;
+		text-transform: uppercase;
+
+		svg {
+			transition: all 0.3s ease-in-out;
+		}
+
+		@include view(mobile) {
+			display: none;
+		}
+	}
+
+	&__btn.active {
+		svg {
+			transform: rotateX(180deg);
+		}
+	}
+
+	&__btn.active + &__nav {
+		display: block;
+	}
+
+	&__nav {
+		display: none;
+
+		margin-top: 1em;
+		padding-left: 1em;
+
+		ul {
+			li {
+				margin-bottom: 0.5em;
+				color: $gray;
+
+				a {
+					font-size: 1.4rem;
+					&:hover {
+						text-decoration: underline;
+					}
+				}
+			}
+		}
+
+		@include view(mobile) {
+			display: block;
+			padding-left: 0;
+		}
+	}
+
+	&__socials {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 1em;
+
+		&-item {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border: 1px solid $gray;
+			border-radius: 50%;
+			padding: 0.5em;
+		}
+
+		&-icon {
+			width: 20px;
+		}
+	}
+
+	&__middle {
+		display: grid;
+		align-items: center;
+		gap: 0.8em;
+
+		@include view(mobile-max) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		@include view(mobile) {
+			grid-template-columns: repeat(6, 1fr);
+		}
+
+		p {
+			color: $white;
+			font-size: 1.3rem;
+			text-align: center;
+			@include view(mobile) {
+				font-size: 1.4rem;
+			}
+
+			span {
+				font-weight: 600;
+				text-transform: uppercase;
+			}
+		}
+	}
+
+	&__bottom {
+		display: grid;
+		align-items: center;
+		gap: 2em;
+
+		@include view(mobile-max) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		p {
+			color: $white;
+			font-size: 1.3rem;
+			text-align: center;
+			@include view(mobile) {
+				font-size: 1.4rem;
+			}
+
+			span {
+				font-weight: 600;
+				text-transform: uppercase;
+			}
+		}
+
+		.footer__box {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: flex-start;
+			// align-items: center;
+			gap: 2em;
+
+			@include view(mobile) {
+				align-items: center;
+			}
+
+			@include view(small-desktop) {
+				flex-wrap: nowrap;
+			}
+
+			p {
+				font-weight: 600;
+				// text-align: center;
+				text-transform: uppercase;
+			}
+		}
+	}
+
+	&__copy {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 0.1em;
+		text-align: center;
+	}
+
+	&__text,
+	&__project {
+		font-size: 1.3rem;
+		text-transform: uppercase;
+
+		@include view(mobile) {
+			font-size: 1.4rem;
+		}
+
+		span {
+			font-weight: 600;
+		}
+	}
+
+	&__text {
+		color: $white;
+	}
+
+	&__project {
+		color: $darkGray;
+
+		a {
+			&:hover {
+				color: $blue;
+			}
+		}
+	}
+
+	&__logo {
+		display: block;
+		text-align: center;
+		img {
+			max-width: 140px;
+		}
+	}
 }
