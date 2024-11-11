@@ -12,7 +12,6 @@ function register_acf_blocks() {
     register_block_type( __DIR__ . '/block/product-tabs-block' );
     register_block_type( __DIR__ . '/block/product-order-benefits-block' );
     register_block_type( __DIR__ . '/block/product-short-description-block' );
-
+    register_block_type( __DIR__ . '/block/text-editor-block' );
 }
-
 ?>

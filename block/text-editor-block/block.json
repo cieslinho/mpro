@@ -1,0 +1,15 @@
+{
+	"name": "acf/text-editor-block",
+	"title": "Text Editor Block",
+	"description": "A custom Text Editor Block that uses ACF fields.",
+	"category": "formatting",
+	"icon": "admin-comments",
+	"keywords": ["Text Editor Block", "quote"],
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "text-editor-block.php"
+	},
+	"supports": {
+		"anchor": true
+	}
+}
