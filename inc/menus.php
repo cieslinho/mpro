@@ -11,8 +11,8 @@ function register_menus()
 			'footer-contact' => esc_html__('footer-contact', 'mpro'),
 			'footer-company' => esc_html__('footer-company', 'mpro'),
 			'footer-categories' => esc_html__('footer-categories', 'mpro'),
-			'footer-info' => esc_html__('footer-info', 'mpro'),
-			'footer-socials' => esc_html__('footer-socials', 'mpro')
+			'footer-info' => esc_html__('footer-info', 'mpro')
+		
 			
 		)
 	);

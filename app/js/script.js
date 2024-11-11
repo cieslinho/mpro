@@ -2,6 +2,7 @@ const navBtn = document.querySelector('.nav__btn')
 const navWrapper = document.querySelector('.nav__wrapper')
 const navOverlay = document.querySelector('.nav__overlay') // Dodajemy selektor dla nav__overlay
 const closeBtn = document.querySelector('.nav__close')
+const footerBtns = document.querySelectorAll('.footer__btn')
 
 const handleNav = () => {
 	navWrapper.classList.toggle('active')
@@ -57,6 +58,12 @@ var headerSwiper = new Swiper('.swiper-container', {
 		el: '.swiper-pagination',
 		clickable: true,
 	},
+})
+
+footerBtns.forEach(btn => {
+	btn.addEventListener('click', () => {
+		btn.classList.toggle('active')
+	})
 })
 
 document.addEventListener('DOMContentLoaded', function () {
