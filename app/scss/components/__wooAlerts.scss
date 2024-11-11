@@ -1,0 +1,89 @@
+.woocommerce-error,
+.woocommerce-info,
+.woocommerce-message {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1em;
+	border: unset;
+	border-radius: 8px;
+	padding: 0.5em 1em;
+	padding-left: 3em;
+	color: $white;
+
+	&::after {
+		display: none;
+	}
+
+	&::before {
+		top: 50%;
+		left: 13px;
+		transform: translateY(-50%);
+		color: $white;
+	}
+
+	li {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1em;
+		width: 100%;
+	}
+
+	a.button,
+	a.restore-item {
+		@include btn;
+		float: unset !important;
+		width: 100%;
+
+		@include view(mobile-max) {
+			width: unset;
+		}
+		// background-color: transparent;
+		font-weight: 400;
+	}
+}
+
+.woocommerce-error {
+	background-color: $error !important;
+
+	a.button {
+		background-color: $white;
+		color: $black;
+
+		&:hover {
+			background-color: $gray;
+		}
+	}
+}
+
+.woocommerce-info {
+	background-color: $dark;
+
+	a.button {
+		background-color: $white;
+		color: $black;
+
+		&:hover {
+			background-color: $black;
+			color: $white;
+		}
+	}
+}
+
+.woocommerce-message {
+	background-color: $success;
+
+	a.button,
+	a.restore-item {
+		background-color: $white;
+		color: $black;
+
+		&:hover {
+			background-color: $black;
+			color: $white;
+		}
+	}
+}
