@@ -1,0 +1,81 @@
+.text {
+	@include sectionPadding;
+
+	&__editor {
+		line-height: 180%;
+
+		h1 {
+			font-size: 3.4rem;
+		}
+
+		h2 {
+			font-size: 2.8rem;
+		}
+
+		h3 {
+			font-size: 2.4rem;
+		}
+
+		h4 {
+			font-size: 2rem;
+		}
+
+		h5 {
+			font-size: 1.8rem;
+		}
+
+		h6 {
+			font-size: 1.6rem;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			margin-top: 1em;
+			margin-bottom: 1em;
+			font-weight: 600;
+		}
+
+		p {
+			margin-bottom: 1em;
+			font-size: 1.4rem;
+		}
+
+		strong {
+			font-weight: 600;
+		}
+
+		ul,
+		ol {
+			padding-left: 2em;
+			list-style: none;
+
+			li {
+				position: relative;
+				margin-bottom: 1em;
+				font-size: 1.4rem;
+
+				&::before {
+					position: absolute;
+					top: 9px;
+					left: -20px;
+					border-radius: 8px;
+					background-color: $blue;
+					padding: 0.1em;
+					width: 10px;
+					height: 10px;
+					content: '';
+				}
+			}
+		}
+
+		a {
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+}
