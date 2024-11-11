@@ -1,0 +1,94 @@
+.account {
+	@include sectionPadding;
+
+	&__boxes {
+		display: grid;
+		// align-items: flex-start;
+		gap: 1em;
+
+		@include view(mobile-max) {
+			grid-template-rows: 1fr;
+			grid-template-columns: 0.7fr 2fr;
+		}
+	}
+
+	&__nav,
+	&__content {
+		background-color: $gray;
+		padding: 1em 2em;
+	}
+
+	&__nav {
+		align-self: flex-start;
+
+		li {
+			margin-bottom: 0.5em;
+
+			&:first-of-type {
+				margin-top: 1em;
+			}
+
+			&:hover {
+				a {
+					color: $blue;
+				}
+			}
+
+			a {
+				display: block;
+				padding: 0.5em 0em;
+				font-size: 1.4rem;
+
+				@include view(mobile-max) {
+					font-size: 1.6rem;
+				}
+			}
+
+			a[aria-current='page'] {
+				color: $blue;
+				font-weight: 600;
+			}
+		}
+	}
+
+	&__title {
+		border-bottom: 1px solid $darkGray;
+		padding-bottom: 0.5em;
+		font-weight: 600;
+		font-size: 2.2rem;
+		text-align: left;
+		text-transform: uppercase;
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5em;
+
+		h2 {
+			font-size: 2.2rem;
+
+			span {
+				font-weight: 600;
+			}
+		}
+	}
+
+	&__info {
+		font-size: 1.4rem;
+		line-height: 180%;
+
+		@include view(mobile-max) {
+			font-size: 1.6rem;
+		}
+        
+		span {
+			font-weight: 600;
+		}
+	}
+
+	&__logout {
+		color: $error;
+		font-weight: 600;
+	}
+}
