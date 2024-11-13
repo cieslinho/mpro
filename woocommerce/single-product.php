@@ -91,12 +91,46 @@ $sale_price = get_post_meta($product_id, '_sale_price', true); // Pobierz cenę 
                     <h1 class="product__title"><?php the_title(); ?></h1>
 
                     <?php
-                    if ($sale_price) {                
-                        echo '<p class="product__price product__pricv-sale price"><del>' . wc_price($price) . '</del> <ins>' . wc_price($sale_price) . '</ins></p>';
-                    } else {                        
-                        echo '<p class="product__price product__pricv-normal price">' . wc_price($price) . '</p>';
-                    }
-                    ?>
+// Pobierz jednostkę miary z ACF
+$unit = get_field('unit_of_measure', $product->get_id()) ?: 'szt';
+
+// Mapa jednostek
+$units = [
+    'szt' => 'szt.',
+    'mb'  => 'mb.',
+    'kg'  => 'kg',
+    'm2'  => 'm2',
+];
+
+
+?>
+
+<?php if ($sale_price): ?>
+    <p class="product__price product__pricv-sale price">
+        <del><?php echo wc_price($price); ?></del>
+        <ins><?php echo wc_price($sale_price); ?></ins>
+        <span class="product__unit">
+<?            if (isset($units[$unit])) {
+        ?>
+        Cena za <?php echo esc_html($units[$unit]); ?>
+        <?php
+    }
+?>
+        </span>
+    </p>
+<?php else: ?>
+    <p class="product__price product__pricv-normal price">
+        <?php echo wc_price($price); ?>
+        <span class="product__unit">
+<?            if (isset($units[$unit])) {
+        ?>
+        Cena za <?php echo esc_html($units[$unit]); ?>
+        <?php
+    }
+?>
+        </span>
+    </p>
+<?php endif; ?>
                     
                     
                     </div>
@@ -117,85 +151,138 @@ if (!empty($shortDescription)) : ?>
                     
 
 <?php 
-// Lista ID produktów, dla których chcemy pokazać cenę za kilogram
-$target_product_ids = [10010, 10015, 10016, 10018]; // Zastąp 123, 456, 789 ID produktów
-// Lista kategorii, dla których chcemy pokazać cenę za kilogram
-$target_categories = ['gwozdzie','wkrety-hartowane', 'wkrety-hartowane-torx', 'wkrety-fosfatowane', 'wkrety-samowiercace', 'sruby-maszynowe-5-8','sruby-maszynowe-8-8',  'nakretki', 'podkladki', 'lancuchy-gospodarcze-i-obroze']; // Nazwy kategorii
+$product_id = get_the_ID(); // Pobierz ID bieżącego produktu
+$unit_of_measure = get_field('unit_of_measure', $product_id); // Pobierz jednostkę miary
+$price_per_unit = get_field('price_per_unit', $product_id); // Pobierz cenę za jednostkę
 
-// Sprawdzenie, czy bieżący produkt ma ID na liście docelowych produktów lub należy do jednej z docelowych kategorii
-if ( in_array( get_the_ID(), $target_product_ids ) || has_term( $target_categories, 'product_cat', get_the_ID() ) ) {
-    $group_content = get_field( 'group_content' );
-    $price_per_kg = $group_content['price_per_kg'] ?? null;
+// Wyświetl kalkulator tylko dla jednostek kg, mb, m2
+if ( in_array( $unit_of_measure, ['kg', 'mb', 'm2'], true ) && $price_per_unit ) : ?>
     
-    if ( $price_per_kg ) : ?>
+    <div class="product__calculator">
     
-        <div class="product__calculator">
-        
-            <p class="product__calculator-title">Cena za kg: <?php echo esc_html( $price_per_kg ); ?> PLN</p>
-        
-            <div class="product__calculator-top" id="weight-calculator">
-               <div class="product__calculator-row">
-               <label class="product__calculator-label" for="kg-input">Ilość kg:</label>
-               <input class="product__calculator-input" type="number" id="kg-input" min="0.1" step="0.1" placeholder="Podaj ilość kg">
-               </div>
-                
-            </div>
-<div class="product__calculator-middle">
-<button type="button" class="product__calculator-btn" id="calculate-price">Oblicz cenę</button>
-<p class="product__calculator-info" id="total-price"></p>
-</div>
-
-            <div class="product__calculator-bottom">
-                <label class="product__calculator-label" for="product-quantity-display">Ilość:</label>
-                <input class="product__calculator-input" type="number" id="product-quantity-display" name="quantity" value="1" readonly>
-                <span class="product__calculator-info"> KG</span>
-            </div>
-        
-            <input type="hidden" id="product-total-price" name="product_total_price" value="">
-            <input type="hidden" name="add-to-cart" value="<?php echo esc_attr( get_the_ID() ); ?>">
+        <p class="product__calculator-title">
+            Cena za <?php echo esc_html( $unit_of_measure ); ?>: <?php echo esc_html( $price_per_unit ); ?> PLN
+        </p>
+    
+        <div class="product__calculator-top" id="weight-calculator">
+           <div class="product__calculator-row">
+               <label class="product__calculator-label" for="unit-input">
+                   Ilość (<?php echo esc_html( $unit_of_measure ); ?>):
+               </label>
+               <input class="product__calculator-input" type="number" id="unit-input" min="0.1" step="0.1" placeholder="Podaj ilość">
+           </div>
         </div>
 
-        <script>
+        <div class="product__calculator-middle">
+            <button type="button" class="product__calculator-btn" id="calculate-price">Oblicz cenę</button>
+            <p class="product__calculator-info" id="total-price"></p>
+        </div>
+
+        <div class="product__calculator-bottom">
+            <label class="product__calculator-label" for="product-quantity-display">Ilość:</label>
+            <input class="product__calculator-input" type="number" id="product-quantity-display" name="quantity" value="1" readonly>
+            <span class="product__calculator-info"> <?php echo esc_html( $unit_of_measure ); ?></span>
+        </div>
+    
+        <input type="hidden" id="product-total-price" name="product_total_price" value="">
+        <input type="hidden" name="add-to-cart" value="<?php echo esc_attr( $product_id ); ?>">
+    </div>
+
+    <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const kgInput = document.getElementById('kg-input');
+    const unitInput = document.getElementById('unit-input');
     const quantityDisplay = document.getElementById('product-quantity-display');
+    const totalPriceDisplay = document.getElementById('total-price');
     const quantityInputs = document.querySelectorAll('input[name="quantity"]'); // Pobierz wszystkie inputy quantity
+    const pricePerUnit = <?php echo json_encode( $price_per_unit ); ?>; // Cena jednostkowa z PHP
 
     // Funkcja do obliczania ceny
     document.getElementById('calculate-price').addEventListener('click', function() {
-        const pricePerKg = <?php echo json_encode($price_per_kg); ?>; // Użyj PHP, aby pobrać cenę za kg
-        const kg = parseFloat(kgInput.value) || 0; // Pobierz wartość z inputu kg
-        const totalPrice = (kg * pricePerKg).toFixed(2); // Oblicz całkowitą cenę
+        const quantity = parseFloat(unitInput.value) || 0; // Pobierz wartość z inputu
+        const totalPrice = (quantity * pricePerUnit).toFixed(2); // Oblicz całkowitą cenę
 
-        // Ustawienia wyświetlania ceny i aktualizacja inputów
-        document.getElementById('total-price').innerText = 'Cena całkowita: ' + totalPrice + ' PLN';
-        quantityDisplay.value = kg; // Ustaw ilość w quantity display
+        // Wyświetl wynik
+        totalPriceDisplay.innerText = 'Cena całkowita: ' + totalPrice + ' PLN';
+        quantityDisplay.value = quantity; // Ustaw ilość w quantity display
         
         // Aktualizacja wszystkich inputów 'quantity'
         quantityInputs.forEach(input => {
-            input.value = kg; // Ustaw ilość w każdym input'cie 'quantity'
+            input.value = quantity; // Ustaw ilość w każdym input'cie 'quantity'
         });
 
-        // Ustawienie wartości ukrytego inputa na całkowitą cenę
+        // Ustaw wartość ukrytego inputa na całkowitą cenę
         document.getElementById('product-total-price').value = totalPrice;
     });
 });
 </script>
-       
-    <?php endif; 
-}
-?>
+
+<?php endif; ?>
+
+
+
+
 
 
 
 <div class="product__bottom">
-<div class="product__btn add-to-cart">
-        <?php woocommerce_template_single_add_to_cart();?>
-    
-                    </div>
-                    <div class="product__meta">
+<?php
+$product_id = get_the_ID();
+$unit_of_measure = get_field('unit_of_measure', $product_id); // Pobierz jednostkę miary
+$price_per_unit = get_field('price_per_unit', $product_id); // Pobierz cenę jednostkową (np. za kg, mb, m2)
+
+// Pobierz stan magazynowy produktu
+$product = wc_get_product($product_id);
+$stock_status = $product->get_stock_status();
+$stock_quantity = $product->get_stock_quantity();
+?>
+
+<?php if ($unit_of_measure && $price_per_unit): ?>
+    <!-- Formularz z customową ilością -->
+    <div class="product__btn add-to-cart">
+    <div class="stock-status">
+        <?php if ($stock_status === 'instock'): ?>
+            <p class="stock in-stock"><?php echo esc_html($stock_quantity); ?> <?php echo esc_html($unit_of_measure); ?> w magazynie</p>
+        <?php elseif ($stock_status === 'outofstock'): ?>
+            <p class="stock out-of-stock">Brak w magazynie</p>
+        <?php elseif ($stock_status === 'onbackorder'): ?>
+            <p>Stan magazynowy: Dostępny na zamówienie</p>
+        <?php endif; ?>
+    </div>
+    <form class="cart" method="post" enctype="multipart/form-data">
+        <div class="quantity">
+        <label for="custom-quantity"></label>
+        <input class="input-text qty text" type="number" id="custom-quantity" name="custom_quantity" min="0" step="0.01" required>
+        </div>
+        
+        <!-- Ukryte pole przekazujące ID produktu -->
+        <input type="hidden" name="product_id" value="<?php echo esc_attr( $product_id ); ?>">
+
+        <!-- Standardowe pole ilości w WooCommerce -->
+        <input type="hidden" name="quantity" value="1">
+
+        <button class="single_add_to_cart_button button alt" type="submit" name="add-to-cart" value="<?php echo esc_attr( $product_id ); ?>">Dodaj do koszyka</button>
+    </form>
+    </div>
+    <div class="product__meta">
         <?php woocommerce_template_single_meta();?>
     </div>
+   
+
+    <!-- Informacja o stanie magazynowym -->
+   
+
+<?php else: ?>
+    <!-- Standardowy przycisk WooCommerce jeśli brak jednostki miary lub ceny -->
+    <div class="product__btn add-to-cart">
+        <?php woocommerce_template_single_add_to_cart(); ?>
+    </div>
+    <div class="product__meta">
+        <?php woocommerce_template_single_meta();?>
+    </div>
+    
+<?php endif; ?>
+
+
     <?php get_template_part('block/product-order-benefits-block/product-order-benefits-block');?>
 </div>
 </div>
@@ -244,7 +331,37 @@ ini_set('error_reporting', E_ALL );
                 </div>
                 <div class="products__box-infos">
                     <h2><a href="<?php echo esc_url($product_link); ?>"><?php echo esc_html($product_title); ?></a></h2>
-                    <span class="products__price"><?php echo wp_kses_post($product_price); ?></span>
+                    <span class="products__price"><?php echo wp_kses_post($product_price); ?>
+                    
+                                        <?php
+    // Pobranie aktualnego produktu
+    global $product;
+
+    // Pobranie jednostki miary z ACF (domyślnie "szt")
+    $unit = get_field('unit_of_measure', $product->get_id()) ?: 'szt';
+
+    // Mapa jednostek
+    $units = [
+        'szt' => 'szt.',
+        'mb'  => 'mb.',
+        'kg'  => 'kg',
+        'm2'  => 'm2',
+    ];
+
+    
+
+    // Wyświetlenie jednostki
+    if (isset($units[$unit])) {
+        ?>
+        <p class="products__unit">Cena za <?php echo esc_html($units[$unit]); ?></p>
+        <?php
+    }
+
+    
+    ?>
+                
+                
+                </span>
                     <a href="<?php echo esc_url($product->add_to_cart_url()); ?>" class="products__btn">
                         Dodaj do koszyka
                     </a>

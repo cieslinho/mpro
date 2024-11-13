@@ -66,11 +66,33 @@
 	}
 
 	&__price {
+		display: flex;
+		align-items: center;
+		// justify-content: space-between;
+		gap: 1em;
 		color: $blue;
 		font-weight: 700;
 
 		span.price {
 			color: $blue;
+		}
+
+		&-latest > span {
+			margin-right: 5px;
+		}
+	}
+
+	&__unit {
+		position: relative;
+		color: $darkGray;
+		font-size: 1.4rem;
+		&::before {
+			position: absolute;
+			top: 50%;
+			left: -12px;
+			transform: translateY(-50%);
+			content: '/';
+			font-size: 1.2rem;
 		}
 	}
 

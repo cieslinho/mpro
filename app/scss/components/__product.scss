@@ -118,10 +118,29 @@
 	}
 
 	&__price {
+		display: flex;
+		align-items: center;
+		// justify-content: space-between;
+		gap: 2em;
 		bdi {
 			color: $blue;
 			font-weight: 600;
 			font-size: 2.8rem;
+		}
+	}
+
+	&__unit {
+		position: relative;
+		color: $darkGray;
+		font-weight: 600;
+		font-size: 1.8rem;
+		&::before {
+			position: absolute;
+			top: 50%;
+			left: -15px;
+			transform: translateY(-50%);
+			content: '/';
+			font-size: 1.2rem;
 		}
 	}
 
@@ -192,6 +211,10 @@
 
 		&-input {
 			margin: 0 !important;
+		}
+
+		#total-price {
+			font-weight: 600;
 		}
 	}
 
@@ -562,6 +585,10 @@
 		gap: 1em;
 		.products__btn {
 			@include btnCta;
+		}
+
+		.products__price > span {
+			margin-right: 5px;
 		}
 	}
 }

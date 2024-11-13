@@ -717,22 +717,42 @@ function customize_woocommerce_products_per_page( $query ) {
 
 
 
-add_action('save_post', 'update_product_price_from_acf', 10, 2);
-function update_product_price_from_acf($post_id, $post) {
-    // Sprawdź, czy to jest produkt WooCommerce
-    if ($post->post_type !== 'product') {
-        return;
-    }
+// add_action('save_post', 'update_product_price_from_acf', 10, 2);
+// function update_product_price_from_acf($post_id, $post) {
+//     // Sprawdź, czy to jest produkt WooCommerce
+//     if ($post->post_type !== 'product') {
+//         return;
+//     }
 
-    // Pobierz wartość z pola ACF
-    $price_per_kg = get_field('group_content')['price_per_kg']; // Upewnij się, że używasz właściwej ścieżki do pola ACF
+//     // Pobierz wartość z pola ACF
+//     $price_per_kg = get_field('group_content')['price_per_kg']; // Upewnij się, że używasz właściwej ścieżki do pola ACF
 
-    // Sprawdź, czy cena jest ustawiona
-    if ($price_per_kg) {
-        // Ustaw cenę produktu na podstawie wartości ACF
-        update_post_meta($post_id, '_regular_price', $price_per_kg);
-        update_post_meta($post_id, '_price', $price_per_kg);
+//     // Sprawdź, czy cena jest ustawiona
+//     if ($price_per_kg) {
+//         // Ustaw cenę produktu na podstawie wartości ACF
+//         update_post_meta($post_id, '_regular_price', $price_per_kg);
+//         update_post_meta($post_id, '_price', $price_per_kg);
+//     }
+// }
+
+
+add_filter( 'woocommerce_add_to_cart_quantity', 'custom_cart_quantity', 10, 2 );
+
+function custom_cart_quantity( $quantity, $product_id ) {
+    // Sprawdzamy, czy formularz zawiera naszą niestandardową ilość
+    if ( isset($_POST['custom_quantity']) && is_numeric($_POST['custom_quantity']) ) {
+        $custom_quantity = floatval($_POST['custom_quantity']); // Pobieramy ilość z formularza
+        return $custom_quantity; // Zwracamy ilość jako wartość dziesiętną
     }
+    return $quantity; // Jeśli nie, używamy standardowej ilości
 }
 
 
+// Przekierowanie na stronę koszyka po dodaniu produktu
+function custom_redirect_to_cart() {
+    if ( isset( $_REQUEST['add-to-cart'] ) ) {
+        wp_safe_redirect( wc_get_cart_url() );
+        exit;
+    }
+}
+add_action( 'template_redirect', 'custom_redirect_to_cart' );
