@@ -756,3 +756,30 @@ function custom_redirect_to_cart() {
     }
 }
 add_action( 'template_redirect', 'custom_redirect_to_cart' );
+
+// Funkcja do aktualizacji pola ACF 'price_per_unit' na cenę WooCommerce
+function sync_wc_price_to_acf_price_per_unit( $post_id ) {
+    // Sprawdzamy, czy to jest zapis produktu (a nie innych postów)
+    if ( get_post_type( $post_id ) !== 'product' ) {
+        return;
+    }
+
+    // Pobierz produkt
+    $product = wc_get_product( $post_id );
+
+    // Pobierz cenę produktu
+    $wc_price = $product->get_regular_price(); // Możesz także użyć get_sale_price() w zależności od wymagań
+
+    // Pobierz jednostkę miary
+    $unit_of_measure = get_field('unit_of_measure', $post_id);
+
+    // Jeśli jednostka miary jest ustawiona na 'kg', 'mb', lub 'm2', kopiujemy cenę do ACF
+    if ( in_array( $unit_of_measure, ['kg', 'mb', 'm2'], true ) ) {
+        // Zapisz cenę WooCommerce do ACF price_per_unit
+        update_field('price_per_unit', $wc_price, $post_id);
+    }
+}
+add_action( 'save_post', 'sync_wc_price_to_acf_price_per_unit', 10, 3 );
+
+
+
