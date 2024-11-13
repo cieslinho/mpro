@@ -185,5 +185,26 @@
 				}
 			}
 		}
+
+		&-price {
+			display: flex;
+			align-items: center;
+			// justify-content: space-between;
+			gap: 1.5em;
+		}
+
+		&-unit {
+			position: relative;
+			color: $darkGray;
+			font-size: 1.3rem;
+			&::before {
+				position: absolute;
+				top: 50%;
+				left: -12px;
+				transform: translateY(-50%);
+				content: '/';
+				font-size: 1.2rem;
+			}
+		}
 	}
 }

@@ -62,6 +62,7 @@ $promoLink      = $promo_content['promo-link'];
 
                                     <span class="header__product-price">
                                         <?php echo $product->get_price_html(); ?>
+                                        
                                     </span>
                                     <button class="header__btn header__btn-cart">Dodaj do koszyka</button>
                                 </div>
@@ -113,6 +114,32 @@ $promoLink      = $promo_content['promo-link'];
                                 </h2>
                                 <span class="header__product-price">
                                     <?php echo $product->get_price_html(); ?>
+                                    <?php
+    // Pobranie aktualnego produktu
+    global $product;
+
+    // Pobranie jednostki miary z ACF (domyślnie "szt")
+    $unit = get_field('unit_of_measure', $product->get_id()) ?: 'szt';
+
+    // Mapa jednostek
+    $units = [
+        'szt' => 'szt.',
+        'mb'  => 'mb.',
+        'kg'  => 'kg',
+        'm2'  => 'm2',
+    ];
+
+    
+
+    // Wyświetlenie jednostki
+    if (isset($units[$unit])) {
+        ?>
+        <p class="header__product-unit">Cena za <?php echo esc_html($units[$unit]); ?></p>
+        <?php
+    }
+
+    
+    ?>
                                 </span>
                             </div>
                         </a>
