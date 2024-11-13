@@ -236,8 +236,8 @@ $stock_status = $product->get_stock_status();
 $stock_quantity = $product->get_stock_quantity();
 ?>
 
-<?php if ($unit_of_measure && $price_per_unit): ?>
-    <!-- Formularz z customową ilością -->
+<?php if ( in_array( $unit_of_measure, ['kg', 'mb', 'm2'], true ) && $price_per_unit ): ?>
+    <!-- Formularz z customową ilością, widoczny tylko jeśli jednostka miary to 'kg', 'mb', lub 'm2' -->
     <div class="product__btn add-to-cart">
     <div class="stock-status">
         <?php if ($stock_status === 'instock'): ?>
@@ -266,11 +266,6 @@ $stock_quantity = $product->get_stock_quantity();
     <div class="product__meta">
         <?php woocommerce_template_single_meta();?>
     </div>
-   
-
-    <!-- Informacja o stanie magazynowym -->
-   
-
 <?php else: ?>
     <!-- Standardowy przycisk WooCommerce jeśli brak jednostki miary lub ceny -->
     <div class="product__btn add-to-cart">
@@ -279,12 +274,11 @@ $stock_quantity = $product->get_stock_quantity();
     <div class="product__meta">
         <?php woocommerce_template_single_meta();?>
     </div>
-    
 <?php endif; ?>
 
-
-    <?php get_template_part('block/product-order-benefits-block/product-order-benefits-block');?>
+<?php get_template_part('block/product-order-benefits-block/product-order-benefits-block');?>
 </div>
+
 </div>
 
 
