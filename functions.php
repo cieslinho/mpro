@@ -782,4 +782,11 @@ function sync_wc_price_to_acf_price_per_unit( $post_id ) {
 add_action( 'save_post', 'sync_wc_price_to_acf_price_per_unit', 10, 3 );
 
 
+function hide_product_description_in_admin() {
+    echo '<style>
+        #postdivrich, #postexcerpt { display: none; } /* Ukrywa edytor opisu produktu */
+    </style>';
+}
+add_action('admin_head', 'hide_product_description_in_admin');
+
 
