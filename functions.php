@@ -790,3 +790,73 @@ function hide_product_description_in_admin() {
 add_action('admin_head', 'hide_product_description_in_admin');
 
 
+
+// Usuwamy domyślne pola imienia i nazwiska
+add_filter('woocommerce_checkout_fields', function($fields) {
+    unset($fields['billing']['billing_first_name']);
+    unset($fields['billing']['billing_last_name']);
+    return $fields;
+});
+
+// Dodaj niestandardowe pola zamiast domyślnych
+add_action('woocommerce_checkout_billing', function() {
+    ?>
+    <div class="checkout__billing-options">
+        <label><input type="radio" name="purchase_type" value="private" checked> <span><?php esc_html_e('Osoba prywatna', 'woocommerce'); ?></span></label>
+        <label><input type="radio" name="purchase_type" value="business"><span> <?php esc_html_e('Zakupy na firmę', 'woocommerce'); ?></span></label>
+    </div>
+
+    <div class="checkout__billing-name">
+        <div class="checkout__row">
+        <label for="billing_first_name"><?php esc_html_e('Imię', 'woocommerce'); ?></label>
+        <input type="text" name="billing_first_name" id="billing_first_name" class="input-text" placeholder="<?php esc_attr_e('Wprowadź swoje imię', 'woocommerce'); ?>" required>
+        </div>
+        <div class="checkout__row">
+        <label for="billing_last_name"><?php esc_html_e('Nazwisko', 'woocommerce'); ?></label>
+        <input type="text" name="billing_last_name" id="billing_last_name" class="input-text" placeholder="<?php esc_attr_e('Wprowadź swoje nazwisko', 'woocommerce'); ?>" required>
+        </div>
+    </div>
+    <?php
+}, 10);
+
+// Modyfikacja pól, ustawienie wymaganych pól oraz walidacja NIP
+add_filter('woocommerce_checkout_fields', function($fields) {
+    $is_business = isset($_POST['purchase_type']) && $_POST['purchase_type'] === 'business';
+    
+    // Wymagane pola
+    $fields['billing']['billing_nip']['required'] = $is_business;
+    $fields['billing']['billing_company']['required'] = $is_business;
+    $fields['shipping']['shipping_company']['required'] = $is_business;
+
+    // Dodanie niestandardowego pola NIP
+    $fields['billing']['billing_nip'] = [
+        'type' => 'text',
+        'label' => __('NIP', 'woocommerce'),
+        'placeholder' => __('Wprowadź NIP', 'woocommerce'),
+        'class' => ['form-row-wide', 'checkout__nip-field', 'validate-required'],
+        'priority' => 25,
+        'required' => $is_business,
+    ];
+
+    // Pole nazwa firmy
+    $fields['billing']['billing_company'] = [
+        'type' => 'text',
+        'label' => __('Nazwa firmy', 'woocommerce'),
+        'placeholder' => __('Wprowadź nazwę firmy', 'woocommerce'),
+        'class' => ['form-row-wide', 'checkout__company-field', 'validate-required'],
+        'priority' => 20,
+        'required' => $is_business,
+    ];
+
+    return $fields;
+}, 10);
+
+// Zmiana etykiety NIP
+add_filter('woocommerce_checkout_field_label', function($label, $field) {
+    if ($field['name'] === 'billing_nip') {
+        $label = $field['required'] 
+            ? 'NIP <span class="required">(wymagane)</span>' 
+            : 'NIP <span class="optional">(opcjonalne)</span>';
+    }
+    return $label;
+}, 10, 2);
