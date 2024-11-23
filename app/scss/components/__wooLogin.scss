@@ -1,0 +1,94 @@
+.login {
+	@include sectionPadding;
+
+	&__boxes {
+		display: grid;
+		gap: 2em;
+
+		@include view(mobile) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	&__box {
+		border: 1px solid $border;
+		border-radius: 8px;
+		padding: 1em 2em;
+
+		h2 {
+			margin-bottom: 1em;
+			font-weight: 600;
+			font-size: 1.8rem;
+		}
+	}
+
+	&__row {
+		p {
+			display: flex;
+			position: relative;
+			flex-direction: column;
+		}
+	}
+
+	&__label {
+		font-weight: 600;
+	}
+
+	&__input {
+		margin-block: 1em;
+		border: 1px solid $border;
+		border-radius: 4px;
+		padding: 0.5em 1em;
+		width: 100%;
+		font-size: 1.4rem;
+
+		&:focus {
+			outline: none;
+			border-color: $darkBlue;
+		}
+	}
+
+	&__show {
+		position: absolute;
+		right: 0;
+		border-radius: 4px;
+		background-color: $black;
+		padding: 0.2em 0.4em;
+		color: $white;
+		font-size: 1.4rem;
+	}
+
+	&__actions {
+		display: flex;
+		align-items: center;
+		gap: 2em;
+		margin-block: 1em;
+	}
+
+	&__btn {
+		@include btn;
+		width: 100%;
+
+		&-login {
+			@include btnCta;
+			width: 70%;
+		}
+	}
+
+	&__required {
+		color: $error;
+	}
+
+	.woocommerce-privacy-policy-text {
+		margin-block: 0.5em;
+		p {
+			font-size: 1.2rem;
+			text-align: center;
+
+			a {
+				border-bottom: 1px solid $black;
+				font-weight: 600;
+			}
+		}
+	}
+}
