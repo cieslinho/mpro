@@ -43,7 +43,7 @@ defined('ABSPATH') || exit;
                 <?php wp_nonce_field('woocommerce-login', 'woocommerce-login-nonce'); ?>
                 <button type="submit" class="login__btn-login login__btn" name="login" value="<?php esc_attr_e('Log in', 'woocommerce'); ?>"><?php esc_html_e('Log in', 'woocommerce'); ?></button>
             </div>
-            <p class="woocommerce-LostPassword lost_password login__btn">
+            <p class="woocommerce-LostPassword lost_password login__btn-lost">
                 <a href="<?php echo esc_url(wp_lostpassword_url()); ?>"><?php esc_html_e('Lost your password?', 'woocommerce'); ?></a>
             </p>
 

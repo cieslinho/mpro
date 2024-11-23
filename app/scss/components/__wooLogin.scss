@@ -63,6 +63,12 @@
 		align-items: center;
 		gap: 2em;
 		margin-block: 1em;
+
+		label {
+			width: 40%;
+			font-weight: 400;
+			font-size: 1.6rem;
+		}
 	}
 
 	&__btn {
@@ -71,7 +77,18 @@
 
 		&-login {
 			@include btnCta;
-			width: 70%;
+			width: 60%;
+		}
+
+		&-lost {
+			margin-top: 1.5em;
+			text-align: center;
+
+			a {
+				border-bottom: 1px solid $black;
+				font-weight: 600;
+				font-size: 1.2rem;
+			}
 		}
 	}
 
@@ -89,6 +106,22 @@
 				border-bottom: 1px solid $black;
 				font-weight: 600;
 			}
+		}
+	}
+
+	.woocommerce-form__input {
+		margin-right: 0.5em;
+		border-radius: 50%;
+		background-color: $border;
+		width: 10px;
+		height: 10px;
+
+		&:checked {
+			background-color: $success;
+		}
+
+		&:checked + span {
+			font-weight: 600;
 		}
 	}
 }
