@@ -16,5 +16,6 @@ function register_acf_blocks() {
     register_block_type( __DIR__ . '/block/contact-block' );
     register_block_type( __DIR__ . '/block/left-section-block' );
     register_block_type( __DIR__ . '/block/right-section-block' );
+    register_block_type( __DIR__ . '/block/banner-block' );
 }
 ?>
