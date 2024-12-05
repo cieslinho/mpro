@@ -1,0 +1,206 @@
+.contact {
+	@include sectionPadding;
+
+	&__boxes {
+		display: flex;
+		flex-direction: column;
+		gap: 2em;
+
+		@include view(tablet) {
+			display: grid;
+			grid-template-rows: 1fr;
+			grid-template-columns: 0.6fr 1.2fr;
+			gap: 0;
+
+			box-shadow: 0 0 20px rgba($color: $border, $alpha: 1);
+			border-radius: 8px;
+		}
+	}
+
+	&__info,
+	&__form {
+		border-radius: 8px;
+		padding: 1em 2em;
+	}
+
+	&__info {
+		display: flex;
+		position: relative;
+		flex-direction: column;
+		gap: 1em;
+		z-index: 10;
+		background-color: $blue;
+		overflow: hidden;
+		color: $white;
+
+		@include view(mobile) {
+			border-top-right-radius: unset;
+			border-bottom-right-radius: unset;
+		}
+	}
+
+	&__title {
+		border-bottom: 2px solid $white;
+		padding-bottom: 0.5em;
+		font-weight: 600;
+		font-size: 2rem;
+		text-align: center;
+		text-transform: uppercase;
+	}
+
+	&__text {
+		line-height: 180%;
+
+		p {
+			margin-bottom: 1em;
+		}
+
+		a {
+			border-bottom: 1px solid $white;
+			padding-bottom: 0.1em;
+			font-weight: 600;
+
+			&:hover {
+				border-bottom: 1px solid $darkBlue;
+			}
+		}
+
+		ul,
+		ol {
+			padding-left: 1.5em;
+			list-style: none;
+
+			li {
+				position: relative;
+				margin-bottom: 0.5em;
+				font-size: 1.4rem;
+
+				&::before {
+					position: absolute;
+					top: 9px;
+					left: -20px;
+					border-radius: 8px;
+					background-color: $white;
+					padding: 0.1em;
+					width: 10px;
+					height: 10px;
+					content: '';
+				}
+			}
+		}
+	}
+
+	&__img {
+		position: absolute;
+
+		transform: rotateZ(-16deg);
+
+		opacity: 0.1;
+		z-index: -10;
+		width: 430px;
+
+		max-width: unset;
+	}
+
+	&__form {
+		background-color: $gray;
+
+		@include view(mobile) {
+			border: 2px solid $blue;
+			border-top-left-radius: unset;
+			border-bottom-left-radius: unset;
+		}
+
+		form {
+			p {
+				input,
+				textarea,
+				select {
+					margin-block: 1em;
+					margin-bottom: 1em;
+					border: 1px solid $border;
+					border-radius: 4px;
+					padding: 0.5em 1em;
+					width: 100%;
+					font-size: 1.4rem;
+
+					&:focus {
+						border-color: $darkBlue;
+					}
+				}
+
+				input.contact__btn {
+					@include btn;
+					cursor: pointer;
+				}
+
+				textarea {
+					height: 100%;
+					max-height: 125px;
+					resize: vertical;
+				}
+			}
+
+			.wpcf7-not-valid-tip {
+				padding-left: 0.5em;
+				color: $error;
+				font-style: italic;
+				font-size: 1.4rem;
+			}
+
+			.wpcf7-list-item {
+				label {
+					display: flex;
+					align-items: center;
+					gap: 0.5em;
+
+					input.contact__acceptance {
+						margin-right: 0.5em;
+
+						border-radius: 50%;
+						background-color: $border;
+						padding: 5px;
+						width: 10px;
+						height: 10px;
+					}
+
+					input:checked {
+						background-color: $success;
+					}
+
+					input:checked + span {
+						font-weight: 600;
+					}
+
+					span {
+						font-style: italic;
+						font-size: 1.2rem;
+					}
+				}
+			}
+		}
+	}
+}
+
+.wpcf7-response-output {
+	margin: 0 !important;
+	border: none !important;
+	border-radius: 8px;
+	background-color: $dark;
+	padding: 0.5em 1em;
+	color: $white;
+	font-size: 1.4rem;
+	text-align: center;
+}
+
+form.invalid {
+	.wpcf7-response-output {
+		background-color: $error;
+	}
+}
+
+form.sent {
+	.wpcf7-response-output {
+		background-color: $success;
+	}
+}
