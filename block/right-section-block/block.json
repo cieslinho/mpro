@@ -1,0 +1,15 @@
+{
+	"name": "acf/right-section-block",
+	"title": "right section block",
+	"description": "A custom right section block that uses ACF fields.",
+	"category": "formatting",
+	"icon": "admin-comments",
+	"keywords": ["right section block", "quote"],
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "right-section-block.php"
+	},
+	"supports": {
+		"anchor": true
+	}
+}
