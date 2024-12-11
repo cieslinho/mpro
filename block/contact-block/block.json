@@ -1,0 +1,15 @@
+{
+	"name": "acf/contact-block",
+	"title": "Contact block",
+	"description": "A custom Contact block that uses ACF fields.",
+	"category": "formatting",
+	"icon": "admin-comments",
+	"keywords": ["Contact block", "quote"],
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "contact-block.php"
+	},
+	"supports": {
+		"anchor": true
+	}
+}

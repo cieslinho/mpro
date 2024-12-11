@@ -1,0 +1,7 @@
+.left,
+.right {
+	@include sectionPadding;
+
+	&__boxes {
+	}
+}

@@ -1,0 +1,51 @@
+.woocommerce-address-fields,
+.woocommerce-EditAccountForm.edit-account {
+	label {
+		margin-bottom: 1em;
+		font-weight: 600;
+	}
+
+	input {
+		margin-block: 1em;
+		border: 1px solid $border;
+		border-radius: 4px;
+		padding: 0.5em 1em;
+		width: 100%;
+		font-size: 1.4rem;
+
+		&:focus {
+			border-color: $darkBlue;
+		}
+	}
+
+	p {
+		button.button {
+			@include btn;
+			display: block;
+			margin-top: 1em;
+
+			padding: 1em 2em !important;
+			width: 100%;
+
+			&:hover {
+				color: $white;
+			}
+		}
+	}
+
+	span {
+		em {
+			display: inline-block;
+			margin-top: 1em;
+			color: $error;
+			font-style: italic;
+			font-size: 1.3rem;
+		}
+	}
+
+	legend {
+		display: inline-block;
+		padding-block: 0.5em;
+		font-size: 2.2rem;
+	}
+}

@@ -66,11 +66,24 @@
 		gap: 0.5em;
 
 		h2 {
+			margin-bottom: 0.5em;
 			font-size: 2.2rem;
 
 			span {
 				font-weight: 600;
 			}
+		}
+
+		p {
+			mark {
+				color: $blue;
+				font-weight: 600;
+			}
+		}
+
+		.woocommerce-order-details {
+			margin-top: 1em;
+			margin-bottom: 1em;
 		}
 	}
 
@@ -81,7 +94,7 @@
 		@include view(mobile-max) {
 			font-size: 1.6rem;
 		}
-        
+
 		span {
 			font-weight: 600;
 		}
@@ -90,5 +103,99 @@
 	&__logout {
 		color: $error;
 		font-weight: 600;
+	}
+
+	.woocommerce-columns,
+	.u-columns {
+		display: grid;
+		gap: 2em;
+
+		&::before,
+		&::after {
+			display: none;
+		}
+
+		@include view(mobile) {
+			grid-template-rows: 1fr;
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.woocommerce-column,
+		.woocommerce-Address {
+			float: unset;
+			width: 100%;
+
+			.woocommerce-Address-title.title {
+				&::before,
+				&::after {
+					display: none;
+				}
+
+				a {
+					@include btn;
+					display: inline-block;
+					float: unset !important;
+
+					margin-bottom: 1em;
+
+					font-size: 1.2rem;
+				}
+			}
+		}
+	}
+
+	.woocommerce-orders-table,
+	.woocommerce-table--order-details,
+	address {
+		border: 1px solid $border !important;
+		border-radius: 8px !important;
+		background-color: $white;
+		padding: 1em 1em;
+
+		th {
+			padding: 0.5em !important;
+
+			a {
+				&:hover {
+					color: $blue;
+				}
+			}
+		}
+
+		tbody {
+			th,
+			td {
+				border-top: 1px solid $border !important;
+				padding: 0.5em;
+			}
+		}
+
+		.woocommerce-orders-table__cell-order-total {
+			font-weight: 600;
+		}
+
+		.woocommerce-orders-table__cell-order-actions {
+			a {
+				@include btn;
+			}
+		}
+
+		.woocommerce-table__product-name.product-name {
+			a {
+				&:hover {
+					color: $blue;
+				}
+			}
+		}
+	}
+
+	address {
+		line-height: 180%;
+
+		.woocommerce-customer-details--phone,
+		.woocommerce-customer-details--email {
+			color: $blue;
+			font-weight: 600;
+		}
 	}
 }
