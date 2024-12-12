@@ -2,6 +2,80 @@
 .right {
 	@include sectionPadding;
 
-	&__boxes {
+	.section {
+		&__boxes {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 2em;
+
+			@include view(mobile) {
+				flex-wrap: nowrap;
+			}
+		}
+
+		&__info {
+			display: flex;
+			flex-direction: column;
+			gap: 1em;
+			width: 100%;
+			@include view(mobile) {
+				width: 60%;
+			}
+		}
+
+		&__img {
+			width: 100%;
+
+			@include view(mobile) {
+				width: 40%;
+			}
+
+			img {
+				border-radius: 8px;
+				width: 100%;
+
+				@include view(mobile) {
+				}
+			}
+		}
+
+		&__title {
+			padding: 0 0em 0 0.5em;
+			font-weight: 700;
+
+			font-size: 2.4rem;
+			text-transform: uppercase;
+
+			@include view(mobile) {
+				font-size: 3.2rem;
+			}
+
+			&-margin {
+				margin-bottom: 0.2em;
+			}
+		}
+
+		&__text {
+			box-shadow: 0 0 15px $border;
+			border-radius: 8px;
+			background-color: $blue;
+			padding: 1em;
+
+			color: $white;
+			font-size: 1.7rem;
+			line-height: 180%;
+
+			@include view(mobile) {
+				font-size: 2rem;
+			}
+		}
+	}
+}
+
+.left {
+	.section {
+		&__info {
+			order: 1;
+		}
 	}
 }

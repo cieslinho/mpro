@@ -25,7 +25,7 @@ $img_alt = get_post_meta($img_id, '_wp_attachment_image_alt', true);
 
             <div class="banner__texts">
             <?php if ($heading) : ?>
-                <?php echo ($heading); ?>
+                <h2><?php echo ($heading); ?></h2>
             <?php endif; ?>
             <?php if ($textEditor) : ?>
                 <?php echo wp_kses_post($textEditor); ?>
