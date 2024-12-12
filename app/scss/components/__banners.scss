@@ -38,6 +38,11 @@
 		padding: 1em 2em;
 		height: 100%;
 
+		h2 {
+			color: $white;
+			font-size: 2.4rem;
+		}
+
 		p {
 			width: 100%;
 			color: $white;
@@ -56,5 +61,12 @@
 				@include hoverBlue;
 			}
 		}
+	}
+}
+
+.banner.full {
+	.banner__texts {
+		flex-direction: column;
+		gap: 0.5em;
 	}
 }
