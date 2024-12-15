@@ -1,0 +1,71 @@
+.pros {
+	@include sectionPadding;
+
+	&__boxes {
+		display: grid;
+		gap: 2em;
+
+		@include view(mobile) {
+			display: grid;
+			grid-template-rows: 1fr;
+			grid-template-columns: repeat(5, 1fr);
+			gap: 1em;
+		}
+	}
+
+	.section__title {
+		margin-bottom: 1em;
+		padding: 0 0em 0 0.5em;
+		font-weight: 700;
+		font-size: 2.4rem;
+
+		text-align: center;
+		text-transform: uppercase;
+
+		@include view(mobile) {
+			font-size: 3.2rem;
+		}
+	}
+
+	&__box {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1em;
+		transition: all 0.3s;
+		border: 1px solid $border;
+		border-radius: 8px;
+		background-color: $gray;
+		padding: 2em 1em;
+
+		&-title {
+			font-weight: 600;
+			font-size: 2rem;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+		}
+
+		@include view(mobile) {
+			&:hover {
+				box-shadow: 0 0 15px $border;
+			}
+		}
+
+		&-icon {
+			width: 80px;
+
+			@include view(mobile) {
+				width: 115px;
+			}
+		}
+
+		&-text {
+			text-align: center;
+
+			p {
+				font-size: 1.5rem;
+				line-height: 180%;
+			}
+		}
+	}
+}
