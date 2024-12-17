@@ -18,5 +18,6 @@ function register_acf_blocks() {
     register_block_type( __DIR__ . '/block/right-section-block' );
     register_block_type( __DIR__ . '/block/banner-block' );
     register_block_type( __DIR__ . '/block/pros-block' );
+    register_block_type( __DIR__ . '/block/reviews-block' );
 }
 ?>
