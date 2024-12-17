@@ -90,6 +90,7 @@ var categorySwiper = new Swiper('.menu-category-slider-menu-container', {
 	loop: true, // Automatyczne zapętlanie slajdów
 	slidesPerView: 1, // Pokaż jeden slajd naraz
 	spaceBetween: 20, // Brak odstępu między slajdami
+	autoplay: true,
 	// centeredSlides: true,
 	pagination: {
 		el: '.category__pagination',
