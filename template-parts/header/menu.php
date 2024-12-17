@@ -1,3 +1,10 @@
+<?php
+$nav_boxes = get_field('nav_box', 'option');
+
+
+
+?>
+
 <?php $logo = get_theme_mod('custom_logo'); ?>
 <?php $logoMobile = get_theme_mod('custom_logo-mobile'); ?>
 <nav class="nav">
@@ -101,40 +108,30 @@
         </div>
         <div class="nav__bottom">
             <div class="container">
-                <div class="nav__bottom-boxes">
-
-
-                    <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            style="transform: ;msFilter:;">
-                            <path
-                                d="M22 8a.76.76 0 0 0 0-.21v-.08a.77.77 0 0 0-.07-.16.35.35 0 0 0-.05-.08l-.1-.13-.08-.06-.12-.09-9-5a1 1 0 0 0-1 0l-9 5-.09.07-.11.08a.41.41 0 0 0-.07.11.39.39 0 0 0-.08.1.59.59 0 0 0-.06.14.3.3 0 0 0 0 .1A.76.76 0 0 0 2 8v8a1 1 0 0 0 .52.87l9 5a.75.75 0 0 0 .13.06h.1a1.06 1.06 0 0 0 .5 0h.1l.14-.06 9-5A1 1 0 0 0 22 16V8zm-10 3.87L5.06 8l2.76-1.52 6.83 3.9zm0-7.72L18.94 8 16.7 9.25 9.87 5.34zM4 9.7l7 3.92v5.68l-7-3.89zm9 9.6v-5.68l3-1.68V15l2-1v-3.18l2-1.11v5.7z">
-                            </path>
-                        </svg>
-                        Free delivery / Worldwide from $27</p>
-                    <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            style="transform: ;msFilter:;">
-                            <path
-                                d="M22 8a.76.76 0 0 0 0-.21v-.08a.77.77 0 0 0-.07-.16.35.35 0 0 0-.05-.08l-.1-.13-.08-.06-.12-.09-9-5a1 1 0 0 0-1 0l-9 5-.09.07-.11.08a.41.41 0 0 0-.07.11.39.39 0 0 0-.08.1.59.59 0 0 0-.06.14.3.3 0 0 0 0 .1A.76.76 0 0 0 2 8v8a1 1 0 0 0 .52.87l9 5a.75.75 0 0 0 .13.06h.1a1.06 1.06 0 0 0 .5 0h.1l.14-.06 9-5A1 1 0 0 0 22 16V8zm-10 3.87L5.06 8l2.76-1.52 6.83 3.9zm0-7.72L18.94 8 16.7 9.25 9.87 5.34zM4 9.7l7 3.92v5.68l-7-3.89zm9 9.6v-5.68l3-1.68V15l2-1v-3.18l2-1.11v5.7z">
-                            </path>
-                        </svg>
-                        Free delivery / Worldwide from $27</p>
-                    <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            style="transform: ;msFilter:;">
-                            <path
-                                d="M22 8a.76.76 0 0 0 0-.21v-.08a.77.77 0 0 0-.07-.16.35.35 0 0 0-.05-.08l-.1-.13-.08-.06-.12-.09-9-5a1 1 0 0 0-1 0l-9 5-.09.07-.11.08a.41.41 0 0 0-.07.11.39.39 0 0 0-.08.1.59.59 0 0 0-.06.14.3.3 0 0 0 0 .1A.76.76 0 0 0 2 8v8a1 1 0 0 0 .52.87l9 5a.75.75 0 0 0 .13.06h.1a1.06 1.06 0 0 0 .5 0h.1l.14-.06 9-5A1 1 0 0 0 22 16V8zm-10 3.87L5.06 8l2.76-1.52 6.83 3.9zm0-7.72L18.94 8 16.7 9.25 9.87 5.34zM4 9.7l7 3.92v5.68l-7-3.89zm9 9.6v-5.68l3-1.68V15l2-1v-3.18l2-1.11v5.7z">
-                            </path>
-                        </svg>
-                        Free delivery / Worldwide from $27</p>
-                    <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                            style="transform: ;msFilter:;">
-                            <path
-                                d="M22 8a.76.76 0 0 0 0-.21v-.08a.77.77 0 0 0-.07-.16.35.35 0 0 0-.05-.08l-.1-.13-.08-.06-.12-.09-9-5a1 1 0 0 0-1 0l-9 5-.09.07-.11.08a.41.41 0 0 0-.07.11.39.39 0 0 0-.08.1.59.59 0 0 0-.06.14.3.3 0 0 0 0 .1A.76.76 0 0 0 2 8v8a1 1 0 0 0 .52.87l9 5a.75.75 0 0 0 .13.06h.1a1.06 1.06 0 0 0 .5 0h.1l.14-.06 9-5A1 1 0 0 0 22 16V8zm-10 3.87L5.06 8l2.76-1.52 6.83 3.9zm0-7.72L18.94 8 16.7 9.25 9.87 5.34zM4 9.7l7 3.92v5.68l-7-3.89zm9 9.6v-5.68l3-1.68V15l2-1v-3.18l2-1.11v5.7z">
-                            </path>
-                        </svg>
-                        Free delivery / Worldwide from $27</p>
-
-
-                </div>
+                <?php
+                if ($nav_boxes): ?>
+                    <div class="nav__bottom-boxes">
+                        <?php foreach ($nav_boxes as $box): 
+                      
+                            $text = $box['text'] ?? '';
+                            $img_id = $box['img'] ?? '';
+                            $img_url = $img_id ? wp_get_attachment_image_url($img_id, 'full') : ''; // Uzyskanie URL obrazka
+                            $img_alt = $img_id ? get_post_meta($img_id, '_wp_attachment_image_alt', true) : ''; // Tekst alternatywny
+                        ?>
+                            <div class="nav__bottom-box">
+                                <?php if ($img_url && $text): ?>
+                                    
+                                        <img src="<?php echo esc_url($img_url); ?>" alt="<?php echo esc_attr($img_alt); ?>">
+                                        <p><?php echo esc_html($text); ?></p>
+                                    
+                                <?php endif; ?>
+                                
+                                
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+               
             </div>
         </div>
     </div>

@@ -10,8 +10,14 @@ $category_content = get_field( 'category-content' );
 $btnText      = $category_content['btn-text'];
 $btnLink      = $category_content['btn-link'];
 $heading      = $category_content['heading'];
-$slider_content = get_field( 'slider-content' );
-$sliderProducts      = $slider_content['slider-products'];
+
+$hero_content = get_field('hero-content');
+$contentOption = $hero_content['content-option'];
+$img           = $hero_content['img'];           
+$title         = $hero_content['title'];         
+$description   = $hero_content['description'];  
+$imageHero     = $hero_content['image_hero'];    
+
 $promo_content = get_field( 'promo-content' );
 $promoHeading      = $promo_content['promo-heading'];
 $promoProducts      = $promo_content['promo-products'];
@@ -34,55 +40,33 @@ $promoLink      = $promo_content['promo-link'];
                 </a>
             </div>
 
-            <div class="header__slider">
-                <?php if( $sliderProducts ): ?>
-                <div class="swiper-container">
-                    <div class="swiper-wrapper">
-                        <?php foreach( $sliderProducts as $post ): ?>
-                        <?php 
-                                // Przygotuj dane postu
-                                setup_postdata($post);
+            <div class="header__content">
+    <?php if ($contentOption === 'grafika' && $img): ?>
+        
+            <img class="header__image" src="<?php echo esc_url(wp_get_attachment_image_url($img, 'full')); ?>" 
+                 alt="<?php echo esc_attr(get_post_meta($img, '_wp_attachment_image_alt', true) ?: 'Obrazek Dekoracyjny lub Promocyjny'); ?>">
+        
+    <?php elseif ($contentOption === 'brakGrafiki'): ?>
+        <div class="header__texts">
+            <?php if ($title): ?>
+                <h1 class="header__title"><?php echo esc_html($title); ?></h1>
+            <?php endif; ?>
 
-                                // Uzyskaj ID produktu
-                                $product_id = $post->ID;
+            <?php if ($description): ?>
+                <div class="header__description"><?php echo wp_kses_post($description); ?></div>
+            <?php endif; ?>
 
-                                // Pobierz obiekt produktu WooCommerce
-                                $product = wc_get_product( $product_id );
-                                ?>
-
-                        <!-- Każdy produkt w karuzeli -->
-                        <div class="swiper-slide header__product header__product-normal">
-
-                            <a href="<?php echo get_permalink($product_id); ?>">
-                                <?php echo $product->get_image(); // Miniatura produktu ?>
-                                <div class="header__product-infos">
-                                    <h2>
-                                        <?php echo get_the_title($product_id); ?>
-                                    </h2>
-
-                                    <span class="header__product-price">
-                                        <?php echo $product->get_price_html(); ?>
-                                        
-                                    </span>
-                                    <button class="header__btn header__btn-cart">Dodaj do koszyka</button>
-                                </div>
-                            </a>
-                        </div>
-
-
-                        <?php endforeach; ?>
-                        <?php wp_reset_postdata(); ?>
-                    </div>
-                    <div class="swiper-pagination"></div>
-
-
-
-                    <!-- Paginacja Swiper -->
-
-                    <!-- Przyciski nawigacji Swiper -->
-                </div>
-                <?php endif; ?>
-            </div>
+            
+        </div>
+        <?php if ($imageHero): ?>
+                <div class="header__wrapper">
+                    <img class="header__image" src="<?php echo esc_url(wp_get_attachment_image_url($imageHero, 'full')); ?>" 
+                         alt="<?php echo esc_attr(get_post_meta($imageHero, '_wp_attachment_image_alt', true) ?: 'Obrazek Dekoracyjny lub Promocyjny'); ?>">
+                         </div>
+            <?php endif; ?>
+    <?php endif; ?>
+</div>
+            
 
             <div class="header__promo">
                 <p class="header__heading">
@@ -153,5 +137,5 @@ $promoLink      = $promo_content['promo-link'];
                 </a>
             </div>
         </div>
-    </div>
+    </>
 </header>
