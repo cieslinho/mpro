@@ -1,0 +1,7 @@
+.reviews {
+	@include sectionPadding;
+
+	.wp-gr .rpi-dot.active {
+		background-color: $blue !important;
+	}
+}

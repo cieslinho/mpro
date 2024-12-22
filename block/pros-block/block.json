@@ -1,0 +1,15 @@
+{
+	"name": "acf/pros-block",
+	"title": "Pros block",
+	"description": "A custom pros block that uses ACF fields.",
+	"category": "formatting",
+	"icon": "admin-comments",
+	"keywords": ["pros block", "quote"],
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "pros-block.php"
+	},
+	"supports": {
+		"anchor": true
+	}
+}
