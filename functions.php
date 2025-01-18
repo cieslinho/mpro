@@ -15,25 +15,25 @@ require_once 'inc/filters.php';
 // require_once 'cpt.php';
 require_once 'blocks.php';
 
-require_once( get_stylesheet_directory() . '/customizer/customizer.php' );
+require_once get_stylesheet_directory() . '/customizer/customizer.php';
 
 function init_scripts() {
 	/**
-	 *  Main styles 
+	 *  Main styles
 	 */
-	wp_register_style( 'main-css', get_template_directory_uri() . '/assets/css/main.css?v=7.3', [], false, 'all' );
-	wp_register_script( 'main-js', get_template_directory_uri() . '/assets/js/script.js?v=7.2', [], false, 'all' );
+	wp_register_style( 'main-css', get_template_directory_uri() . '/assets/css/main.css?v=7.3', array(), false, 'all' );
+	wp_register_script( 'main-js', get_template_directory_uri() . '/assets/js/script.js?v=7.2', array(), false, 'all' );
 
 	wp_enqueue_style( 'main-css' );
 	wp_enqueue_script( 'main-js' );
 }
 add_action( 'wp_enqueue_scripts', 'init_scripts' );
 
-add_action('admin_enqueue_scripts', 'enqueue_my_custom_admin_script');
+add_action( 'admin_enqueue_scripts', 'enqueue_my_custom_admin_script' );
 
 function enqueue_my_custom_admin_script() {
-    wp_enqueue_media(); // Umożliwia korzystanie z mediów
-    wp_enqueue_script('my-admin-script', plugin_dir_url(__FILE__) . 'js/my-admin-script.js', array('jquery'), null, true);
+	wp_enqueue_media(); // Umożliwia korzystanie z mediów
+	wp_enqueue_script( 'my-admin-script', plugin_dir_url( __FILE__ ) . 'js/my-admin-script.js', array( 'jquery' ), null, true );
 }
 
 
@@ -86,25 +86,25 @@ add_filter( 'wp_nav_menu_items', 'add_arrow_icon1', 10, 2 );
 
 // Default images for new animals
 // function set_default_acf_thumbnail_image($post_id) {
-// 	// Check if the post type is 'animals'
-// 	if (get_post_type($post_id) === 'animals') {
-// 			// Check if the 'thumbnail-image' ACF field is empty
-// 			if (empty(get_field('thumbnail-image', $post_id))) {
-// 					// Get the attachment ID for the default image
-// 					$default_image_id = 305;
+// Check if the post type is 'animals'
+// if (get_post_type($post_id) === 'animals') {
+// Check if the 'thumbnail-image' ACF field is empty
+// if (empty(get_field('thumbnail-image', $post_id))) {
+// Get the attachment ID for the default image
+// $default_image_id = 305;
 
-// 					// Update the 'thumbnail-image' ACF field with the default image ID
-// 					update_field('thumbnail-image', $default_image_id, $post_id);
+// Update the 'thumbnail-image' ACF field with the default image ID
+// update_field('thumbnail-image', $default_image_id, $post_id);
 
-// 					// Remove default classes from the default image
-// 					$default_image_classes = array();
-// 					update_post_meta($default_image_id, '_wp_attachment_image_class', $default_image_classes);
+// Remove default classes from the default image
+// $default_image_classes = array();
+// update_post_meta($default_image_id, '_wp_attachment_image_class', $default_image_classes);
 
-// 					// Add the 'animal__image' class to the default image
-// 					$new_image_classes = array('animal__image');
-// 					update_post_meta($default_image_id, '_wp_attachment_image_class', $new_image_classes);
-// 			}
-// 	}
+// Add the 'animal__image' class to the default image
+// $new_image_classes = array('animal__image');
+// update_post_meta($default_image_id, '_wp_attachment_image_class', $new_image_classes);
+// }
+// }
 // }
 
 // add_action('save_post', 'set_default_acf_thumbnail_image');
@@ -114,36 +114,35 @@ add_filter( 'wp_nav_menu_items', 'add_arrow_icon1', 10, 2 );
  *[woo_search num="5" sku="on" description="on" price="on"]
  *https://redpishi.com/wordpress-tutorials/product-ajax-search-code/
  */
-add_shortcode("woo_search", "woo_search_func");
-function woo_search_func($atts)
-{
-    $atts = shortcode_atts(
-        [
-            "image" => "true",
-            "check_stock" => "", // on
-            "sku" => "", // off
-            "description" => "", // off
-            "price" => "", // off
-            "num" => "5",
-            "cat" => "on", // on
-        ],
-        $atts,
-        "woo_search"
-    );
-    static $woo_search_first_call = 1;
-    $image = $atts["image"];
-    $stock = $atts["check_stock"];
-    $sku = $atts["sku"];
-    $description = $atts["description"];
-    $price = $atts["price"];
-    $num = $atts["num"];
-    $cat = $atts["cat"];
+add_shortcode( 'woo_search', 'woo_search_func' );
+function woo_search_func( $atts ) {
+	$atts                         = shortcode_atts(
+		array(
+			'image'       => 'true',
+			'check_stock' => '', // on
+			'sku'         => '', // off
+			'description' => '', // off
+			'price'       => '', // off
+			'num'         => '5',
+			'cat'         => 'on', // on
+		),
+		$atts,
+		'woo_search'
+	);
+	static $woo_search_first_call = 1;
+	$image                        = $atts['image'];
+	$stock                        = $atts['check_stock'];
+	$sku                          = $atts['sku'];
+	$description                  = $atts['description'];
+	$price                        = $atts['price'];
+	$num                          = $atts['num'];
+	$cat                          = $atts['cat'];
 
-    $woo_search_form =
-        '<div class="woo_search_bar woo_bar_el">
+	$woo_search_form =
+		'<div class="woo_search_bar woo_bar_el">
     <form class="woo_search woo_bar_el" id="woo_search' .
-        $woo_search_first_call .
-        '" action="/" method="get" autocomplete="off">
+		$woo_search_first_call .
+		'" action="/" method="get" autocomplete="off">
 		<span class="loading woo_bar_el" >
 		<svg width="25px" height="25px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none" class="hds-flight-icon--animation-loading woo_bar_el">
 <g fill="#676767" fill-rule="evenodd" clip-rule="evenodd">
@@ -153,39 +152,39 @@ function woo_search_func($atts)
 </svg>
 		</span>
         <input type="search" name="s" placeholder="Szukaj..." id="keyword" class="input_search woo_bar_el" onkeyup="searchFetch(this)"><button id="mybtn" class="search' .
-        $woo_search_first_call .
-        ' woo_bar_el">
+		$woo_search_first_call .
+		' woo_bar_el">
         <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M16.6725 16.6412L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </svg>
         </button>
         <input type="hidden" name="post_type" value="product">
         <input type="hidden" name="search_id" value="' .
-        $woo_search_first_call .
-        '">
+		$woo_search_first_call .
+		'">
         <input type="hidden" name="check_stock" value="' .
-        $stock .
-        '">
+		$stock .
+		'">
         <input type="hidden" name="sku" value="' .
-        $sku .
-        '">
+		$sku .
+		'">
         <input type="hidden" name="description" value="' .
-        $description .
-        '">
+		$description .
+		'">
         <input type="hidden" name="price" value="' .
-        $price .
-        '">
+		$price .
+		'">
         <input type="hidden" name="num" value="' .
-        $num .
-        '">
+		$num .
+		'">
         <input type="hidden" name="cat" value="' .
-        $cat .
-        '">
+		$cat .
+		'">
     </form><div class="search_result woo_bar_el" id="datafetch" style="display: none;">
         <ul>
             <li>Proszę poczekać..</li>
         </ul>
     </div></div>';
-    $java =
-        '<script>
+	$java            =
+		'<script>
 function searchFetch(e) {
 const searchForm = e.parentElement;	
 searchForm.querySelector(".loading").style.visibility = "visible";
@@ -195,25 +194,25 @@ if (e.value.trim().length > 0) { datafetch.style.display = "block"; } else { dat
 
 e.nextSibling.value = "Proszę poczekać..."
 var formdata' .
-        $woo_search_first_call .
-        ' = new FormData(searchForm);
+		$woo_search_first_call .
+		' = new FormData(searchForm);
 formdata' .
-        $woo_search_first_call .
-        '.append("image", "' .
-        $image .
-        '") 
+		$woo_search_first_call .
+		'.append("image", "' .
+		$image .
+		'") 
 formdata' .
-        $woo_search_first_call .
-        '.append("action", "woo_search") 
+		$woo_search_first_call .
+		'.append("action", "woo_search") 
 Ajaxwoo_search(formdata' .
-        $woo_search_first_call .
-        ',e) 
+		$woo_search_first_call .
+		',e) 
 
 }
 async function Ajaxwoo_search(formdata,e) {
   const url = "' .
-        admin_url("admin-ajax.php") .
-        '?action=woo_search";
+		admin_url( 'admin-ajax.php' ) .
+		'?action=woo_search";
   const response = await fetch(url, {
       method: "POST",
       body: formdata,
@@ -229,7 +228,7 @@ function goSearch(id){document.querySelector(id).click(); console.log(`clicked`)
 document.addEventListener("click", function(e) { if (document.activeElement.classList.contains("woo_bar_el") == false ) { [...document.querySelectorAll("div.search_result")].forEach(e => e.style.display = "none") } else {if  (e.target?.value.trim().length > 0) { e.target.parentElement.nextSibling.style.display = "block"}} })
 
 </script>';
-    $css = '<style>form.woo_search { display: flex; flex-wrap: nowrap; border: 1px solid #f0f0f0; border-radius: 8px; padding: 0.3em 0.6em; background-color: white; gap: 0.5em; }
+	$css             = '<style>form.woo_search { display: flex; flex-wrap: nowrap; border: 1px solid #f0f0f0; border-radius: 8px; padding: 0.3em 0.6em; background-color: white; gap: 0.5em; }
 form.woo_search button#mybtn { display: grid; padding: 4px; cursor: pointer; background: none; align-items: center;border: none; }
 form.woo_search input#keyword {border: none;}
 div#datafetch {
@@ -373,158 +372,183 @@ hr.search_title {
     margin: 2px 8px 0px 8px;
 }
 </style>';
-    if ($woo_search_first_call == 1) {
-        $woo_search_first_call++;
-        return "{$woo_search_form}{$java}{$css}";
-    } elseif ($woo_search_first_call > 1) {
-        $woo_search_first_call++;
-        return "{$woo_search_form}";
-    }
+	if ( $woo_search_first_call == 1 ) {
+		++$woo_search_first_call;
+		return "{$woo_search_form}{$java}{$css}";
+	} elseif ( $woo_search_first_call > 1 ) {
+		++$woo_search_first_call;
+		return "{$woo_search_form}";
+	}
 }
 
-add_action("wp_ajax_woo_search", "woo_search");
-add_action("wp_ajax_nopriv_woo_search", "woo_search");
-function woo_search()
-{
-    //sleep(1s);
-    $search_id = esc_attr($_POST["search_id"]);
-    $stock = "";
-    $sku = esc_attr($_POST["sku"]);
-    $description = esc_attr($_POST["description"]);
-    $price = esc_attr($_POST["price"]);
-    $num = esc_attr($_POST["num"]);
-    $cat = "";
-    $search_term = esc_attr($_POST["s"]);
+add_action( 'wp_ajax_woo_search', 'woo_search' );
+add_action( 'wp_ajax_nopriv_woo_search', 'woo_search' );
+function woo_search() {
+	// sleep(1s);
+	$search_id   = esc_attr( $_POST['search_id'] );
+	$stock       = '';
+	$sku         = esc_attr( $_POST['sku'] );
+	$description = esc_attr( $_POST['description'] );
+	$price       = esc_attr( $_POST['price'] );
+	$num         = esc_attr( $_POST['num'] );
+	$cat         = '';
+	$search_term = esc_attr( $_POST['s'] );
 
-    if ($sku == "off") {
-        $sku = "style='display: none;'";
-    }
-    if ($description == "off") {
-        $description = "style='display: none;'";
-    }
+	if ( $sku == 'off' ) {
+		$sku = "style='display: none;'";
+	}
+	if ( $description == 'off' ) {
+		$description = "style='display: none;'";
+	}
 
-    if ($cat == "on") {
-        // Get categories
+	if ( $cat == 'on' ) {
+		// Get categories
 
-        $categories = get_terms([
-            "taxonomy" => "product_cat",
-            "name__like" => $search_term,
-            "orderby" => "name",
-            "order" => "ASC",
-        ]);
+		$categories = get_terms(
+			array(
+				'taxonomy'   => 'product_cat',
+				'name__like' => $search_term,
+				'orderby'    => 'name',
+				'order'      => 'ASC',
+			)
+		);
 
-        if (!empty($categories) && !is_wp_error($categories)) {
-            echo '<p class="search_title">CATEGORIES</p> ';
-            echo '<hr class="search_title">';
-            echo '<ul class="cat_ul woo_bar_el">';
+		if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
+			echo '<p class="search_title">CATEGORIES</p> ';
+			echo '<hr class="search_title">';
+			echo '<ul class="cat_ul woo_bar_el">';
 
-            foreach ($categories as $category) {
-                $category_link = get_term_link(
-                    $category->term_id,
-                    "product_cat"
-                );
-                $product_count = $category->count;
-                echo '<li class="cat_li woo_bar_el"><a class="cat_a woo_bar_el" href="' .
-                    esc_url($category_link) .
-                    '">' .
-                    esc_html($category->name) .
-                    " (" .
-                    $product_count .
-                    ")</a></li>";
-            }
-            echo "</ul>";
-        }
-    }
+			foreach ( $categories as $category ) {
+				$category_link = get_term_link(
+					$category->term_id,
+					'product_cat'
+				);
+				$product_count = $category->count;
+				echo '<li class="cat_li woo_bar_el"><a class="cat_a woo_bar_el" href="' .
+					esc_url( $category_link ) .
+					'">' .
+					esc_html( $category->name ) .
+					' (' .
+					$product_count .
+					')</a></li>';
+			}
+			echo '</ul>';
+		}
+	}
 
-    $the_query = new WP_Query([
-        "posts_per_page" => $num,
-        "post_type" => "product",
-        "s" => $search_term,
-    ]);
+	$the_query = new WP_Query(
+		array(
+			'posts_per_page' => $num,
+			'post_type'      => 'product',
+			's'              => $search_term,
+		)
+	);
 
-    if (!$the_query->have_posts()) {
-        $the_query = new WP_Query([
-            "posts_per_page" => $num,
-            "post_type" => "product",
-            "meta_query" => [
-                [
-                    "key" => "_sku",
-                    "value" => $search_term,
-                    "compare" => "LIKE",
-                ],
-            ],
-        ]);
-    }
+	if ( ! $the_query->have_posts() ) {
+		$the_query = new WP_Query(
+			array(
+				'posts_per_page' => $num,
+				'post_type'      => 'product',
+				'meta_query'     => array(
+					array(
+						'key'     => '_sku',
+						'value'   => $search_term,
+						'compare' => 'LIKE',
+					),
+				),
+			)
+		);
+	}
 
-    $number_of_result = $the_query->found_posts;
-    if ($number_of_result > 5) {
-        $show_all =
-            '<button class="show_all woo_bar_el" style="text-align: center; background: white; width: 100%; padding: 5px; color: #666464; cursor: pointer; font-size: 0.95em;border: none; "   onclick="goSearch(`button.search' .
-            $search_id .
-            '`)"  >ZOBACZ WSZYSTKIE PRODUKTY.. (' .
-            $number_of_result .
-            ")</button>";
-    } else {
-        $show_all = "";
-    }
+	$number_of_result = $the_query->found_posts;
+	if ( $number_of_result > 5 ) {
+		$show_all =
+			'<button class="show_all woo_bar_el" style="text-align: center; background: white; width: 100%; padding: 5px; color: #666464; cursor: pointer; font-size: 0.95em;border: none; "   onclick="goSearch(`button.search' .
+			$search_id .
+			'`)"  >ZOBACZ WSZYSTKIE PRODUKTY.. (' .
+			$number_of_result .
+			')</button>';
+	} else {
+		$show_all = '';
+	}
 
-    if ($the_query->have_posts()):
-        if ($cat == "on") {
-            echo '<p class="search_title">PRODUCTS</p> ';
-            echo '<hr class="search_title">';
-        }
+	if ( $the_query->have_posts() ) :
+		if ( $cat == 'on' ) {
+			echo '<p class="search_title">PRODUCTS</p> ';
+			echo '<hr class="search_title">';
+		}
 
-        echo '<ul class="woo_bar_el">';
-        while ($the_query->have_posts()):
+		echo '<ul class="woo_bar_el">';
+		while ( $the_query->have_posts() ) :
 
-            $the_query->the_post();
-            $product = wc_get_product();
-            $current_price = $product->get_price_html();
-            if ($current_price == "") {
-                $current_price = "SOLD OUT";
-                $sold_style =
-                    "style='font-size: 0.75em; font-weight: bold; color: red; '";
-            } else {
-                $sold_style = "";
-            }
-            if ($current_price == "SOLD OUT" && $stock == "on") {
-                $stock_hide = "style='display: none;'";
-            } else {
-                $stock_hide = "";
-            }
-            ?>
-        
-            <a href="<?php echo esc_url(
-                get_permalink()
-            ); ?>" class="woo_bar_el" <?= $stock_hide ?> >
-<?php $image = wp_get_attachment_image_src(
-    get_post_thumbnail_id(),
-    "single-post-thumbnail"
-); ?>                               
-<?php if (
-    $image[0] &&
-    trim(esc_attr($_POST["image"])) == "true"
-) { ?>  <img src="<?php the_post_thumbnail_url(
-      "thumbnail"
-  ); ?>" style="height: 60px;padding: 0px 5px;">
-<li><span class="title_r_1"><h5><?php the_title(); ?></h5 class="product_name"><h5 class="sku" <?= $sku ?> >(SKU:  <?php echo $product->get_sku(); ?>) </h5></span><p class="des" <?= $description ?> > <?php echo wp_trim_words(
-     $product->get_short_description(),
-     15,
-     "..."
- ); ?> </p> </li>	
+			$the_query->the_post();
+			$product       = wc_get_product();
+			$current_price = $product->get_price_html();
+			if ( $current_price == '' ) {
+				$current_price = 'SOLD OUT';
+				$sold_style    =
+					"style='font-size: 0.75em; font-weight: bold; color: red; '";
+			} else {
+				$sold_style = '';
+			}
+			if ( $current_price == 'SOLD OUT' && $stock == 'on' ) {
+				$stock_hide = "style='display: none;'";
+			} else {
+				$stock_hide = '';
+			}
+			?>
+		
+			<a href="
+			<?php
+			echo esc_url(
+				get_permalink()
+			);
+			?>
+			" class="woo_bar_el" <?php echo $stock_hide; ?> >
+			<?php
+			$image = wp_get_attachment_image_src(
+				get_post_thumbnail_id(),
+				'single-post-thumbnail'
+			);
+			?>
+						<?php
+						if (
+						$image[0] &&
+						trim( esc_attr( $_POST['image'] ) ) == 'true'
+						) {
+							?>
+				<img src="
+							<?php
+							the_post_thumbnail_url(
+								'thumbnail'
+							);
+							?>
+	" style="height: 60px;padding: 0px 5px;">
+<li><span class="title_r_1"><h5><?php the_title(); ?></h5 class="product_name"><h5 class="sku" <?php echo $sku; ?> >(SKU:  <?php echo $product->get_sku(); ?>) </h5></span><p class="des" <?php echo $description; ?> > 
+													<?php
+													echo wp_trim_words(
+														$product->get_short_description(),
+														15,
+														'...'
+													);
+													?>
+</p> </li>  
 
 
-<?php if ($price != "off") { ?> 
-	<span class="price" <?= $sold_style ?> > <span> <?= $current_price ?> </span></span>
- <?php }} ?> 
-</a>
-        <?php
-        endwhile;
-        echo $show_all;
-        echo "</ul>";
-        wp_reset_postdata();
-    endif;
-    die();
+							<?php if ( $price != 'off' ) { ?> 
+	<span class="price" <?php echo $sold_style; ?> > <span> <?php echo $current_price; ?> </span></span>
+								<?php
+							}
+						}
+						?>
+			</a>
+			<?php
+		endwhile;
+		echo $show_all;
+		echo '</ul>';
+		wp_reset_postdata();
+	endif;
+	die();
 }
 
 /**
@@ -551,9 +575,9 @@ function conditionally_remove_wc_assets() {
 	remove_filter( 'get_the_generator_xhtml', 'wc_generator_tag', 10, 2 );
 
 	// unload WC scripts
-	remove_action( 'wp_enqueue_scripts', [ WC_Frontend_Scripts::class, 'load_scripts' ] );
-	remove_action( 'wp_print_scripts', [ WC_Frontend_Scripts::class, 'localize_printed_scripts' ], 5 );
-	remove_action( 'wp_print_footer_scripts', [ WC_Frontend_Scripts::class, 'localize_printed_scripts' ], 5 );
+	remove_action( 'wp_enqueue_scripts', array( WC_Frontend_Scripts::class, 'load_scripts' ) );
+	remove_action( 'wp_print_scripts', array( WC_Frontend_Scripts::class, 'localize_printed_scripts' ), 5 );
+	remove_action( 'wp_print_footer_scripts', array( WC_Frontend_Scripts::class, 'localize_printed_scripts' ), 5 );
 
 	// remove "Show the gallery if JS is disabled"
 	remove_action( 'wp_head', 'wc_gallery_noscript' );
@@ -583,49 +607,54 @@ function conditionally_wp_enqueue_scripts() {
 }
 
 // add_action( 'init', 'remove_wc_custom_action' );
-function remove_wc_custom_action(){
+function remove_wc_custom_action() {
 	remove_action( 'wp_head', 'wc_gallery_noscript' );
 }
 
 function theme_add_woocommerce_support() {
-    add_theme_support('woocommerce');
+	add_theme_support( 'woocommerce' );
 }
-add_action('after_setup_theme', 'theme_add_woocommerce_support');
+add_action( 'after_setup_theme', 'theme_add_woocommerce_support' );
 
 
 
 
-add_theme_support('post-thumbnails', array(
-'post',
-'page',
-'custom-post-type-name',
-));
+add_theme_support(
+	'post-thumbnails',
+	array(
+		'post',
+		'page',
+		'custom-post-type-name',
+	)
+);
 
 // Modyfikacja struktury WooCommerce breadcrumbs
 add_filter( 'woocommerce_breadcrumb_defaults', 'custom_woocommerce_breadcrumbs' );
 
 function custom_woocommerce_breadcrumbs() {
-    return array(
-        'delimiter'   => '/', // Usuń domyślny separator
-        'wrap_before' => '<ul class="woocommerce-breadcrumb breadcrumbs">', // Zmień wrapper na ul
-        'wrap_after'  => '</ul>',
-        'before'      => '<li>', // Każdy element breadcrumb w li
-        'after'       => '</li>',
-        'home'        => _x( 'Home', 'breadcrumb', 'woocommerce' ), // Zmień etykietę strony głównej, jeśli potrzebne
-    );
+	return array(
+		'delimiter'   => '/', // Usuń domyślny separator
+		'wrap_before' => '<ul class="woocommerce-breadcrumb breadcrumbs">', // Zmień wrapper na ul
+		'wrap_after'  => '</ul>',
+		'before'      => '<li>', // Każdy element breadcrumb w li
+		'after'       => '</li>',
+		'home'        => _x( 'Home', 'breadcrumb', 'woocommerce' ), // Zmień etykietę strony głównej, jeśli potrzebne
+	);
 }
 
 
 
 function my_theme_widgets_init() {
-    register_sidebar( array(
-        'name'          => 'Shop Sidebar',
-        'id'            => 'shop-sidebar',
-        'before_widget' => '<div class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h2 class="widget-title">',
-        'after_title'   => '</h2>',
-    ) );
+	register_sidebar(
+		array(
+			'name'          => 'Shop Sidebar',
+			'id'            => 'shop-sidebar',
+			'before_widget' => '<div class="widget %2$s">',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		)
+	);
 }
 add_action( 'widgets_init', 'my_theme_widgets_init' );
 
@@ -633,85 +662,85 @@ add_action( 'widgets_init', 'my_theme_widgets_init' );
 add_action( 'woocommerce_product_query', 'filter_products_by_price' );
 
 function filter_products_by_price( $query ) {
-    if ( isset( $_GET['min_cena'] ) && isset( $_GET['max_cena'] ) ) {
-        $meta_query = $query->get( 'meta_query' );
+	if ( isset( $_GET['min_cena'] ) && isset( $_GET['max_cena'] ) ) {
+		$meta_query = $query->get( 'meta_query' );
 
-        $meta_query[] = array(
-            'key' => '_price',
-            'value' => array( floatval( $_GET['min_cena'] ), floatval( $_GET['max_cena'] ) ),
-            'compare' => 'BETWEEN',
-            'type' => 'DECIMAL',
-        );
+		$meta_query[] = array(
+			'key'     => '_price',
+			'value'   => array( floatval( $_GET['min_cena'] ), floatval( $_GET['max_cena'] ) ),
+			'compare' => 'BETWEEN',
+			'type'    => 'DECIMAL',
+		);
 
-        $query->set( 'meta_query', $meta_query );
-    }
+		$query->set( 'meta_query', $meta_query );
+	}
 }
 
 add_filter( 'woocommerce_get_query_vars', 'change_price_filter_query_vars' );
 
 function change_price_filter_query_vars( $vars ) {
-    if ( isset( $_GET['min_price'] ) ) {
-        $vars['min_cena'] = $_GET['min_price'];
-        unset( $vars['min_price'] );
-    }
-    if ( isset( $_GET['max_price'] ) ) {
-        $vars['max_cena'] = $_GET['max_price'];
-        unset( $vars['max_price'] );
-    }
+	if ( isset( $_GET['min_price'] ) ) {
+		$vars['min_cena'] = $_GET['min_price'];
+		unset( $vars['min_price'] );
+	}
+	if ( isset( $_GET['max_price'] ) ) {
+		$vars['max_cena'] = $_GET['max_price'];
+		unset( $vars['max_price'] );
+	}
 
-    return $vars;
+	return $vars;
 }
 
 
 // Dodaj klasę do elementu "Zobacz koszyk" po dodaniu do koszyka
-add_filter('woocommerce_add_to_cart_fragments', 'add_custom_class_to_cart_link');
+add_filter( 'woocommerce_add_to_cart_fragments', 'add_custom_class_to_cart_link' );
 
-function add_custom_class_to_cart_link($fragments) {
-    ob_start();
-    ?>
-    <a href="<?php echo esc_url(wc_get_cart_url()); ?>" class="added_to_cart products__btn-ajax" title="<?php esc_attr_e('Zobacz koszyk', 'woocommerce'); ?>" rel="nofollow">
-        <?php echo esc_html(__('Zobacz koszyk', 'woocommerce')); ?>
-    </a>
-    <?php
-    $fragments['a.added_to_cart'] = ob_get_clean();
-    return $fragments;
+function add_custom_class_to_cart_link( $fragments ) {
+	ob_start();
+	?>
+	<a href="<?php echo esc_url( wc_get_cart_url() ); ?>" class="added_to_cart products__btn-ajax" title="<?php esc_attr_e( 'Zobacz koszyk', 'woocommerce' ); ?>" rel="nofollow">
+		<?php echo esc_html( __( 'Zobacz koszyk', 'woocommerce' ) ); ?>
+	</a>
+	<?php
+	$fragments['a.added_to_cart'] = ob_get_clean();
+	return $fragments;
 }
 
 
-function custom_product_sorting($query) {
-    if (!is_admin() && $query->is_main_query() && (is_post_type_archive('product') || is_tax('product_cat'))) {
-        // Pobierz parametr 'orderby' z URL
-        $orderby = isset($_GET['orderby']) ? $_GET['orderby'] : '';
+function custom_product_sorting( $query ) {
+	if ( ! is_admin() && $query->is_main_query() && ( is_post_type_archive( 'product' ) || is_tax( 'product_cat' ) ) ) {
+		// Pobierz parametr 'orderby' z URL
+		$orderby = isset( $_GET['orderby'] ) ? $_GET['orderby'] : '';
 
-        switch ($orderby) {
-            case 'date_asc':
-                $query->set('orderby', 'date');
-                $query->set('order', 'ASC');
-                break;
-            case 'date_desc':
-                $query->set('orderby', 'date');
-                $query->set('order', 'DESC');
-                break;
-            case 'price_asc':
-                $query->set('meta_key', '_price');
-                $query->set('orderby', 'meta_value_num');
-                $query->set('order', 'ASC');
-                break;
-            case 'price_desc':
-                $query->set('meta_key', '_price');
-                $query->set('orderby', 'meta_value_num');
-                $query->set('order', 'DESC');
-                break;
-        }
-    }
+		switch ( $orderby ) {
+			case 'date_asc':
+				$query->set( 'orderby', 'date' );
+				$query->set( 'order', 'ASC' );
+				break;
+			case 'date_desc':
+				$query->set( 'orderby', 'date' );
+				$query->set( 'order', 'DESC' );
+				break;
+			case 'price_asc':
+				$query->set( 'meta_key', '_price' );
+				$query->set( 'orderby', 'meta_value_num' );
+				$query->set( 'order', 'ASC' );
+				break;
+			case 'price_desc':
+				$query->set( 'meta_key', '_price' );
+				$query->set( 'orderby', 'meta_value_num' );
+				$query->set( 'order', 'DESC' );
+				break;
+		}
+	}
 }
-add_action('pre_get_posts', 'custom_product_sorting');
+add_action( 'pre_get_posts', 'custom_product_sorting' );
 
 add_action( 'pre_get_posts', 'customize_woocommerce_products_per_page' );
 function customize_woocommerce_products_per_page( $query ) {
-    if ( ! is_admin() && $query->is_main_query() && ( is_shop() || is_product_category() ) ) {
-        $query->set( 'posts_per_page', 12 );
-    }
+	if ( ! is_admin() && $query->is_main_query() && ( is_shop() || is_product_category() ) ) {
+		$query->set( 'posts_per_page', 12 );
+	}
 }
 
 
@@ -719,144 +748,362 @@ function customize_woocommerce_products_per_page( $query ) {
 
 // add_action('save_post', 'update_product_price_from_acf', 10, 2);
 // function update_product_price_from_acf($post_id, $post) {
-//     // Sprawdź, czy to jest produkt WooCommerce
-//     if ($post->post_type !== 'product') {
-//         return;
-//     }
+// Sprawdź, czy to jest produkt WooCommerce
+// if ($post->post_type !== 'product') {
+// return;
+// }
 
-//     // Pobierz wartość z pola ACF
-//     $price_per_kg = get_field('group_content')['price_per_kg']; // Upewnij się, że używasz właściwej ścieżki do pola ACF
+// Pobierz wartość z pola ACF
+// $price_per_kg = get_field('group_content')['price_per_kg']; // Upewnij się, że używasz właściwej ścieżki do pola ACF
 
-//     // Sprawdź, czy cena jest ustawiona
-//     if ($price_per_kg) {
-//         // Ustaw cenę produktu na podstawie wartości ACF
-//         update_post_meta($post_id, '_regular_price', $price_per_kg);
-//         update_post_meta($post_id, '_price', $price_per_kg);
-//     }
+// Sprawdź, czy cena jest ustawiona
+// if ($price_per_kg) {
+// Ustaw cenę produktu na podstawie wartości ACF
+// update_post_meta($post_id, '_regular_price', $price_per_kg);
+// update_post_meta($post_id, '_price', $price_per_kg);
+// }
 // }
 
 
 add_filter( 'woocommerce_add_to_cart_quantity', 'custom_cart_quantity', 10, 2 );
 
 function custom_cart_quantity( $quantity, $product_id ) {
-    // Sprawdzamy, czy formularz zawiera naszą niestandardową ilość
-    if ( isset($_POST['custom_quantity']) && is_numeric($_POST['custom_quantity']) ) {
-        $custom_quantity = floatval($_POST['custom_quantity']); // Pobieramy ilość z formularza
-        return $custom_quantity; // Zwracamy ilość jako wartość dziesiętną
-    }
-    return $quantity; // Jeśli nie, używamy standardowej ilości
+	// Sprawdzamy, czy formularz zawiera naszą niestandardową ilość
+	if ( isset( $_POST['custom_quantity'] ) && is_numeric( $_POST['custom_quantity'] ) ) {
+		$custom_quantity = floatval( $_POST['custom_quantity'] ); // Pobieramy ilość z formularza
+		return $custom_quantity; // Zwracamy ilość jako wartość dziesiętną
+	}
+	return $quantity; // Jeśli nie, używamy standardowej ilości
 }
 
 
 // Przekierowanie na stronę koszyka po dodaniu produktu
 function custom_redirect_to_cart() {
-    if ( isset( $_REQUEST['add-to-cart'] ) ) {
-        wp_safe_redirect( wc_get_cart_url() );
-        exit;
-    }
+	if ( isset( $_REQUEST['add-to-cart'] ) ) {
+		wp_safe_redirect( wc_get_cart_url() );
+		exit;
+	}
 }
 add_action( 'template_redirect', 'custom_redirect_to_cart' );
 
 // Funkcja do aktualizacji pola ACF 'price_per_unit' na cenę WooCommerce
 function sync_wc_price_to_acf_price_per_unit( $post_id ) {
-    // Sprawdzamy, czy to jest zapis produktu (a nie innych postów)
-    if ( get_post_type( $post_id ) !== 'product' ) {
-        return;
-    }
+	// Sprawdzamy, czy to jest zapis produktu (a nie innych postów)
+	if ( get_post_type( $post_id ) !== 'product' ) {
+		return;
+	}
 
-    // Pobierz produkt
-    $product = wc_get_product( $post_id );
+	// Pobierz produkt
+	$product = wc_get_product( $post_id );
 
-    // Pobierz cenę produktu
-    $wc_price = $product->get_regular_price(); // Możesz także użyć get_sale_price() w zależności od wymagań
+	// Pobierz cenę produktu
+	$wc_price = $product->get_regular_price(); // Możesz także użyć get_sale_price() w zależności od wymagań
 
-    // Pobierz jednostkę miary
-    $unit_of_measure = get_field('unit_of_measure', $post_id);
+	// Pobierz jednostkę miary
+	$unit_of_measure = get_field( 'unit_of_measure', $post_id );
 
-    // Jeśli jednostka miary jest ustawiona na 'kg', 'mb', lub 'm2', kopiujemy cenę do ACF
-    if ( in_array( $unit_of_measure, ['kg', 'mb', 'm2'], true ) ) {
-        // Zapisz cenę WooCommerce do ACF price_per_unit
-        update_field('price_per_unit', $wc_price, $post_id);
-    }
+	// Jeśli jednostka miary jest ustawiona na 'kg', 'mb', lub 'm2', kopiujemy cenę do ACF
+	if ( in_array( $unit_of_measure, array( 'kg', 'mb', 'm2' ), true ) ) {
+		// Zapisz cenę WooCommerce do ACF price_per_unit
+		update_field( 'price_per_unit', $wc_price, $post_id );
+	}
 }
 add_action( 'save_post', 'sync_wc_price_to_acf_price_per_unit', 10, 3 );
 
 
 function hide_product_description_in_admin() {
-    echo '<style>
+	echo '<style>
         #postdivrich, #postexcerpt { display: none; } /* Ukrywa edytor opisu produktu */
     </style>';
 }
-add_action('admin_head', 'hide_product_description_in_admin');
+add_action( 'admin_head', 'hide_product_description_in_admin' );
 
 
 
 // Usuwamy domyślne pola imienia i nazwiska
-add_filter('woocommerce_checkout_fields', function($fields) {
-    unset($fields['billing']['billing_first_name']);
-    unset($fields['billing']['billing_last_name']);
-    return $fields;
-});
+// add_filter(
+// 'woocommerce_checkout_fields',
+// function ( $fields ) {
+// unset( $fields['billing']['billing_first_name'] );
+// unset( $fields['billing']['billing_last_name'] );
+// return $fields;
+// }
+// );
 
-// Dodaj niestandardowe pola zamiast domyślnych
-add_action('woocommerce_checkout_billing', function() {
-    ?>
-    <div class="checkout__billing-options">
-        <label><input type="radio" name="purchase_type" value="private" checked> <span><?php esc_html_e('Osoba prywatna', 'woocommerce'); ?></span></label>
-        <label><input type="radio" name="purchase_type" value="business"><span> <?php esc_html_e('Zakupy na firmę', 'woocommerce'); ?></span></label>
-    </div>
+// Dodajemy niestandardowe pola zamiast domyślnych
+add_action(
+	'woocommerce_checkout_billing',
+	function () {
+		?>
+	<div class="checkout__billing-options">
+		<label><input type="radio" name="purchase_type" value="private" checked> <span><?php esc_html_e( 'Osoba prywatna', 'woocommerce' ); ?></span></label>
+		<label><input type="radio" name="purchase_type" value="business"><span> <?php esc_html_e( 'Zakupy na firmę', 'woocommerce' ); ?></span></label>
+	</div>
 
-    <div class="checkout__billing-name">
-        <div class="checkout__row">
-        <label for="billing_first_name"><?php esc_html_e('Imię', 'woocommerce'); ?></label>
-        <input type="text" name="billing_first_name" id="billing_first_name" class="input-text" placeholder="<?php esc_attr_e('Wprowadź swoje imię', 'woocommerce'); ?>" required>
-        </div>
-        <div class="checkout__row">
-        <label for="billing_last_name"><?php esc_html_e('Nazwisko', 'woocommerce'); ?></label>
-        <input type="text" name="billing_last_name" id="billing_last_name" class="input-text" placeholder="<?php esc_attr_e('Wprowadź swoje nazwisko', 'woocommerce'); ?>" required>
-        </div>
-    </div>
-    <?php
-}, 10);
+		<?php
+	},
+	10
+);
+
 
 // Modyfikacja pól, ustawienie wymaganych pól oraz walidacja NIP
-add_filter('woocommerce_checkout_fields', function($fields) {
-    $is_business = isset($_POST['purchase_type']) && $_POST['purchase_type'] === 'business';
-    
-    // Wymagane pola
-    $fields['billing']['billing_nip']['required'] = $is_business;
-    $fields['billing']['billing_company']['required'] = $is_business;
-    $fields['shipping']['shipping_company']['required'] = $is_business;
+add_filter(
+	'woocommerce_checkout_fields',
+	function ( $fields ) {
+		$is_business = isset( $_POST['purchase_type'] ) && $_POST['purchase_type'] === 'business';
 
-    // Dodanie niestandardowego pola NIP
-    $fields['billing']['billing_nip'] = [
-        'type' => 'text',
-        'label' => __('NIP', 'woocommerce'),
-        'placeholder' => __('Wprowadź NIP', 'woocommerce'),
-        'class' => ['form-row-wide', 'checkout__nip-field', 'validate-required'],
-        'priority' => 25,
-        'required' => $is_business,
-    ];
+		// Wymagane pola
+		$fields['billing']['billing_nip']['required']       = $is_business;
+		$fields['billing']['billing_company']['required']   = $is_business;
+		$fields['shipping']['shipping_company']['required'] = $is_business;
 
-    // Pole nazwa firmy
-    $fields['billing']['billing_company'] = [
-        'type' => 'text',
-        'label' => __('Nazwa firmy', 'woocommerce'),
-        'placeholder' => __('Wprowadź nazwę firmy', 'woocommerce'),
-        'class' => ['form-row-wide', 'checkout__company-field', 'validate-required'],
-        'priority' => 20,
-        'required' => $is_business,
-    ];
+		// Dodanie niestandardowego pola NIP
+		$fields['billing']['billing_nip'] = array(
+			'type'        => 'text',
+			'label'       => __( 'NIP', 'woocommerce' ),
+			'placeholder' => __( 'Wprowadź NIP', 'woocommerce' ),
+			'class'       => array( 'form-row-wide', 'checkout__nip-field', 'validate-required' ),
+			'priority'    => 25,
+			'required'    => $is_business,
+		);
 
-    return $fields;
-}, 10);
+		// Pole nazwa firmy
+		$fields['billing']['billing_company'] = array(
+			'type'        => 'text',
+			'label'       => __( 'Nazwa firmy', 'woocommerce' ),
+			'placeholder' => __( 'Wprowadź nazwę firmy', 'woocommerce' ),
+			'class'       => array( 'form-row-wide', 'checkout__company-field', 'validate-required' ),
+			'priority'    => 20,
+			'required'    => $is_business,
+		);
+
+		return $fields;
+	},
+	10
+);
 
 // Zmiana etykiety NIP
-add_filter('woocommerce_checkout_field_label', function($label, $field) {
-    if ($field['name'] === 'billing_nip') {
-        $label = $field['required'] 
-            ? 'NIP <span class="required">(wymagane)</span>' 
-            : 'NIP <span class="optional">(opcjonalne)</span>';
-    }
-    return $label;
-}, 10, 2);
+add_filter(
+	'woocommerce_checkout_field_label',
+	function ( $label, $field ) {
+		if ( $field['name'] === 'billing_nip' ) {
+			$label = $field['required']
+			? 'NIP <span class="required">(wymagane)</span>'
+			: 'NIP <span class="optional">(opcjonalne)</span>';
+		}
+		return $label;
+	},
+	10,
+	2
+);
+
+/**
+ * Customizes the placeholder text for the "Address Line 1" field in WooCommerce.
+ *
+ * This function modifies the default placeholder text for the "address_2" field
+ * in WooCommerce's billing and shipping forms. Useful for providing more specific
+ * instructions to users about what to enter in this field.
+ *
+ * @param array $fields The default WooCommerce address fields.
+ *                      Each field is represented as an associative array.
+ *                      Example for `address_2`:
+ *                      [
+ *                          'type'        => 'text',
+ *                          'label'       => 'Address line 1',
+ *                          'placeholder' => 'Apartment, suite, unit, etc. (required)',
+ *                          'required'    => true,
+ *                          ...
+ *                      ]
+ * @return array The modified address fields array with updated placeholder for "address_1".
+ */
+function custom_address_line_1_placeholder( $fields ) {
+	// Update the placeholder text for "Address Line 1".
+	$fields['address_1']['placeholder'] = 'Nazwa ulicy';
+
+	return $fields;
+}
+add_filter( 'woocommerce_default_address_fields', 'custom_address_line_1_placeholder' );
+/**
+ * Customizes the placeholder text for the "Address Line 2" field in WooCommerce.
+ *
+ * This function modifies the default placeholder text for the "address_2" field
+ * in WooCommerce's billing and shipping forms. Useful for providing more specific
+ * instructions to users about what to enter in this field.
+ *
+ * @param array $fields The default WooCommerce address fields.
+ *                      Each field is represented as an associative array.
+ *                      Example for `address_2`:
+ *                      [
+ *                          'type'        => 'text',
+ *                          'label'       => 'Address line 2',
+ *                          'placeholder' => 'Apartment, suite, unit, etc. (required)',
+ *                          'required'    => true,
+ *                          ...
+ *                      ]
+ * @return array The modified address fields array with updated placeholder for "address_2".
+ */
+function custom_address_line_2_placeholder( $fields ) {
+	// Update the placeholder text for "Address Line 2".
+	$fields['address_2']['placeholder'] = 'Numer budynku / Numer lokalu';
+
+	return $fields;
+}
+add_filter( 'woocommerce_default_address_fields', 'custom_address_line_2_placeholder' );
+
+
+/**
+ * Wyświetlanie niestandardowych pól w panelu administracyjnym zamówienia WooCommerce
+ *
+ * Dodaje pola: NIP, Firma (Billing), Firma (Shipping) w szczegółach zamówienia oraz zapisuje je z formularza checkout.
+ */
+
+/**
+ * Wyświetla niestandardowe pola w sekcji adresu płatnika w szczegółach zamówienia.
+ *
+ * @param WC_Order $order Obiekt zamówienia WooCommerce.
+ */
+add_action( 'woocommerce_admin_order_data_after_billing_address', 'custom_display_billing_fields_in_admin_order', 10, 1 );
+function custom_display_billing_fields_in_admin_order( $order ) {
+	// Pobierz i wyświetl pole NIP
+	$billing_nip = $order->get_meta( '_billing_nip' );
+	if ( $billing_nip ) {
+		echo '<p><strong>' . __( 'NIP', 'woocommerce' ) . ':</strong> ' . esc_html( $billing_nip ) . '</p>';
+	}
+
+	// Pobierz i wyświetl pole Firma (Billing)
+	$billing_company = $order->get_meta( '_billing_company' );
+	if ( $billing_company ) {
+		echo '<p><strong>' . __( 'Firma (Billing)', 'woocommerce' ) . ':</strong> ' . esc_html( $billing_company ) . '</p>';
+	}
+}
+
+/**
+ * Wyświetla niestandardowe pola w sekcji adresu dostawy w szczegółach zamówienia.
+ *
+ * @param WC_Order $order Obiekt zamówienia WooCommerce.
+ */
+add_action( 'woocommerce_admin_order_data_after_shipping_address', 'custom_display_shipping_fields_in_admin_order', 10, 1 );
+function custom_display_shipping_fields_in_admin_order( $order ) {
+	// Pobierz i wyświetl pole Firma (Shipping)
+	$shipping_company = $order->get_meta( '_shipping_company' );
+	if ( $shipping_company ) {
+		echo '<p><strong>' . __( 'Firma (Shipping)', 'woocommerce' ) . ':</strong> ' . esc_html( $shipping_company ) . '</p>';
+	}
+}
+
+/**
+ * Zapisuje wartości niestandardowych pól z formularza checkout do metadanych zamówienia.
+ *
+ * @param int $order_id ID zamówienia WooCommerce.
+ */
+add_action( 'woocommerce_checkout_update_order_meta', 'custom_save_checkout_fields_to_order_meta' );
+function custom_save_checkout_fields_to_order_meta( $order_id ) {
+	if ( ! empty( $_POST['billing_nip'] ) ) {
+		update_post_meta( $order_id, '_billing_nip', sanitize_text_field( $_POST['billing_nip'] ) );
+	}
+	if ( ! empty( $_POST['billing_company'] ) ) {
+		update_post_meta( $order_id, '_billing_company', sanitize_text_field( $_POST['billing_company'] ) );
+	}
+	if ( ! empty( $_POST['shipping_company'] ) ) {
+		update_post_meta( $order_id, '_shipping_company', sanitize_text_field( $_POST['shipping_company'] ) );
+	}
+}
+
+
+/**
+ * Dodaje niestandardowe pola do skrótów adresów na stronie "order-received".
+ */
+
+/**
+ * Dodaje niestandardowe dane do skrótów adresów.
+ *
+ * @param array    $address_array Tablica danych adresowych.
+ * @param WC_Order $order Obiekt zamówienia WooCommerce.
+ * @return array Zaktualizowana tablica danych adresowych.
+ */
+add_filter( 'woocommerce_order_formatted_billing_address', 'custom_add_billing_fields_to_formatted_address', 10, 2 );
+add_filter( 'woocommerce_order_formatted_shipping_address', 'custom_add_shipping_fields_to_formatted_address', 10, 2 );
+
+function custom_add_billing_fields_to_formatted_address( $address_array, $order ) {
+	// Dodaj pole NIP
+	$billing_nip = $order->get_meta( '_billing_nip' );
+	if ( ! empty( $billing_nip ) ) {
+		$address_array['billing_nip'] = __( 'NIP', 'woocommerce' ) . ': ' . $billing_nip;
+	}
+
+	// Dodaj pole Firma (Billing)
+	$billing_company = $order->get_meta( '_billing_company' );
+	if ( ! empty( $billing_company ) ) {
+		$address_array['billing_company'] = __( 'Firma', 'woocommerce' ) . ': ' . $billing_company;
+	}
+
+	return $address_array;
+}
+
+function custom_add_shipping_fields_to_formatted_address( $address_array, $order ) {
+	// Dodaj pole Firma (Shipping)
+	$shipping_company = $order->get_meta( '_shipping_company' );
+	if ( ! empty( $shipping_company ) ) {
+		$address_array['shipping_company'] = __( 'Firma (dostawa)', 'woocommerce' ) . ': ' . $shipping_company;
+	}
+
+	return $address_array;
+}
+
+/**
+ * Wyświetla niestandardowe dane w skrótach adresów na stronie "order-received".
+ *
+ * @param string   $formatted_address Sformatowany adres.
+ * @param array    $address_array Tablica danych adresowych.
+ * @param WC_Order $order Obiekt zamówienia WooCommerce.
+ * @return string Zaktualizowany sformatowany adres.
+ */
+add_filter( 'woocommerce_order_get_formatted_billing_address', 'custom_format_billing_address', 10, 3 );
+add_filter( 'woocommerce_order_get_formatted_shipping_address', 'custom_format_shipping_address', 10, 3 );
+
+function custom_format_billing_address( $formatted_address, $address_array, $order ) {
+	// Pobierz niestandardowe dane
+	$billing_nip     = $order->get_meta( '_billing_nip' );
+	$billing_company = $order->get_meta( '_billing_company' );
+
+	// Dodaj do sformatowanego adresu
+	if ( ! empty( $billing_nip ) ) {
+		$formatted_address .= '<br>' . __( 'NIP', 'woocommerce' ) . ': ' . esc_html( $billing_nip );
+	}
+	if ( ! empty( $billing_company ) ) {
+		$formatted_address .= '<br>' . __( 'Firma', 'woocommerce' ) . ': ' . esc_html( $billing_company );
+	}
+
+	return $formatted_address;
+}
+
+function custom_format_shipping_address( $formatted_address, $address_array, $order ) {
+	// Pobierz niestandardowe dane
+	$shipping_company = $order->get_meta( '_shipping_company' );
+
+	// Dodaj do sformatowanego adresu
+	if ( ! empty( $shipping_company ) ) {
+		$formatted_address .= '<br>' . __( 'Firma (dostawa)', 'woocommerce' ) . ': ' . esc_html( $shipping_company );
+	}
+
+	return $formatted_address;
+}
+
+function assign_custom_fields_to_new_account( $customer_id ) {
+	// Pobierz wartości pól z formularza checkout
+	if ( isset( $_POST['_shipping_company'] ) ) {
+		$shipping_company = sanitize_text_field( $_POST['_shipping_company'] );
+		update_user_meta( $customer_id, '_shipping_company', $shipping_company );
+	}
+
+	if ( isset( $_POST['_billing_nip'] ) ) {
+		$billing_nip = sanitize_text_field( $_POST['_billing_nip'] );
+		update_user_meta( $customer_id, '_billing_nip', $billing_nip );
+	}
+
+	if ( isset( $_POST['_billing_company'] ) ) {
+		$billing_company = sanitize_text_field( $_POST['_billing_company'] );
+		update_user_meta( $customer_id, '_billing_company', $billing_company );
+	}
+}
+add_action( 'woocommerce_created_customer', 'assign_custom_fields_to_new_account' );
