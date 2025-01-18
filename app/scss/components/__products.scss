@@ -386,3 +386,32 @@ input[type='number'] {
 		fill: $dark;
 	}
 }
+
+.wc-block-product-categories-list-item.current-cat > ul,
+.wc-block-product-categories-list-item.current-cat-parent > ul {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3em;
+}
+
+.current-cat > a {
+	color: $blue;
+	font-weight: 600;
+}
+
+.current-cat-parent > a {
+	font-weight: 600;
+}
+
+.current-cat-parent > a,
+.current-cat > a {
+	.categories__btn {
+		.arrow-icon-category {
+			transform: rotateX(180deg);
+
+			path {
+				fill: $blue;
+			}
+		}
+	}
+}
