@@ -301,3 +301,47 @@
 		width: 49% !important;
 	}
 }
+
+.woocommerce-account-fields {
+	margin-inline: 0.2em !important;
+	margin-top: 1em !important;
+	border-radius: 4px;
+	background-color: $darkGray;
+	padding: 0.5em 1em;
+	color: $white;
+
+	p {
+		display: flex;
+		position: relative;
+		justify-content: stretch;
+		align-items: center;
+		margin: 0 !important;
+		padding: 0 !important;
+
+		&::before,
+		&::after {
+			display: none;
+		}
+
+		label {
+			width: 100%;
+			input {
+				display: unset !important;
+				margin-right: 0.5em !important;
+				// outline: 1px solid $black;
+				border-radius: 50%;
+				background-color: $border;
+				width: 10px;
+				height: 10px;
+			}
+
+			input:checked {
+				background-color: $success;
+			}
+
+			input:checked + span {
+				font-weight: 600 !important;
+			}
+		}
+	}
+}
