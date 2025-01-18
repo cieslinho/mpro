@@ -118,97 +118,87 @@ var categorySwiper = new Swiper('.menu-category-slider-menu-container', {
 })
 
 function redirectToFilteredPrice() {
-	const minPrice = document.getElementById('minPriceInput').value
-	const maxPrice = document.getElementById('maxPriceInput').value
+	const price = document.getElementById('priceInput').value
 
-	// Dynamically set the base URL (you might want to define this according to your setup)
+	// Zapisanie wartości w localStorage
+	localStorage.setItem('lastPrice', price)
+
+	// Dynamiczne ustawienie bazowego URL
 	const baseUrl = window.location.origin + '/sklep'
 
-	// Uzyskiwanie numeru aktualnej strony z URL
-	const currentPath = window.location.pathname // np. '/sklep/page/477/'
-	const currentPage = currentPath.split('/').pop() // Wydobycie ostatniego segmentu URL (numery strony)
-
-	// Tworzenie nowego URL z parametrami min_cena i max_cena
-	const url = `${baseUrl}/${currentPage}/?min_cena=${minPrice}&max_cena=${maxPrice}`
+	// Tworzenie nowego URL z parametrami min_price i max_price
+	const url = `${baseUrl}/?max_price=${price}`
 
 	// Przekierowanie do nowego URL
 	window.location.href = url
 }
 
-// Funkcja do inicjalizacji filtracji
 function initPriceFilter() {
-	const minPriceInput = document.getElementById('minPriceInput')
-	const maxPriceInput = document.getElementById('maxPriceInput')
-	const minPriceSlider = document.getElementById('minPrice')
-	const maxPriceSlider = document.getElementById('maxPrice')
+	const priceInput = document.getElementById('priceInput')
+	const priceSlider = document.getElementById('priceSlider')
 	const filterButton = document.getElementById('filterButton')
-	const minPriceValue = document.getElementById('minPriceValue')
-	const maxPriceValue = document.getElementById('maxPriceValue')
+	const priceValue = document.getElementById('priceValue')
 
-	// Ustawienia wartości maksymalnej
-	maxPriceSlider.max = maxPrice // Ustaw maksymalną wartość suwaka na maksymalną cenę
+	// Funkcja aktualizacji stylu suwaka
+	function updateSliderValue() {
+		const value = priceSlider.value
+		const max = priceSlider.max
+		const percentage = (value / max) * 100
+		priceSlider.style.setProperty('--value', percentage)
+	}
 
-	// Ustawienia wartości minimalnej i maksymalnej
-	minPriceInput.addEventListener('input', function () {
-		minPriceSlider.value = this.value
-		minPriceValue.textContent = this.value
+	// Odczytanie ostatniej zapisanej wartości z localStorage
+	const lastPrice = localStorage.getItem('lastPrice')
+	if (lastPrice !== null) {
+		priceInput.value = lastPrice
+		priceSlider.value = lastPrice
+		priceValue.textContent = lastPrice
+		updateSliderValue()
+	}
+
+	// Aktualizacja wartości inputa na podstawie suwaka
+	priceSlider.addEventListener('input', function () {
+		priceInput.value = this.value
+		priceValue.textContent = this.value
+		updateSliderValue() // Aktualizacja stylu suwaka
 	})
 
-	maxPriceInput.addEventListener('input', function () {
-		maxPriceSlider.value = this.value
-		maxPriceValue.textContent = this.value
+	// Aktualizacja suwaka na podstawie inputa
+	priceInput.addEventListener('input', function () {
+		priceSlider.value = this.value
+		priceValue.textContent = this.value
+		updateSliderValue() // Aktualizacja stylu suwaka
 	})
 
-	// Ustawianie wartości suwaków
-	minPriceSlider.addEventListener('input', function () {
-		minPriceInput.value = this.value
-		minPriceValue.textContent = this.value
+	// Przycisk zmniejszania wartości
+	document.getElementById('priceDecrease').addEventListener('click', function () {
+		if (parseInt(priceInput.value) > 0) {
+			priceInput.value = parseInt(priceInput.value) - 1
+			priceSlider.value = priceInput.value
+			priceValue.textContent = priceInput.value
+			updateSliderValue() // Aktualizacja stylu suwaka
+		}
 	})
 
-	maxPriceSlider.addEventListener('input', function () {
-		maxPriceInput.value = this.value
-		maxPriceValue.textContent = this.value
+	// Przycisk zwiększania wartości
+	document.getElementById('priceIncrease').addEventListener('click', function () {
+		if (parseInt(priceInput.value) < parseInt(priceSlider.max)) {
+			priceInput.value = parseInt(priceInput.value) + 1
+			priceSlider.value = priceInput.value
+			priceValue.textContent = priceInput.value
+			updateSliderValue() // Aktualizacja stylu suwaka
+		}
 	})
 
-	// Dodanie nasłuchiwacza na przycisk
+	// Dodanie nasłuchiwacza na przycisk filtracji
 	filterButton.addEventListener('click', redirectToFilteredPrice)
 
-	// Przycisk zwiększania wartości min
-	document.getElementById('minPriceIncrease').addEventListener('click', function () {
-		if (parseInt(minPriceInput.value) < parseInt(maxPriceInput.value)) {
-			minPriceInput.value = parseInt(minPriceInput.value) + 1
-			minPriceSlider.value = minPriceInput.value
-			minPriceValue.textContent = minPriceInput.value
-		}
-	})
-
-	// Przycisk zmniejszania wartości min
-	document.getElementById('minPriceDecrease').addEventListener('click', function () {
-		if (parseInt(minPriceInput.value) > 0) {
-			minPriceInput.value = parseInt(minPriceInput.value) - 1
-			minPriceSlider.value = minPriceInput.value
-			minPriceValue.textContent = minPriceInput.value
-		}
-	})
-
-	// Przycisk zwiększania wartości max
-	document.getElementById('maxPriceIncrease').addEventListener('click', function () {
-		if (parseInt(maxPriceInput.value) < maxPrice) {
-			maxPriceInput.value = parseInt(maxPriceInput.value) + 1
-			maxPriceSlider.value = maxPriceInput.value
-			maxPriceValue.textContent = maxPriceInput.value
-		}
-	})
-
-	// Przycisk zmniejszania wartości max
-	document.getElementById('maxPriceDecrease').addEventListener('click', function () {
-		if (parseInt(maxPriceInput.value) > parseInt(minPriceInput.value)) {
-			maxPriceInput.value = parseInt(maxPriceInput.value) - 1
-			maxPriceSlider.value = maxPriceInput.value
-			maxPriceValue.textContent = maxPriceInput.value
-		}
-	})
+	// Zainicjuj styl suwaka na starcie
+	updateSliderValue()
 }
+
+// Inicjalizacja filtra po załadowaniu strony
+initPriceFilter()
 
 document.addEventListener('DOMContentLoaded', function () {
 	// Wybierz wszystkie elementy z podkategoriami
