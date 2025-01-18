@@ -214,6 +214,9 @@ document.addEventListener('DOMContentLoaded', function () {
 	// Wybierz wszystkie elementy z podkategoriami
 	const categoryItems = document.querySelectorAll('.wc-block-product-categories-list-item')
 
+	// Pobierz aktualny URL, aby sprawdzić, która kategoria jest aktywna
+	const currentURL = window.location.href
+
 	categoryItems.forEach(item => {
 		const link = item.querySelector('a')
 		const submenu = item.querySelector('.wc-block-product-categories-list')
@@ -243,11 +246,24 @@ document.addEventListener('DOMContentLoaded', function () {
 				const isExpanded = button.getAttribute('aria-expanded') === 'true'
 
 				// Toggle widoczności submenu, klasy 'active' na przycisku, oraz klasy 'submenu-open' na submenu
-
 				submenu.classList.toggle('submenu-open', !isExpanded)
 				button.classList.toggle('active', !isExpanded)
 				button.setAttribute('aria-expanded', !isExpanded)
 			})
+		}
+
+		// Dodanie klas aktywnych do kategorii
+		if (link.href === currentURL) {
+			item.classList.add('current-cat') // Dodaj klasę dla bieżącej kategorii
+
+			// Dodaj klasę "current-cat-parent" dla nadrzędnej kategorii
+			let parent = item.closest('.wc-block-product-categories-list-item')
+			while (parent) {
+				parent.classList.add('current-cat-parent')
+				parent = parent
+					.closest('.wc-block-product-categories-list-item')
+					.parentElement.closest('.wc-block-product-categories-list-item')
+			}
 		}
 	})
 
