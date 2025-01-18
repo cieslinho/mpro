@@ -1,8 +1,15 @@
 .woocommerce .woocommerce-breadcrumb {
 	display: flex;
 	flex-wrap: wrap;
+	align-items: center;
 	gap: 0.5em;
 	margin-block: 2em !important;
+
+	font-size: 1rem !important;
+
+	@include view(mobile) {
+		font-size: 1.4rem !important;
+	}
 
 	&::after,
 	&::before {
@@ -10,7 +17,26 @@
 	}
 
 	li {
+		-webkit-clip-path: polygon(
+			calc(100% - 10px) 0%,
+			100% 50%,
+			calc(100% - 10px) calc(100% - 0px),
+			0% 100%,
+			10px 50%,
+			0% 0%
+		);
+
+		clip-path: polygon(calc(100% - 10px) 0%, 100% 50%, calc(100% - 10px) calc(100% - 0px), 0% 100%, 10px 50%, 0% 0%);
+
+		background-color: $gray;
+
+		padding: 0.3em 1em;
 		text-transform: uppercase;
+
+		&:last-of-type {
+			background-color: $darkGray;
+			color: $white;
+		}
 		a {
 			@include hoverBlue;
 		}
