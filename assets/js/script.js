@@ -197,9 +197,6 @@ function initPriceFilter() {
 	updateSliderValue()
 }
 
-// Inicjalizacja filtra po załadowaniu strony
-initPriceFilter()
-
 document.addEventListener('DOMContentLoaded', function () {
 	// Wybierz wszystkie elementy z podkategoriami
 	const categoryItems = document.querySelectorAll('.wc-block-product-categories-list-item')
