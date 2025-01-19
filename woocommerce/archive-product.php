@@ -32,6 +32,8 @@ remove_action( 'woocommerce_product_loop_start', 'woocommerce_product_loop_start
 remove_action( 'woocommerce_product_loop_end', 'woocommerce_product_loop_end', 10 );
 ?>
 
+<?php get_template_part( 'block/hero-parent-category-block/hero-parent-category-block' ); ?>
+
 <section class="products">
 	<div class="container">
 		<div class="products__breadcrumbs">
@@ -180,7 +182,6 @@ remove_action( 'woocommerce_product_loop_end', 'woocommerce_product_loop_end', 1
 						<?php do_action( 'woocommerce_no_products_found' ); ?>
 					<?php endif; ?>
 				</div>
-				<?php get_template_part( 'block/bottom-banner-block/bottom-banner-block' ); ?>
 			</div>
 		</div>
 
