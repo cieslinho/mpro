@@ -50,7 +50,7 @@ if ( $hero_img ) {
 		$top_category = get_term( $top_category->parent, 'product_cat' );
 	}
 
-	// Renderowanie kontenera z obrazkiem
+	// Renderowanie kontenera z obrazkiem.
 	?>
 	<div class="category__hero">
 		<p class="category__hero-title">
