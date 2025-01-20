@@ -1,0 +1,48 @@
+.page404 {
+	@include sectionPadding;
+
+	&__boxes,
+	&__box {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 1em;
+	}
+
+	&__box {
+		text-align: center;
+		&:last-of-type {
+			flex-direction: row;
+			align-items: center;
+		}
+	}
+
+	&__title {
+		color: $error;
+		font-weight: bold;
+		font-size: 6rem;
+		text-align: center;
+
+		@include view(mobile) {
+			font-size: 10rem;
+		}
+	}
+
+	&__text {
+		font-size: 2rem;
+	}
+
+	&__description {
+		color: $darkGray;
+		font-size: 1.2rem;
+	}
+
+	&__btn {
+		@include btn;
+
+		&-cta {
+			@include btnCta;
+		}
+	}
+}
