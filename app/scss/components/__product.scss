@@ -275,6 +275,70 @@
 				}
 			}
 		}
+
+		.variations_form {
+			flex-direction: column;
+			gap: 1.5em;
+			width: 100%;
+
+			table.variations {
+				tr {
+					display: flex;
+					flex-direction: column;
+					gap: 1em;
+					margin-bottom: 1em;
+
+					th {
+						align-self: flex-end;
+						label {
+							font-weight: 600;
+							font-size: 2rem;
+							letter-spacing: 1px;
+						}
+					}
+
+					td.value {
+						display: flex;
+						flex-direction: row-reverse;
+						flex-wrap: wrap;
+						justify-content: space-between;
+						align-items: center;
+
+						select,
+						a {
+							@include btn;
+						}
+
+						a {
+							background-color: $error;
+
+							font-size: 1.4rem;
+
+							&:hover {
+								background-color: $error;
+							}
+						}
+
+						select {
+							option {
+								text-align: center;
+							}
+						}
+					}
+				}
+			}
+
+			.variations_button {
+				display: flex;
+				justify-content: space-between;
+				gap: 3em;
+
+				button {
+					align-self: flex-end;
+					width: 170.94px;
+				}
+			}
+		}
 	}
 
 	&__meta {
