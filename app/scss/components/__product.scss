@@ -331,12 +331,20 @@
 			.variations_button {
 				display: flex;
 				justify-content: space-between;
-				gap: 3em;
+				gap: 1em;
 
 				button {
 					align-self: flex-end;
 					width: 170.94px;
 				}
+			}
+
+			.single_variation_wrap {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: flex-end;
+				align-items: center;
+				gap: 1em;
 			}
 		}
 	}
