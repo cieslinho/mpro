@@ -274,6 +274,7 @@ $stock_quantity = $product->get_stock_quantity();
 	<div class="product__btn add-to-cart">
 		<?php woocommerce_template_single_add_to_cart(); ?>
 	</div>
+	</div>
 	<div class="product__meta">
 		<?php woocommerce_template_single_meta(); ?>
 	</div>
@@ -299,6 +300,7 @@ $stock_quantity = $product->get_stock_quantity();
 
 			</div>
 		</div>
+
 
 	  
 		
@@ -355,6 +357,63 @@ $stock_quantity = $product->get_stock_quantity();
 										}
 
 
+
+	   
+		
+		<?php get_template_part( 'block/product-tabs-block/product-tabs-block' ); ?>
+		<div class="product__related">
+			<h2 class="section-title section-title-margin">Podobne produkty</h2>
+		<div class="products__boxes">
+	<?php
+	ini_set( 'display_errors', 'Off' );
+	ini_set( 'error_reporting', E_ALL );
+	$related_products = wc_get_related_products( get_the_ID(), 4 );
+
+	if ( $related_products ) :
+		foreach ( $related_products as $related_product_id ) :
+
+			$product       = wc_get_product( $related_product_id );
+			$product_title = $product->get_name();
+			$product_link  = get_permalink( $related_product_id );
+			$product_image = wp_get_attachment_image_src( get_post_thumbnail_id( $related_product_id ), 'medium' )[0];
+			$product_price = $product->get_price_html();
+			?>
+			<div class="products__box">
+				<div class="products__box-top">
+					<a href="<?php echo esc_url( $product_link ); ?>">
+						<img src="<?php echo esc_url( $product_image ); ?>" alt="<?php echo esc_attr( $product_title ); ?>">
+					</a>
+				</div>
+				<div class="products__box-infos">
+					<h2><a href="<?php echo esc_url( $product_link ); ?>"><?php echo esc_html( $product_title ); ?></a></h2>
+					<span class="products__price"><?php echo wp_kses_post( $product_price ); ?>
+					
+										<?php
+										// Pobranie aktualnego produktu
+										global $product;
+
+										// Pobranie jednostki miary z ACF (domyślnie "szt")
+										$unit = get_field( 'unit_of_measure', $product->get_id() ) ?: 'szt';
+
+										// Mapa jednostek
+										$units = array(
+											'szt' => 'szt.',
+											'mb'  => 'mb.',
+											'kg'  => 'kg',
+											'm2'  => 'm2',
+										);
+
+
+
+										// Wyświetlenie jednostki
+										if ( isset( $units[ $unit ] ) ) {
+											?>
+		<p class="products__unit">Cena za <?php echo esc_html( $units[ $unit ] ); ?></p>
+											<?php
+										}
+
+
+
 										?>
 				
 				
@@ -372,11 +431,13 @@ $stock_quantity = $product->get_stock_quantity();
 </div>
 
 		</div>
-	   
+
 	</div>
 </section>
 
 <?php
+
+
 
 
 do_action( 'woocommerce_after_main_content' );

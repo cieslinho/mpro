@@ -81,7 +81,7 @@ remove_action( 'woocommerce_product_loop_end', 'woocommerce_product_loop_end', 1
 			</div>
 
 			<div class="products__right">
-			<?php get_template_part( 'block/top-banner-block/top-banner-block' ); ?>
+			
 			<div class="products__sorting">
 	<form method="GET">
 		<label for="orderby" class="products__sorting-label">Sortuj:</label>
@@ -182,6 +182,7 @@ remove_action( 'woocommerce_product_loop_end', 'woocommerce_product_loop_end', 1
 						<?php do_action( 'woocommerce_no_products_found' ); ?>
 					<?php endif; ?>
 				</div>
+				<?php get_template_part( 'block/top-banner-block/top-banner-block' ); ?>
 			</div>
 		</div>
 
