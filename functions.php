@@ -1107,3 +1107,12 @@ function assign_custom_fields_to_new_account( $customer_id ) {
 	}
 }
 add_action( 'woocommerce_created_customer', 'assign_custom_fields_to_new_account' );
+
+add_action(
+	'wp_enqueue_scripts',
+	function () {
+		if ( is_woocommerce() || is_cart() || is_checkout() ) {
+			wp_enqueue_script( 'wc-add-to-cart-variation' );
+		}
+	}
+);
