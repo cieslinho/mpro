@@ -75,6 +75,7 @@
 				li {
 					a {
 						font-size: 1.4rem;
+						text-transform: uppercase;
 						@include hoverBlue;
 					}
 				}
@@ -92,7 +93,7 @@
 				a {
 					color: $white;
 					font-size: 1.2rem;
-
+					text-transform: uppercase;
 					@include hoverBlue;
 				}
 			}
@@ -228,6 +229,7 @@
 						position: relative;
 						padding: 0.5em 1em;
 						color: $white;
+						text-transform: uppercase;
 
 						&:hover {
 							background-color: $darkBlue;
