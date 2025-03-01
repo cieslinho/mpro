@@ -175,6 +175,11 @@
 		}
 
 		.woocommerce-orders-table__cell-order-actions {
+			display: flex;
+			flex-direction: column;
+			// justify-content: center;
+			// align-items: center;
+			gap: 0.5em;
 			a {
 				@include btn;
 			}
@@ -185,6 +190,17 @@
 				&:hover {
 					color: $blue;
 				}
+			}
+		}
+
+		.woocommerce-orders-table__header-order-rt-invoice,
+		.woocommerce-orders-table__cell-order-rt-invoice {
+			display: none;
+		}
+
+		.woocommerce-orders-table__cell-rt-invoice {
+			a {
+				@include btn;
 			}
 		}
 	}
