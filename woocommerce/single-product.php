@@ -17,14 +17,7 @@ $main_image_id = $product->get_image_id();
 $main_image_url = wp_get_attachment_image_url( $main_image_id, 'large' );
 $main_image_alt = get_post_meta( $main_image_id, '_wp_attachment_image_alt', true );
 
-// Placeholder dla głównego zdjęcia
-$placeholder_url = 'http://mprosklep.pl/wp-content/uploads/2024/10/product-placeholder.png';
 
-// Użyj placeholdera, jeśli brak głównego zdjęcia
-if ( ! $main_image_url ) {
-	$main_image_url = $placeholder_url;
-	$main_image_alt = 'No image available'; // Ustaw alternatywny tekst dla placeholdera
-}
 
 $product_id = get_the_ID(); // ID aktualnego produktu
 $price      = get_post_meta( $product_id, '_price', true ); // Pobierz cenę podstawową
@@ -45,6 +38,10 @@ if ( function_exists( 'wc_print_notices' ) ) {
 		<div class="product__content">
 			<div class="product__left">
 				<div class="product__img">
+					<?php
+					$default_image_url = wc_placeholder_img_src();
+					$main_image_url    = ! empty( $main_image_url ) ? $main_image_url : $default_image_url;
+					?>
 					<img id="main-image" src="<?php echo esc_url( $main_image_url ); ?>" alt="<?php echo esc_attr( $main_image_alt ); ?>">
 				</div>
 
@@ -59,11 +56,6 @@ if ( function_exists( 'wc_print_notices' ) ) {
 							echo '<div class="product__thumbnail" data-large-img="' . esc_url( $main_image_url ) . '">';
 							echo wp_get_attachment_image( $main_image_id, 'auto' );
 							echo '</div>';
-						} else {
-							// Dodaj placeholder jako miniaturę, jeśli brak głównego zdjęcia
-							echo '<div class="product__thumbnail" data-large-img="' . esc_url( $placeholder_url ) . '">';
-							echo '<img src="' . esc_url( $placeholder_url ) . '" alt="Zdjęcie Zastępcze Produktu" />';
-							echo '</div>';
 						}
 
 						// Dodaj pozostałe miniatury z galerii
@@ -75,11 +67,6 @@ if ( function_exists( 'wc_print_notices' ) ) {
 								echo wp_get_attachment_image( $attachment_id, 'auto', false, array( 'alt' => esc_attr( $thumbnail_alt ) ) );
 								echo '</div>';
 							}
-						} else {
-							// Dodaj placeholder dla miniatur, gdy brak zdjęć
-							echo '<div class="product__thumbnail" data-large-img="' . esc_url( $placeholder_url ) . '">';
-							echo '<img src="' . esc_url( $placeholder_url ) . '" alt="Zdjęcie Zastępcze Produktu" />';
-							echo '</div>';
 						}
 						?>
 					
@@ -319,13 +306,23 @@ $stock_quantity = $product->get_stock_quantity();
 			$product       = wc_get_product( $related_product_id );
 			$product_title = $product->get_name();
 			$product_link  = get_permalink( $related_product_id );
-			$product_image = wp_get_attachment_image_src( get_post_thumbnail_id( $related_product_id ), 'medium' )[0];
+			// Pobierz ID głównego zdjęcia
+			$main_image_id = $product->get_image_id();
+			// Pobierz URL i metadane głównego zdjęcia
+			$main_image_url = wp_get_attachment_image_url( $main_image_id, 'large' );
+			$main_image_alt = get_post_meta( $main_image_id, '_wp_attachment_image_alt', true );
+
 			$product_price = $product->get_price_html();
 			?>
 			<div class="products__box">
 				<div class="products__box-top">
 					<a href="<?php echo esc_url( $product_link ); ?>">
-						<img src="<?php echo esc_url( $product_image ); ?>" alt="<?php echo esc_attr( $product_title ); ?>">
+						<?php
+						$default_image_url = wc_placeholder_img_src();
+						$main_image_url    = ! empty( $main_image_url ) ? $main_image_url : $default_image_url;
+
+						?>
+						<img src="<?php echo esc_url( $main_image_url ); ?>" alt="<?php echo esc_attr( $product_title ); ?>">
 					</a>
 				</div>
 				<div class="products__box-infos">
