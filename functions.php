@@ -1116,3 +1116,146 @@ add_action(
 		}
 	}
 );
+
+
+add_action( 'pre_get_posts', function( $query ) {
+    if ( !is_admin() && $query->is_main_query() && ( is_shop() || is_product_category() || is_product_tag() ) ) {
+        $query->set( 'post_status', 'publish' );
+    }
+});
+
+
+add_filter('woocommerce_my_account_my_orders_columns', function ($columns) {
+    $columns['rt-invoice'] = __('Dokument sprzedaży', 'woocommerce');
+    return $columns;
+});
+
+add_action('woocommerce_my_account_my_orders_column_rt-invoice', function ($order) {
+    $dirs = wp_get_upload_dir();
+    $dir = rtrim($dirs['basedir'], '/') . '/rt-invoices';
+    $invoice = get_post_meta($order->get_id(), 'rt-invoice', true);
+    $path = $dir . '/' . sanitize_file_name($invoice);
+    $url = $dirs['baseurl'] . '/rt-invoices/' . sanitize_file_name($invoice);
+
+    if ($invoice && file_exists($path)) {
+        echo '<a class="button wc-action-button wc-action-button-rt-invoice rt-invoice link" href="' . esc_url($url) . '" aria-label="' . __('Pobierz dokument sprzedaży', 'woocommerce') . '" title="' . __('Pobierz dokument sprzedaży', 'woocommerce') . '" target="_blank">' . __('Pobierz dokument sprzedaży', 'woocommerce') . '</a>';
+    }
+});
+
+// Dodanie sekcji do edycji zamówienia w WooCommerce
+add_action('woocommerce_admin_order_data_after_billing_address', function ($order) {
+    // Pobranie wartości faktury z metadanych zamówienia
+    $invoice = get_post_meta($order->get_id(), 'rt-invoice', true);
+
+    if ($invoice) {
+        // Pobranie ścieżki do katalogu uploadów
+        $upload_dir = wp_get_upload_dir();
+        $invoice_url = $upload_dir['baseurl'] . '/rt-invoices/' . sanitize_file_name($invoice);
+
+        echo '<p><strong>' . __('Dokument sprzedaży:', 'woocommerce') . '</strong><br>';
+        echo '<a href="' . esc_url($invoice_url) . '" target="_blank" class="button button-primary">' . esc_html($invoice) . '</a></p>';
+    } else {
+        echo '<p><strong>' . __('Dokument sprzedaży:', 'woocommerce') . '</strong><br>';
+        echo '<em>' . __('Brak dokumentu', 'woocommerce') . '</em></p>';
+    }
+}, 10, 1);
+
+
+// Dodanie przycisku w edycji zamówienia
+add_action('woocommerce_admin_order_data_after_order_details', function ($order) {
+    $order_id = $order->get_id();
+    ?>
+    <div class="order_rt_invoice">
+        <p><strong><?php _e('Dokument sprzedaży:', 'woocommerce'); ?></strong></p>
+        <?php
+        $invoice = get_post_meta($order_id, 'rt-invoice', true);
+        if ($invoice) {
+            $upload_dir = wp_get_upload_dir();
+            $invoice_url = $upload_dir['baseurl'] . '/rt-invoices/' . sanitize_file_name($invoice);
+            ?>
+            <p><a href="<?php echo esc_url($invoice_url); ?>" target="_blank" class="button"><?php _e('Pobierz fakturę', 'woocommerce'); ?></a></p>
+            <p><button type="button" class="button button-primary send_rt_invoice" data-order-id="<?php echo esc_attr($order_id); ?>">
+                <?php _e('Wyślij fakturę do klienta', 'woocommerce'); ?>
+            </button></p>
+            <?php
+        } else {
+            echo '<p><em>' . __('Brak dokumentu', 'woocommerce') . '</em></p>';
+        }
+        ?>
+    </div>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('.send_rt_invoice').on('click', function() {
+                var order_id = $(this).data('order-id');
+                var button = $(this);
+                button.prop('disabled', true).text('<?php _e('Wysyłanie...', 'woocommerce'); ?>');
+
+                $.post(ajaxurl, {
+                    action: 'send_rt_invoice',
+                    order_id: order_id
+                }, function(response) {
+                    alert(response.data.message);
+                    button.prop('disabled', false).text('<?php _e('Wyślij fakturę do klienta', 'woocommerce'); ?>');
+                });
+            });
+        });
+    </script>
+    <?php
+});
+
+// Obsługa AJAX do wysyłania faktury
+add_action('wp_ajax_send_rt_invoice', function () {
+    if (!current_user_can('manage_woocommerce')) {
+        wp_send_json_error(['message' => __('Brak uprawnień!', 'woocommerce')]);
+    }
+
+    // Pobranie ID zamówienia
+    $order_id = isset($_POST['order_id']) ? intval($_POST['order_id']) : 0;
+    if (!$order_id) {
+        wp_send_json_error(['message' => __('Nieprawidłowe zamówienie!', 'woocommerce')]);
+    }
+
+    // Pobranie zamówienia
+    $order = wc_get_order($order_id);
+    if (!$order) {
+        wp_send_json_error(['message' => __('Nie znaleziono zamówienia!', 'woocommerce')]);
+    }
+
+    // Pobranie e-maila klienta
+    $customer_email = $order->get_billing_email();
+    if (!$customer_email) {
+        wp_send_json_error(['message' => __('Brak e-maila klienta!', 'woocommerce')]);
+    }
+
+    // Pobranie faktury
+    $invoice = get_post_meta($order_id, 'rt-invoice', true);
+    if (!$invoice) {
+        wp_send_json_error(['message' => __('Brak faktury dla tego zamówienia!', 'woocommerce')]);
+    }
+
+    // Ścieżki do faktury
+    $upload_dir = wp_get_upload_dir();
+    $invoice_path = $upload_dir['basedir'] . '/rt-invoices/' . sanitize_file_name($invoice);
+    $invoice_url  = $upload_dir['baseurl'] . '/rt-invoices/' . sanitize_file_name($invoice);
+
+    // Sprawdzenie czy plik istnieje
+    if (!file_exists($invoice_path)) {
+        wp_send_json_error(['message' => __('Plik faktury nie istnieje!', 'woocommerce')]);
+    }
+
+    // Przygotowanie e-maila
+    $subject = __('Twoja faktura za zamówienie', 'woocommerce');
+    $message = sprintf(__('Dzień dobry,<br><br>Załączamy fakturę do Twojego zamówienia #%s.<br><br>Możesz także pobrać ją klikając w ten link: <a href="%s">%s</a>.<br><br>Pozdrawiamy,<br>Zespół sklepu.', 'woocommerce'), $order->get_order_number(), esc_url($invoice_url), esc_html($invoice));
+
+    $headers = ['Content-Type: text/html; charset=UTF-8'];
+    
+    // Wysyłka wiadomości e-mail z załącznikiem
+    $sent = wp_mail($customer_email, $subject, $message, $headers, [$invoice_path]);
+
+    if ($sent) {
+        wp_send_json_success(['message' => __('Faktura została wysłana do klienta!', 'woocommerce')]);
+    } else {
+        wp_send_json_error(['message' => __('Nie udało się wysłać e-maila!', 'woocommerce')]);
+    }
+});
+

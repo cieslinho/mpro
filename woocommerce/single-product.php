@@ -121,7 +121,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 	</p>
 <?php else : ?>
 	<p class="product__price product__pricv-normal price">
-		<?php echo wc_price( $price ); ?>
+		<?php echo wc_price( wc_get_price_including_tax( $product ) ); ?>
 		<span class="product__unit">
 <?            if (isset($units[$unit])) {
 		?>
