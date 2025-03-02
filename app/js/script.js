@@ -30,6 +30,21 @@ const handleNav = () => {
 	})
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+	// Znalezienie elementu <li> zawierającego link "Moje Konto"
+	var menuItems = document.querySelectorAll('li.menu-icon-account')
+
+	menuItems.forEach(menuItem => {
+		if (menuItem) {
+			// Kod SVG do wstawienia
+			var svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);"><path d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5zM20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h17z"></path></svg>`
+
+			// Wstawienie SVG bezpośrednio po otwarciu <li>, ale przed <a>
+			menuItem.insertAdjacentHTML('afterbegin', svgIcon)
+		}
+	})
+})
+
 document.querySelectorAll('.nav__arrow').forEach(button => {
 	button.addEventListener('click', function () {
 		const parentItem = this.closest('li') // Znalezienie elementu li

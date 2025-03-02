@@ -143,6 +143,8 @@ function woo_search_func( $atts ) {
     <form class="woo_search woo_bar_el" id="woo_search' .
 		$woo_search_first_call .
 		'" action="/" method="get" autocomplete="off">
+		
+        <input type="search" name="s" placeholder="Szukaj..." id="keyword" class="input_search woo_bar_el" onkeyup="searchFetch(this)">
 		<span class="loading woo_bar_el" >
 		<svg width="25px" height="25px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none" class="hds-flight-icon--animation-loading woo_bar_el">
 <g fill="#676767" fill-rule="evenodd" clip-rule="evenodd">
@@ -151,7 +153,7 @@ function woo_search_func( $atts ) {
 </g>
 </svg>
 		</span>
-        <input type="search" name="s" placeholder="Szukaj..." id="keyword" class="input_search woo_bar_el" onkeyup="searchFetch(this)"><button id="mybtn" class="search' .
+		<button id="mybtn" class="search' .
 		$woo_search_first_call .
 		' woo_bar_el">
         <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M16.6725 16.6412L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/> </svg>
@@ -228,153 +230,9 @@ function goSearch(id){document.querySelector(id).click(); console.log(`clicked`)
 document.addEventListener("click", function(e) { if (document.activeElement.classList.contains("woo_bar_el") == false ) { [...document.querySelectorAll("div.search_result")].forEach(e => e.style.display = "none") } else {if  (e.target?.value.trim().length > 0) { e.target.parentElement.nextSibling.style.display = "block"}} })
 
 </script>';
-	$css             = '<style>form.woo_search { display: flex; flex-wrap: nowrap; border: 1px solid #f0f0f0; border-radius: 8px; padding: 0.3em 0.6em; background-color: white; gap: 0.5em; }
-form.woo_search button#mybtn { display: grid; padding: 4px; cursor: pointer; background: none; align-items: center;border: none; }
-form.woo_search input#keyword {border: none;}
-div#datafetch {
-    background: white;
-    z-index: 10;
-    position: absolute;
-    max-height: 425px;
-    overflow: auto;
-    right: 0;
-    left: 0;
-    top: 50px;
-}
-div.woo_search_bar {
-    width: 100%;
-    min-width: 400px;
-    position: relative;
-}
-
-div.search_result ul a li {
-    display: flex;
-    margin: 0px;
-    padding: 0px 0px 0px 0px;
-    color: #3f3f3f;
-    font-weight: bold;
-    flex-direction: column;
-    justify-content: space-evenly;
-}
-div.search_result li {
-    margin-inline-start: 20px;
-    list-style: none;
-}
-div.search_result ul {
-    padding: 13px 0px 0px 0px!important;
-    list-style: none;
-    margin: auto;
-}
-
-div.search_result ul a {
-    display: grid;
-    grid-template-columns: 70px 1fr minmax(70px , min-content);
-    margin-bottom: 10px;
-    gap: 5px;
-}
-div.search_result ul a h5 {
-    font-size: 1em;
-    padding: 0;
-    margin: 0;
-    font-weight: bold;
-}
-div.search_result ul a p.des {
-    font-weight: normal;
-    font-size: 0.9em;
-    color: #676767;
-    padding: 0;
-    margin: 0;
-    line-height: 1.3em;
-}
-div.search_result ul a h5.sku {
-    font-weight: normal;
-    font-size: 0.85em;
-    color: #676767;
-    padding: 0!important;
-    margin: 0!important;
-}
-div.search_result ul a span.title_r_1 {
-    display: flex;
-    flex-direction: row;
-    gap: 9px;
-}
-div.search_result ul a:hover {
-    background-color: #f3f3f3;
-}
-.woo_search input#keyword {
-    outline: none;
-    width: 100%;
-    background-color: white;
-}
-span.loading {
-    display: grid;
-    align-items: center;
-}
-@-webkit-keyframes rotating {
-    from{
-        -webkit-transform: rotate(0deg);
-    }
-    to{
-        -webkit-transform: rotate(360deg);
-    }
-}
-
-.hds-flight-icon--animation-loading {
-    -webkit-animation: rotating 1s linear infinite;
-}
-span.loading {
-    visibility: hidden;
-}
-span.price p {
-    padding: 0;
-    margin: 0;
-}
-span.price {
-    display: flex;
-    margin-inline-end: 5px;
-    align-items: center;
-    color: #535353;
-}
-span.price .sale-price {
-    justify-content: flex-start;
- 
-}
-div#datafetch a {
-    text-decoration: none;
-}
-ul.cat_ul.woo_bar_el {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0px;
-}
-a.cat_a.woo_bar_el {
-    display: block;
-    color: #5a5a5a;
-    padding: 4px 15px;
-    border-radius: 8px;
-    border: 1px solid #5a5a5a;
-}
-a.cat_a.woo_bar_el:hover {
-    background-color: #5a5a5a;
-    color: white;
-}
-
-p.search_title {
-    margin: 10px 0px 0px 8px;
-    line-height: normal;
-    color: #676767;
-    font-size: 0.9em;
-    font-weight: normal;
-    padding: 0;
-}
-hr.search_title {
-    background-color: #cccccc;
-    margin: 2px 8px 0px 8px;
-}
-</style>';
 	if ( $woo_search_first_call == 1 ) {
 		++$woo_search_first_call;
-		return "{$woo_search_form}{$java}{$css}";
+		return "{$woo_search_form}{$java}";
 	} elseif ( $woo_search_first_call > 1 ) {
 		++$woo_search_first_call;
 		return "{$woo_search_form}";
@@ -463,7 +321,7 @@ function woo_search() {
 	$number_of_result = $the_query->found_posts;
 	if ( $number_of_result > 5 ) {
 		$show_all =
-			'<button class="show_all woo_bar_el" style="text-align: center; background: white; width: 100%; padding: 5px; color: #666464; cursor: pointer; font-size: 0.95em;border: none; "   onclick="goSearch(`button.search' .
+			'<button class="show_all woo_bar_el" onclick="goSearch(`button.search' .
 			$search_id .
 			'`)"  >ZOBACZ WSZYSTKIE PRODUKTY.. (' .
 			$number_of_result .
@@ -523,7 +381,7 @@ function woo_search() {
 								'thumbnail'
 							);
 							?>
-	" style="height: 60px;padding: 0px 5px;">
+	" style="">
 <li><span class="title_r_1"><h5><?php the_title(); ?></h5 class="product_name"><h5 class="sku" <?php echo $sku; ?> >(SKU:  <?php echo $product->get_sku(); ?>) </h5></span><p class="des" <?php echo $description; ?> > 
 													<?php
 													echo wp_trim_words(
@@ -1118,144 +976,181 @@ add_action(
 );
 
 
-add_action( 'pre_get_posts', function( $query ) {
-    if ( !is_admin() && $query->is_main_query() && ( is_shop() || is_product_category() || is_product_tag() ) ) {
-        $query->set( 'post_status', 'publish' );
-    }
-});
+add_action(
+	'pre_get_posts',
+	function ( $query ) {
+		if ( ! is_admin() && $query->is_main_query() && ( is_shop() || is_product_category() || is_product_tag() ) ) {
+			$query->set( 'post_status', 'publish' );
+		}
+	}
+);
 
 
-add_filter('woocommerce_my_account_my_orders_columns', function ($columns) {
-    $columns['rt-invoice'] = __('Dokument sprzedaży', 'woocommerce');
-    return $columns;
-});
+add_filter(
+	'woocommerce_my_account_my_orders_columns',
+	function ( $columns ) {
+		$columns['rt-invoice'] = __( 'Dokument sprzedaży', 'woocommerce' );
+		return $columns;
+	}
+);
 
-add_action('woocommerce_my_account_my_orders_column_rt-invoice', function ($order) {
-    $dirs = wp_get_upload_dir();
-    $dir = rtrim($dirs['basedir'], '/') . '/rt-invoices';
-    $invoice = get_post_meta($order->get_id(), 'rt-invoice', true);
-    $path = $dir . '/' . sanitize_file_name($invoice);
-    $url = $dirs['baseurl'] . '/rt-invoices/' . sanitize_file_name($invoice);
+add_action(
+	'woocommerce_my_account_my_orders_column_rt-invoice',
+	function ( $order ) {
+		$dirs    = wp_get_upload_dir();
+		$dir     = rtrim( $dirs['basedir'], '/' ) . '/rt-invoices';
+		$invoice = get_post_meta( $order->get_id(), 'rt-invoice', true );
+		$path    = $dir . '/' . sanitize_file_name( $invoice );
+		$url     = $dirs['baseurl'] . '/rt-invoices/' . sanitize_file_name( $invoice );
 
-    if ($invoice && file_exists($path)) {
-        echo '<a class="button wc-action-button wc-action-button-rt-invoice rt-invoice link" href="' . esc_url($url) . '" aria-label="' . __('Pobierz dokument sprzedaży', 'woocommerce') . '" title="' . __('Pobierz dokument sprzedaży', 'woocommerce') . '" target="_blank">' . __('Pobierz dokument sprzedaży', 'woocommerce') . '</a>';
-    }
-});
+		if ( $invoice && file_exists( $path ) ) {
+			echo '<a class="button wc-action-button wc-action-button-rt-invoice rt-invoice link" href="' . esc_url( $url ) . '" aria-label="' . __( 'Pobierz dokument sprzedaży', 'woocommerce' ) . '" title="' . __( 'Pobierz dokument sprzedaży', 'woocommerce' ) . '" target="_blank">' . __( 'Pobierz dokument sprzedaży', 'woocommerce' ) . '</a>';
+		}
+	}
+);
 
 // Dodanie sekcji do edycji zamówienia w WooCommerce
-add_action('woocommerce_admin_order_data_after_billing_address', function ($order) {
-    // Pobranie wartości faktury z metadanych zamówienia
-    $invoice = get_post_meta($order->get_id(), 'rt-invoice', true);
+add_action(
+	'woocommerce_admin_order_data_after_billing_address',
+	function ( $order ) {
+		// Pobranie wartości faktury z metadanych zamówienia
+		$invoice = get_post_meta( $order->get_id(), 'rt-invoice', true );
 
-    if ($invoice) {
-        // Pobranie ścieżki do katalogu uploadów
-        $upload_dir = wp_get_upload_dir();
-        $invoice_url = $upload_dir['baseurl'] . '/rt-invoices/' . sanitize_file_name($invoice);
+		if ( $invoice ) {
+			// Pobranie ścieżki do katalogu uploadów
+			$upload_dir  = wp_get_upload_dir();
+			$invoice_url = $upload_dir['baseurl'] . '/rt-invoices/' . sanitize_file_name( $invoice );
 
-        echo '<p><strong>' . __('Dokument sprzedaży:', 'woocommerce') . '</strong><br>';
-        echo '<a href="' . esc_url($invoice_url) . '" target="_blank" class="button button-primary">' . esc_html($invoice) . '</a></p>';
-    } else {
-        echo '<p><strong>' . __('Dokument sprzedaży:', 'woocommerce') . '</strong><br>';
-        echo '<em>' . __('Brak dokumentu', 'woocommerce') . '</em></p>';
-    }
-}, 10, 1);
+			echo '<p><strong>' . __( 'Dokument sprzedaży:', 'woocommerce' ) . '</strong><br>';
+			echo '<a href="' . esc_url( $invoice_url ) . '" target="_blank" class="button button-primary">' . esc_html( $invoice ) . '</a></p>';
+		} else {
+			echo '<p><strong>' . __( 'Dokument sprzedaży:', 'woocommerce' ) . '</strong><br>';
+			echo '<em>' . __( 'Brak dokumentu', 'woocommerce' ) . '</em></p>';
+		}
+	},
+	10,
+	1
+);
 
 
 // Dodanie przycisku w edycji zamówienia
-add_action('woocommerce_admin_order_data_after_order_details', function ($order) {
-    $order_id = $order->get_id();
-    ?>
-    <div class="order_rt_invoice">
-        <p><strong><?php _e('Dokument sprzedaży:', 'woocommerce'); ?></strong></p>
-        <?php
-        $invoice = get_post_meta($order_id, 'rt-invoice', true);
-        if ($invoice) {
-            $upload_dir = wp_get_upload_dir();
-            $invoice_url = $upload_dir['baseurl'] . '/rt-invoices/' . sanitize_file_name($invoice);
-            ?>
-            <p><a href="<?php echo esc_url($invoice_url); ?>" target="_blank" class="button"><?php _e('Pobierz fakturę', 'woocommerce'); ?></a></p>
-            <p><button type="button" class="button button-primary send_rt_invoice" data-order-id="<?php echo esc_attr($order_id); ?>">
-                <?php _e('Wyślij fakturę do klienta', 'woocommerce'); ?>
-            </button></p>
-            <?php
-        } else {
-            echo '<p><em>' . __('Brak dokumentu', 'woocommerce') . '</em></p>';
-        }
-        ?>
-    </div>
-    <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            $('.send_rt_invoice').on('click', function() {
-                var order_id = $(this).data('order-id');
-                var button = $(this);
-                button.prop('disabled', true).text('<?php _e('Wysyłanie...', 'woocommerce'); ?>');
+add_action(
+	'woocommerce_admin_order_data_after_order_details',
+	function ( $order ) {
+		$order_id = $order->get_id();
+		?>
+	<div class="order_rt_invoice">
+		<p><strong><?php _e( 'Dokument sprzedaży:', 'woocommerce' ); ?></strong></p>
+		<?php
+		$invoice = get_post_meta( $order_id, 'rt-invoice', true );
+		if ( $invoice ) {
+			$upload_dir  = wp_get_upload_dir();
+			$invoice_url = $upload_dir['baseurl'] . '/rt-invoices/' . sanitize_file_name( $invoice );
+			?>
+			<p><a href="<?php echo esc_url( $invoice_url ); ?>" target="_blank" class="button"><?php _e( 'Pobierz fakturę', 'woocommerce' ); ?></a></p>
+			<p><button type="button" class="button button-primary send_rt_invoice" data-order-id="<?php echo esc_attr( $order_id ); ?>">
+				<?php _e( 'Wyślij fakturę do klienta', 'woocommerce' ); ?>
+			</button></p>
+			<?php
+		} else {
+			echo '<p><em>' . __( 'Brak dokumentu', 'woocommerce' ) . '</em></p>';
+		}
+		?>
+	</div>
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$('.send_rt_invoice').on('click', function() {
+				var order_id = $(this).data('order-id');
+				var button = $(this);
+				button.prop('disabled', true).text('<?php _e( 'Wysyłanie...', 'woocommerce' ); ?>');
 
-                $.post(ajaxurl, {
-                    action: 'send_rt_invoice',
-                    order_id: order_id
-                }, function(response) {
-                    alert(response.data.message);
-                    button.prop('disabled', false).text('<?php _e('Wyślij fakturę do klienta', 'woocommerce'); ?>');
-                });
-            });
-        });
-    </script>
-    <?php
-});
+				$.post(ajaxurl, {
+					action: 'send_rt_invoice',
+					order_id: order_id
+				}, function(response) {
+					alert(response.data.message);
+					button.prop('disabled', false).text('<?php _e( 'Wyślij fakturę do klienta', 'woocommerce' ); ?>');
+				});
+			});
+		});
+	</script>
+		<?php
+	}
+);
 
 // Obsługa AJAX do wysyłania faktury
-add_action('wp_ajax_send_rt_invoice', function () {
-    if (!current_user_can('manage_woocommerce')) {
-        wp_send_json_error(['message' => __('Brak uprawnień!', 'woocommerce')]);
-    }
+add_action(
+	'wp_ajax_send_rt_invoice',
+	function () {
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Brak uprawnień!', 'woocommerce' ) ) );
+		}
 
-    // Pobranie ID zamówienia
-    $order_id = isset($_POST['order_id']) ? intval($_POST['order_id']) : 0;
-    if (!$order_id) {
-        wp_send_json_error(['message' => __('Nieprawidłowe zamówienie!', 'woocommerce')]);
-    }
+		// Pobranie ID zamówienia
+		$order_id = isset( $_POST['order_id'] ) ? intval( $_POST['order_id'] ) : 0;
+		if ( ! $order_id ) {
+			wp_send_json_error( array( 'message' => __( 'Nieprawidłowe zamówienie!', 'woocommerce' ) ) );
+		}
 
-    // Pobranie zamówienia
-    $order = wc_get_order($order_id);
-    if (!$order) {
-        wp_send_json_error(['message' => __('Nie znaleziono zamówienia!', 'woocommerce')]);
-    }
+		// Pobranie zamówienia
+		$order = wc_get_order( $order_id );
+		if ( ! $order ) {
+			wp_send_json_error( array( 'message' => __( 'Nie znaleziono zamówienia!', 'woocommerce' ) ) );
+		}
 
-    // Pobranie e-maila klienta
-    $customer_email = $order->get_billing_email();
-    if (!$customer_email) {
-        wp_send_json_error(['message' => __('Brak e-maila klienta!', 'woocommerce')]);
-    }
+		// Pobranie e-maila klienta
+		$customer_email = $order->get_billing_email();
+		if ( ! $customer_email ) {
+			wp_send_json_error( array( 'message' => __( 'Brak e-maila klienta!', 'woocommerce' ) ) );
+		}
 
-    // Pobranie faktury
-    $invoice = get_post_meta($order_id, 'rt-invoice', true);
-    if (!$invoice) {
-        wp_send_json_error(['message' => __('Brak faktury dla tego zamówienia!', 'woocommerce')]);
-    }
+		// Pobranie faktury
+		$invoice = get_post_meta( $order_id, 'rt-invoice', true );
+		if ( ! $invoice ) {
+			wp_send_json_error( array( 'message' => __( 'Brak faktury dla tego zamówienia!', 'woocommerce' ) ) );
+		}
 
-    // Ścieżki do faktury
-    $upload_dir = wp_get_upload_dir();
-    $invoice_path = $upload_dir['basedir'] . '/rt-invoices/' . sanitize_file_name($invoice);
-    $invoice_url  = $upload_dir['baseurl'] . '/rt-invoices/' . sanitize_file_name($invoice);
+		// Ścieżki do faktury
+		$upload_dir   = wp_get_upload_dir();
+		$invoice_path = $upload_dir['basedir'] . '/rt-invoices/' . sanitize_file_name( $invoice );
+		$invoice_url  = $upload_dir['baseurl'] . '/rt-invoices/' . sanitize_file_name( $invoice );
 
-    // Sprawdzenie czy plik istnieje
-    if (!file_exists($invoice_path)) {
-        wp_send_json_error(['message' => __('Plik faktury nie istnieje!', 'woocommerce')]);
-    }
+		// Sprawdzenie czy plik istnieje
+		if ( ! file_exists( $invoice_path ) ) {
+			wp_send_json_error( array( 'message' => __( 'Plik faktury nie istnieje!', 'woocommerce' ) ) );
+		}
 
-    // Przygotowanie e-maila
-    $subject = __('Twoja faktura za zamówienie', 'woocommerce');
-    $message = sprintf(__('Dzień dobry,<br><br>Załączamy fakturę do Twojego zamówienia #%s.<br><br>Możesz także pobrać ją klikając w ten link: <a href="%s">%s</a>.<br><br>Pozdrawiamy,<br>Zespół sklepu.', 'woocommerce'), $order->get_order_number(), esc_url($invoice_url), esc_html($invoice));
+		// Przygotowanie e-maila
+		$subject = __( 'Twoja faktura za zamówienie', 'woocommerce' );
+		$message = sprintf( __( 'Dzień dobry,<br><br>Załączamy fakturę do Twojego zamówienia #%1$s.<br><br>Możesz także pobrać ją klikając w ten link: <a href="%2$s">%3$s</a>.<br><br>Pozdrawiamy,<br>Zespół sklepu.', 'woocommerce' ), $order->get_order_number(), esc_url( $invoice_url ), esc_html( $invoice ) );
 
-    $headers = ['Content-Type: text/html; charset=UTF-8'];
-    
-    // Wysyłka wiadomości e-mail z załącznikiem
-    $sent = wp_mail($customer_email, $subject, $message, $headers, [$invoice_path]);
+		$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 
-    if ($sent) {
-        wp_send_json_success(['message' => __('Faktura została wysłana do klienta!', 'woocommerce')]);
-    } else {
-        wp_send_json_error(['message' => __('Nie udało się wysłać e-maila!', 'woocommerce')]);
-    }
-});
+		// Wysyłka wiadomości e-mail z załącznikiem
+		$sent = wp_mail( $customer_email, $subject, $message, $headers, array( $invoice_path ) );
 
+		if ( $sent ) {
+			wp_send_json_success( array( 'message' => __( 'Faktura została wysłana do klienta!', 'woocommerce' ) ) );
+		} else {
+			wp_send_json_error( array( 'message' => __( 'Nie udało się wysłać e-maila!', 'woocommerce' ) ) );
+		}
+	}
+);
+
+// Funkcja do dodania liczby produktów w koszyku do menu
+function custom_add_cart_count_to_menu( $items, $args ) {
+	// Sprawdzamy, czy to właściwe menu
+	if ( $args->theme_location == 'account-menu' ) {  // Zmień 'primary' na nazwę lokalizacji menu, którą chcesz edytować
+		// Sprawdzamy liczbę produktów w koszyku
+		$cart_count = WC()->cart->get_cart_contents_count();
+
+		// Dodajemy element HTML z liczbą produktów
+		if ( $cart_count >= 0 ) {
+			$items .= '<li class="menu-item cart-item-count">';
+			$items .= '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M21.822 7.431A1 1 0 0 0 21 7H7.333L6.179 4.23A1.994 1.994 0 0 0 4.333 3H2v2h2.333l4.744 11.385A1 1 0 0 0 10 17h8c.417 0 .79-.259.937-.648l3-8a1 1 0 0 0-.115-.921z"></path><circle cx="10.5" cy="19.5" r="1.5"></circle><circle cx="17.5" cy="19.5" r="1.5"></circle></svg> <a class="cart-link" href="' . wc_get_cart_url() . '">Koszyk <span>(' . $cart_count . ')</span></a>';
+			$items .= '</li>';
+		}
+	}
+	return $items;
+}
+add_filter( 'wp_nav_menu_items', 'custom_add_cart_count_to_menu', 10, 2 );
