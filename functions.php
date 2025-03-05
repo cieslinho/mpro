@@ -1154,3 +1154,54 @@ function custom_add_cart_count_to_menu( $items, $args ) {
 	return $items;
 }
 add_filter( 'wp_nav_menu_items', 'custom_add_cart_count_to_menu', 10, 2 );
+
+
+add_action('wp_loaded', function () {
+    $upload_dir = wp_get_upload_dir();
+    $invoice_dir = $upload_dir['basedir'] . '/rt-invoices/';
+
+    if (!is_dir($invoice_dir)) {
+        return;
+    }
+
+    $files = glob($invoice_dir . '/*.pdf'); // Pobiera wszystkie pliki PDF w folderze
+
+    foreach ($files as $file) {
+        $filename = basename($file);
+
+        // Sprawdzenie, czy już został przetworzony
+        if (get_transient('sent_invoice_' . $filename)) {
+            continue;
+        }
+
+        // Wydobywamy numer zamówienia (np. 82471_xxxxx.pdf → 82471)
+        if (preg_match('/^(\d+)_/', $filename, $matches)) {
+            $order_id = intval($matches[1]);
+            $order = wc_get_order($order_id);
+
+            if ($order) {
+                $customer_email = $order->get_billing_email();
+
+                if ($customer_email) {
+                    $invoice_url = $upload_dir['baseurl'] . '/rt-invoices/' . $filename;
+
+                    // Tworzymy treść e-maila
+                    $subject = __('Twoja faktura za zamówienie', 'woocommerce');
+                    $message = sprintf(
+                        __('Dzień dobry,<br><br>Załączamy fakturę do Twojego zamówienia #%s.<br><br>Możesz także pobrać ją klikając w ten link: <a href="%s">%s</a>.<br><br>Pozdrawiamy,<br>Zespół sklepu.', 'woocommerce'),
+                        $order->get_order_number(),
+                        esc_url($invoice_url),
+                        esc_html($filename)
+                    );
+
+                    $headers = ['Content-Type: text/html; charset=UTF-8'];
+                    $sent = wp_mail($customer_email, $subject, $message, $headers, [$file]);
+
+                    if ($sent) {
+                        set_transient('sent_invoice_' . $filename, true, 24 * HOUR_IN_SECONDS); // Zapamiętujemy wysłany plik
+                    }
+                }
+            }
+        }
+    }
+});
