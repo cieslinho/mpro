@@ -99,17 +99,23 @@
 	}
 
 	&__categories {
-		display: none;
+		order: 2;
+		// display: none;
+		width: 100%;
 
 		@include view(tablet) {
 			display: flex;
+			order: unset;
+			width: 30%;
 		}
 	}
 
 	&__promo {
+		order: 3;
 		width: 100%;
 
 		@include view(tablet) {
+			order: unset;
 			width: 30%;
 		}
 	}
@@ -259,6 +265,30 @@
 				content: '/';
 				font-size: 1.2rem;
 			}
+		}
+	}
+
+	&__search {
+		order: 1;
+
+		form.woo_search,
+		input#keyword {
+			background-color: $darkGray !important;
+			color: $white !important;
+
+			span.loading.woo_bar_el {
+				svg,
+				svg g {
+					fill: $white !important;
+				}
+			}
+		}
+		.show_all {
+			background-color: $darkGray !important;
+		}
+
+		@include view(mobile-max) {
+			display: none;
 		}
 	}
 }
