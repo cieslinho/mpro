@@ -133,8 +133,11 @@
 	}
 
 	&__bottom {
+		margin: 1em auto;
+		border-radius: 8px;
 		background-color: $blue;
 		padding: 1em;
+		max-width: 1340px;
 
 		&-boxes {
 			display: flex;

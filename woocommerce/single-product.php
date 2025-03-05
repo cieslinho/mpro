@@ -20,8 +20,11 @@ $main_image_alt = get_post_meta( $main_image_id, '_wp_attachment_image_alt', tru
 
 
 $product_id = get_the_ID(); // ID aktualnego produktu
-$price      = get_post_meta( $product_id, '_price', true ); // Pobierz cenę podstawową
-$sale_price = get_post_meta( $product_id, '_sale_price', true ); // Pobierz cenę promocyjną (jeśli jest)
+$price      = $product->get_regular_price(); // Pobierz cenę regularną
+$sale_price = $product->get_sale_price(); // Pobierz cenę promocyjną (jeśli jest)
+
+$regular_price_incl_tax = wc_get_price_including_tax( $product, 'regular' ); // Cena regularna brutto
+$sale_price_incl_tax    = wc_get_price_including_tax( $product, 'sale' ); // Cena promocyjna brutto (jeśli jest)
 ?>
 
 <section class="product">
@@ -96,8 +99,8 @@ if ( function_exists( 'wc_print_notices' ) ) {
 
 <?php if ( $sale_price ) : ?>
 	<p class="product__price product__pricv-sale price">
-		<del><?php echo wc_price( $price ); ?></del>
-		<ins><?php echo wc_price( $sale_price ); ?></ins>
+		<del><?php echo wc_price( wc_get_price_including_tax( $product ) ); ?></del>
+		<ins><?php echo wc_price( $sale_price_incl_tax ); ?></ins>
 		<span class="product__unit">
 <?            if (isset($units[$unit])) {
 		?>

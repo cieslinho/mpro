@@ -28,8 +28,24 @@
 		outline: 1px solid $gray;
 		border-bottom: 1px solid $gray;
 		&-top {
+			position: relative;
 			align-self: center;
 			margin-top: 1em;
+
+			span {
+				position: absolute !important;
+				top: -16px !important;
+				right: -22px !important;
+				left: unset !important;
+				border-radius: unset !important;
+				background-color: $darkBlue !important;
+				padding: 0.3em 0.6em !important;
+				width: unset !important;
+				height: unset !important;
+				min-height: unset !important;
+				font-size: 1.2rem !important;
+				line-height: unset !important;
+			}
 		}
 
 		img {
@@ -75,6 +91,17 @@
 
 		span.price {
 			color: $blue;
+
+			del {
+				margin-right: 0.5em;
+				color: $darkGray;
+				font-size: 1.3rem;
+				text-decoration: line-through;
+			}
+
+			ins {
+				font-size: 1.5rem;
+			}
 		}
 
 		&-latest > span {
@@ -85,7 +112,11 @@
 	&__unit {
 		position: relative;
 		color: $darkGray;
-		font-size: 1.4rem;
+		font-size: 1.1rem;
+
+		@include view(mobile) {
+			text-wrap-mode: nowrap;
+		}
 		&::before {
 			position: absolute;
 			top: 50%;
