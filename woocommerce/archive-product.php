@@ -147,6 +147,7 @@ remove_action( 'woocommerce_product_loop_end', 'woocommerce_product_loop_end', 1
 											'mb'  => 'mb.',
 											'kg'  => 'kg',
 											'm2'  => 'm2',
+											'l'   => 'litr',
 										);
 
 

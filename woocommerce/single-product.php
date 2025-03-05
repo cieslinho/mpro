@@ -88,6 +88,7 @@ if ( function_exists( 'wc_print_notices' ) ) {
 						'mb'  => 'mb.',
 						'kg'  => 'kg',
 						'm2'  => 'm2',
+						'l'   => 'litr',
 					);
 
 
@@ -145,7 +146,7 @@ $unit_of_measure = get_field( 'unit_of_measure', $product_id ); // Pobierz jedno
 $price_per_unit  = get_field( 'price_per_unit', $product_id ); // Pobierz cenę za jednostkę
 
 // Wyświetl kalkulator tylko dla jednostek kg, mb, m2
-if ( in_array( $unit_of_measure, array( 'kg', 'mb', 'm2' ), true ) && $price_per_unit ) :
+if ( in_array( $unit_of_measure, array( 'kg', 'mb', 'm2', 'l' ), true ) && $price_per_unit ) :
 	?>
 	
 	<div class="product__calculator">
@@ -226,7 +227,7 @@ $stock_status   = $product->get_stock_status();
 $stock_quantity = $product->get_stock_quantity();
 ?>
 
-<?php if ( in_array( $unit_of_measure, array( 'kg', 'mb', 'm2' ), true ) && $price_per_unit ) : ?>
+<?php if ( in_array( $unit_of_measure, array( 'kg', 'mb', 'm2', 'l' ), true ) && $price_per_unit ) : ?>
 	<!-- Formularz z customową ilością, widoczny tylko jeśli jednostka miary to 'kg', 'mb', lub 'm2' -->
 	<div class="product__btn add-to-cart">
 	<div class="stock-status">
@@ -342,6 +343,7 @@ $stock_quantity = $product->get_stock_quantity();
 											'mb'  => 'mb.',
 											'kg'  => 'kg',
 											'm2'  => 'm2',
+											'l'   => 'litr',
 										);
 
 
