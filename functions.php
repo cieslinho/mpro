@@ -654,16 +654,16 @@ function sync_wc_price_to_acf_price_per_unit( $post_id ) {
 	// Pobierz produkt
 	$product = wc_get_product( $post_id );
 
-	// Pobierz cenę produktu
-	$wc_price = $product->get_regular_price(); // Możesz także użyć get_sale_price() w zależności od wymagań
+	// Pobierz cenę brutto produktu
+	$wc_price_gross = wc_get_price_including_tax( $product );
 
 	// Pobierz jednostkę miary
 	$unit_of_measure = get_field( 'unit_of_measure', $post_id );
 
-	// Jeśli jednostka miary jest ustawiona na 'kg', 'mb', lub 'm2', kopiujemy cenę do ACF
-	if ( in_array( $unit_of_measure, array( 'kg', 'mb', 'm2' ), true ) ) {
-		// Zapisz cenę WooCommerce do ACF price_per_unit
-		update_field( 'price_per_unit', $wc_price, $post_id );
+	// Jeśli jednostka miary jest ustawiona na 'kg', 'mb', 'm2', lub 'l', kopiujemy cenę do ACF
+	if ( in_array( $unit_of_measure, array( 'kg', 'mb', 'm2', 'l' ), true ) ) {
+		// Zapisz cenę brutto WooCommerce do ACF price_per_unit
+		update_field( 'price_per_unit', $wc_price_gross, $post_id );
 	}
 }
 add_action( 'save_post', 'sync_wc_price_to_acf_price_per_unit', 10, 3 );
@@ -1156,52 +1156,55 @@ function custom_add_cart_count_to_menu( $items, $args ) {
 add_filter( 'wp_nav_menu_items', 'custom_add_cart_count_to_menu', 10, 2 );
 
 
-add_action('wp_loaded', function () {
-    $upload_dir = wp_get_upload_dir();
-    $invoice_dir = $upload_dir['basedir'] . '/rt-invoices/';
+add_action(
+	'wp_loaded',
+	function () {
+		$upload_dir  = wp_get_upload_dir();
+		$invoice_dir = $upload_dir['basedir'] . '/rt-invoices/';
 
-    if (!is_dir($invoice_dir)) {
-        return;
-    }
+		if ( ! is_dir( $invoice_dir ) ) {
+			return;
+		}
 
-    $files = glob($invoice_dir . '/*.pdf'); // Pobiera wszystkie pliki PDF w folderze
+		$files = glob( $invoice_dir . '/*.pdf' ); // Pobiera wszystkie pliki PDF w folderze
 
-    foreach ($files as $file) {
-        $filename = basename($file);
+		foreach ( $files as $file ) {
+			$filename = basename( $file );
 
-        // Sprawdzenie, czy już został przetworzony
-        if (get_transient('sent_invoice_' . $filename)) {
-            continue;
-        }
+			// Sprawdzenie, czy już został przetworzony
+			if ( get_transient( 'sent_invoice_' . $filename ) ) {
+				continue;
+			}
 
-        // Wydobywamy numer zamówienia (np. 82471_xxxxx.pdf → 82471)
-        if (preg_match('/^(\d+)_/', $filename, $matches)) {
-            $order_id = intval($matches[1]);
-            $order = wc_get_order($order_id);
+			// Wydobywamy numer zamówienia (np. 82471_xxxxx.pdf → 82471)
+			if ( preg_match( '/^(\d+)_/', $filename, $matches ) ) {
+				$order_id = intval( $matches[1] );
+				$order    = wc_get_order( $order_id );
 
-            if ($order) {
-                $customer_email = $order->get_billing_email();
+				if ( $order ) {
+					$customer_email = $order->get_billing_email();
 
-                if ($customer_email) {
-                    $invoice_url = $upload_dir['baseurl'] . '/rt-invoices/' . $filename;
+					if ( $customer_email ) {
+						$invoice_url = $upload_dir['baseurl'] . '/rt-invoices/' . $filename;
 
-                    // Tworzymy treść e-maila
-                    $subject = __('Twoja faktura za zamówienie', 'woocommerce');
-                    $message = sprintf(
-                        __('Dzień dobry,<br><br>Załączamy fakturę do Twojego zamówienia #%s.<br><br>Możesz także pobrać ją klikając w ten link: <a href="%s">%s</a>.<br><br>Pozdrawiamy,<br>Zespół sklepu.', 'woocommerce'),
-                        $order->get_order_number(),
-                        esc_url($invoice_url),
-                        esc_html($filename)
-                    );
+						// Tworzymy treść e-maila
+						$subject = __( 'Twoja faktura za zamówienie', 'woocommerce' );
+						$message = sprintf(
+							__( 'Dzień dobry,<br><br>Załączamy fakturę do Twojego zamówienia #%1$s.<br><br>Możesz także pobrać ją klikając w ten link: <a href="%2$s">%3$s</a>.<br><br>Pozdrawiamy,<br>Zespół sklepu.', 'woocommerce' ),
+							$order->get_order_number(),
+							esc_url( $invoice_url ),
+							esc_html( $filename )
+						);
 
-                    $headers = ['Content-Type: text/html; charset=UTF-8'];
-                    $sent = wp_mail($customer_email, $subject, $message, $headers, [$file]);
+						$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+						$sent    = wp_mail( $customer_email, $subject, $message, $headers, array( $file ) );
 
-                    if ($sent) {
-                        set_transient('sent_invoice_' . $filename, true, 24 * HOUR_IN_SECONDS); // Zapamiętujemy wysłany plik
-                    }
-                }
-            }
-        }
-    }
-});
+						if ( $sent ) {
+							set_transient( 'sent_invoice_' . $filename, true, 24 * HOUR_IN_SECONDS ); // Zapamiętujemy wysłany plik
+						}
+					}
+				}
+			}
+		}
+	}
+);

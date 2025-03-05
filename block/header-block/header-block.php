@@ -124,6 +124,7 @@ $promoLink     = $promo_content['promo-link'];
 										'mb'  => 'mb.',
 										'kg'  => 'kg',
 										'm2'  => 'm2',
+										'l'   => 'litr',
 									);
 
 
